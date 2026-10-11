@@ -345,6 +345,7 @@ if ($p === 'quote') {
 <p class="muted noprint">以上係你嘅入貨成本（未計印製、運費、稅）。</p>
 <div class="noprint">
 <a class="btn" href="?p=print" target="_blank">🖨 列印／出 PDF</a>
+<a class="btn" href="?p=order">📦 經 S&S 落單</a>
 <form method="post" action="?p=quote" style="display:inline">
 <input type="hidden" name="act" value="clear">
 <button type="submit" class="ghost" onclick="return confirm('清空成張報價單？')">清空</button></form>
@@ -387,6 +388,144 @@ th{background:#f0f0f0} .total td{font-size:18px;font-weight:bold;border-top:2px 
 <p class="noprint"><button onclick="window.print()">列印</button></p>
 </body></html>
     <?php
+    exit;
+}
+
+// ================= 經 S&S 落單 (v2) =================
+if ($p === 'order') {
+    $quote = quote_get();
+    if (empty($quote)) { header('Location: ?p=quote'); exit; }
+    $api = ss();
+
+    // --- 步驟3：真實落單 ---
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['step'] ?? '') === 'place') {
+        $draft = $_SESSION['ssq_order_draft'] ?? null;
+        if (!$draft) { header('Location: ?p=order'); exit; }
+        $lines = array();
+        foreach ($quote as $sku => $l) {
+            $lines[] = array('identifier' => $sku, 'qty' => (int)$l['qty'], 'warehouseAbbr' => 'ON');
+        }
+        $res = $api->placeOrder($lines, array(
+            'shippingAddress'   => $draft['address'],
+            'shippingMethod'    => $draft['method'],
+            'poNumber'          => $draft['po'],
+            'emailConfirmation' => $draft['email'],
+            'paymentProfile'    => array('email' => $draft['pay_email'], 'profileID' => (int)$draft['profile_id']),
+            'testOrder'         => false,
+        ));
+        page_head('落單結果');
+        if ($res === null) {
+            echo '<p class="err">落單失敗：' . h($api->lastError) . '</p>';
+            echo '<p class="muted">如果見到 EXPIRED_CARD，即係 S&S 戶口嗰張卡過期咗，要去 S&S 網站 My Account 更新有效嘅卡。</p>';
+            echo '<a class="btn ghost" href="?p=order">← 返回修改</a>';
+        } else {
+            $o = (is_array($res) && isset($res[0])) ? $res[0] : $res;
+            echo '<div class="card"><h3 class="ok">✅ 落單成功</h3>';
+            echo '<p>訂單號碼：<strong>' . h($o['orderNumber'] ?? '') . '</strong><br>'
+                . '狀態：' . h($o['orderStatus'] ?? '') . '<br>'
+                . '總數：' . money($o['total'] ?? 0) . '（' . (int)($o['totalPieces'] ?? 0) . ' 件）<br>'
+                . '取貨方式：' . h($draft['method'] === SSClient::SHIP_PICKUP ? 'Vaughan 倉自取' : 'S&S 送貨') . '</p></div>';
+            $_SESSION['ssq_quote'] = array();
+            unset($_SESSION['ssq_order_draft']);
+            echo '<a class="btn" href="?p=search">繼續查款</a> ';
+            echo '<a class="btn ghost" href="?p=quote">報價單</a>';
+        }
+        page_foot();
+        exit;
+    }
+
+    // --- 步驟2：確認頁 ---
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['step'] ?? '') === 'review') {
+        $draft = array(
+            'method'     => $_POST['method'] ?? SSClient::SHIP_PICKUP,
+            'po'         => trim($_POST['po'] ?? ''),
+            'email'      => trim($_POST['email'] ?? ''),
+            'pay_email'  => trim($_POST['pay_email'] ?? ''),
+            'profile_id' => $_POST['profile_id'] ?? '',
+            'address'    => array(
+                'customer'    => trim($_POST['a_customer'] ?? ''),
+                'attn'        => trim($_POST['a_attn'] ?? ''),
+                'address'     => trim($_POST['a_address'] ?? ''),
+                'city'        => trim($_POST['a_city'] ?? ''),
+                'state'       => trim($_POST['a_state'] ?? ''),
+                'zip'         => trim($_POST['a_zip'] ?? ''),
+                'residential' => false,
+            ),
+        );
+        if ($draft['profile_id'] === '') {
+            page_head('經 S&S 落單');
+            echo '<p class="err">請選擇付款方式。</p><a class="btn ghost" href="?p=order">← 返回</a>';
+            page_foot();
+            exit;
+        }
+        $_SESSION['ssq_order_draft'] = $draft;
+        page_head('確認落單');
+        echo '<div class="card"><p class="err"><strong>⚠️ 呢個係真實落單，一按確認就會即時收費。</strong></p>';
+        echo '<table><tr><th>款式</th><th>顏色</th><th>尺碼</th><th>單價</th><th>數量</th><th>小計</th></tr>';
+        foreach ($quote as $l) {
+            echo '<tr><td>' . h($l['style']) . '</td><td>' . h($l['color']) . '</td><td>' . h($l['size']) . '</td>'
+                . '<td>' . money($l['price']) . '</td><td>' . (int)$l['qty'] . '</td>'
+                . '<td>' . money($l['price'] * $l['qty']) . '</td></tr>';
+        }
+        echo '<tr><td colspan="5" style="text-align:right"><strong>總計</strong></td><td><strong>' . money(quote_total()) . '</strong></td></tr></table>';
+        echo '<p>取貨方式：<strong>' . h($draft['method'] === SSClient::SHIP_PICKUP ? 'Vaughan 倉自取 (Will Call)' : 'S&S 送貨（最平 ground）') . '</strong><br>'
+            . 'PO：' . h($draft['po']) . '<br>確認電郵：' . h($draft['email']) . '<br>付款方式 ID：' . h($draft['profile_id']) . '</p>';
+        echo '<form method="post" action="?p=order"><input type="hidden" name="step" value="place">'
+            . '<button type="submit" onclick="return confirm(\'真係要落單？會即時收費。\')">✅ 確認落單</button> '
+            . '<a class="btn ghost" href="?p=order">← 返回修改</a></form></div>';
+        page_foot();
+        exit;
+    }
+
+    // --- 步驟1：落單表單 ---
+    $payEmail = trim($_GET['pay_email'] ?? 'info@hifillstudio.com');
+    $profiles = $api->paymentProfiles($payEmail);
+    page_head('經 S&S 落單');
+    ?>
+<div class="card">
+<p class="muted">以下會經 S&S API 直接落真單。建議先去報價單確認內容。</p>
+<form method="get" action="" class="card noprint" style="margin-top:0">
+<input type="hidden" name="p" value="order">
+<label style="margin-top:0"><strong>S&S 網站登入電郵</strong>（用嚟載入已儲存嘅付款方式）
+<div class="searchrow">
+<input type="text" name="pay_email" value="<?php echo h($payEmail); ?>">
+<button type="submit" class="ghost">載入</button>
+</div></label></form>
+<form method="post" action="?p=order">
+<input type="hidden" name="step" value="review">
+<label><strong>取貨方式</strong></label>
+<label><input type="radio" name="method" value="<?php echo SSClient::SHIP_PICKUP; ?>" checked style="width:auto">
+Vaughan 倉自取 (Will Call) — 預設</label>
+<label><input type="radio" name="method" value="<?php echo SSClient::SHIP_CHEAPEST; ?>" style="width:auto">
+S&S 送貨（系統揀最平嘅 ground）</label>
+<label>PO / 備註 <input type="text" name="po" value="<?php echo h($_SESSION['ssq_po'] ?? ''); ?>"></label>
+<label>訂單確認電郵 <input type="text" name="email" value="info@hifillstudio.com"></label>
+<label><strong>付款方式</strong>（S&S 網站已儲存嘅卡）</label>
+<input type="hidden" name="pay_email" value="<?php echo h($payEmail); ?>">
+    <?php
+    if ($profiles === null) {
+        echo '<p class="err">讀取付款方式失敗：' . h($api->lastError) . '</p>';
+    } elseif (empty($profiles)) {
+        echo '<p class="err">呢個電郵冇已儲存嘅付款方式，請先去 S&S 網站 My Account 加卡。</p>';
+    } else {
+        foreach ($profiles as $pf) {
+            echo '<label><input type="radio" name="profile_id" value="' . (int)$pf['profileID'] . '" style="width:auto"> '
+                . h($pf['name'] ?? ('Profile ' . $pf['profileID'])) . '</label>';
+        }
+    }
+    ?>
+<label><strong>地址</strong>（系統要求填寫；自取唔會用嚟送貨）</label>
+<label>公司 <input type="text" name="a_customer" value="HiFills Studio"></label>
+<label>聯絡人 <input type="text" name="a_attn" value="Illo Lam"></label>
+<label>地址 <input type="text" name="a_address" value="6675 Langstaff Rd"></label>
+<label>城市 <input type="text" name="a_city" value="Woodbridge"></label>
+<label>省份 <input type="text" name="a_state" value="ON"></label>
+<label>郵編 <input type="text" name="a_zip" value="L4H4W9"></label>
+<button type="submit">下一步：確認內容 →</button>
+<a class="btn ghost" href="?p=quote">← 返回報價單</a>
+</form></div>
+    <?php
+    page_foot();
     exit;
 }
 
