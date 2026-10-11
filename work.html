@@ -34,6 +34,12 @@
     }
     .cat-nav a:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-1px); }
     .demo-group { scroll-margin-top: 84px; }
+    .demo-group-foot { margin-top: 36px; text-align: right; }
+    .to-top { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px;
+      border: 1.5px solid var(--line); border-radius: 999px;
+      font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none;
+      transition: border-color .18s ease, color .18s ease, transform .18s ease; }
+    .to-top:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-1px); }
   </style>
   <script type="application/ld+json">
   {
@@ -69,7 +75,7 @@
   </header>
 
   <main id="main">
-    <section class="page-hero">
+    <section class="page-hero" id="top">
       <div class="shell">
         <h1>Work we're proud to show.</h1>
         <p>Eight live demos. Open any demo in a new tab to scroll, tap and navigate the full experience.</p>
@@ -132,6 +138,7 @@
               </div>
             </article>
           </div>
+          <div class="demo-group-foot"><a class="to-top" href="#top"><span aria-hidden="true">↑</span> Back to top</a></div>
         </div>
 
         <div class="demo-group" id="cat-professional">
@@ -152,6 +159,7 @@
               </div>
             </article>
           </div>
+          <div class="demo-group-foot"><a class="to-top" href="#top"><span aria-hidden="true">↑</span> Back to top</a></div>
         </div>
 
         <div class="demo-group" id="cat-booking">
@@ -183,6 +191,7 @@
               </div>
             </article>
           </div>
+          <div class="demo-group-foot"><a class="to-top" href="#top"><span aria-hidden="true">↑</span> Back to top</a></div>
         </div>
 
         <div class="demo-group" id="cat-ordering">
@@ -214,6 +223,7 @@
               </div>
             </article>
           </div>
+          <div class="demo-group-foot"><a class="to-top" href="#top"><span aria-hidden="true">↑</span> Back to top</a></div>
         </div>
 
         <p class="work-note">Interactive concept portfolio — sample brands created to demonstrate design range.</p>
