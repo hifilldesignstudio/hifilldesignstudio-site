@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_old_site_backup/
+
+Sitemap: https://hifilldesignstudio.com/sitemap.xml
