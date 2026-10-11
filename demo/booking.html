@@ -440,6 +440,7 @@
     };
     mk("any", "First available", "—", "Earliest opening with any therapist", "Any working day", true);
     PRACTITIONERS.forEach(p => mk(p.id, p.name, p.cred, p.spec, p.days, false));
+    updateNext();
   }
 
   function renderTreatments() {
@@ -454,6 +455,7 @@
       b.onclick = () => { state.treatId = id; state.dateISO = null; state.startMin = null; renderTreatments(); };
       list.appendChild(b);
     });
+    updateNext();
   }
 
   function renderDateTime() {
@@ -474,7 +476,7 @@
         });
       }
       opts.sort((a, b) => (a.dateISO + a.startMin) < (b.dateISO + b.startMin) ? -1 : 1);
-      if (!opts.length) { area.innerHTML = `<p class="empty-note">No availability in the next 14 days — please call us.</p>`; return; }
+      if (!opts.length) { area.innerHTML = `<p class="empty-note">No availability in the next 14 days — please call us.</p>`; updateNext(); return; }
       opts.slice(0, 12).forEach(o => {
         const b = document.createElement("button");
         b.type = "button";
@@ -483,6 +485,7 @@
         b.onclick = () => { state.practIdReal = o.practId; state.dateISO = o.dateISO; state.startMin = o.startMin; renderDateTime(); };
         grid.appendChild(b);
       });
+      updateNext();
       return;
     }
 
@@ -505,6 +508,7 @@
       const first = days.find(x => x.n > 0);
       if (first) { state.dateISO = first.s; renderDateTime(); return; }
       grid.innerHTML = `<p class="empty-note">No availability in the next 14 days — please call us.</p>`;
+      updateNext();
       return;
     }
     availableSlots(state.practId, state.dateISO, treatMins, bookings).forEach(s => {
@@ -515,6 +519,7 @@
       grid.appendChild(b);
     });
     if (!grid.children.length) grid.innerHTML = `<p class="empty-note">This day just filled up — please pick another day.</p>`;
+    updateNext();
   }
 
   function totalPrice() {
