@@ -25,6 +25,15 @@
     .demo-group-head { margin-bottom: 30px; }
     .demo-group-head h3 { font-family: "Libre Caslon Display", Georgia, serif; font-size: clamp(38px, 5vw, 60px); letter-spacing: -.03em; line-height: 1.02; color: var(--coral); margin: 0 0 10px; }
     .demo-group-head p { margin: 0; color: var(--muted); font-size: 16px; max-width: 640px; }
+    .cat-nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 4px; }
+    .cat-nav a {
+      display: inline-flex; align-items: center; padding: 10px 20px;
+      border: 1.5px solid var(--line); border-radius: 999px;
+      font-size: 14px; font-weight: 600; color: inherit; text-decoration: none;
+      transition: border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .cat-nav a:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-1px); }
+    .demo-group { scroll-margin-top: 84px; }
   </style>
   <script type="application/ld+json">
   {
@@ -76,7 +85,14 @@
           
         </div>
 
-        <div class="demo-group">
+        <nav class="cat-nav" aria-label="Demo categories">
+          <a href="#cat-small-business">Small Business</a>
+          <a href="#cat-professional">Professional</a>
+          <a href="#cat-booking">Appointment Booking</a>
+          <a href="#cat-ordering">Restaurant Ordering</a>
+        </nav>
+
+        <div class="demo-group" id="cat-small-business">
           <div class="demo-group-head">
             <h3>Small Business</h3>
             <p>Affordable one-page websites for local shops and trades — services, menus and quote forms included.</p>
@@ -118,7 +134,7 @@
           </div>
         </div>
 
-        <div class="demo-group">
+        <div class="demo-group" id="cat-professional">
           <div class="demo-group-head">
             <h3>Professional</h3>
             <p>Trust-building websites for firms and practices — practice areas, team profiles and contact forms.</p>
@@ -138,7 +154,7 @@
           </div>
         </div>
 
-        <div class="demo-group">
+        <div class="demo-group" id="cat-booking">
           <div class="demo-group-head">
             <h3>Appointment Booking</h3>
             <p>Websites with online booking built in — clients pick a service, day and time without calling.</p>
@@ -169,7 +185,7 @@
           </div>
         </div>
 
-        <div class="demo-group">
+        <div class="demo-group" id="cat-ordering">
           <div class="demo-group-head">
             <h3>Restaurant Ordering Systems</h3>
             <p>QR table ordering with kitchen display and cashier — for cafés and restaurants of any cuisine.</p>
