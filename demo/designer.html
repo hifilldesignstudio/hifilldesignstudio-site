@@ -54,12 +54,13 @@
 </head>
 <body>
 <div class="wrap">
-  <span class="tag">PROTOTYPE v0.1</span>
+  <span class="tag">PROTOTYPE v0.2</span>
   <h1>Tee Designer</h1>
-  <p class="sub">試玩版 — upload 圖、加字、拉放擺位，睇下手感啱唔啱。</p>
+  <p class="sub">試玩版 — 前面同後面係獨立設計，upload 圖、加字、拉放擺位。</p>
 
   <div class="stage">
-    <div class="canvas-scale"><canvas id="c" width="600" height="700"></canvas></div>
+    <div class="canvas-scale" id="wrapFront"><canvas id="cFront" width="600" height="700"></canvas></div>
+    <div class="canvas-scale" id="wrapBack" style="display:none"><canvas id="cBack" width="600" height="700"></canvas></div>
   </div>
   <div class="view-toggle">
     <button id="vFront" class="small primary" type="button">Front</button>
@@ -67,7 +68,7 @@
   </div>
 
   <div class="panel">
-    <h2>1 · Artwork</h2>
+    <h2>1 · Artwork <span style="text-transform:none; font-weight:400">(只會加落而家睇緊嗰面)</span></h2>
     <div class="row">
       <label class="file-label primary" style="flex:1">Upload artwork<input type="file" id="upload" accept="image/*"></label>
     </div>
@@ -104,16 +105,16 @@
     </div>
     <div class="row">
       <button id="toggleGuide" class="small ghost" type="button">隱藏印刷範圍</button>
-      <button id="clear" class="small ghost" type="button">清空設計</button>
+      <button id="clear" class="small ghost" type="button">清空呢面設計</button>
     </div>
   </div>
 
   <div class="panel">
     <h2>4 · 完成</h2>
     <div class="row">
-      <button id="download" class="primary" type="button">下載預覽圖 (PNG)</button>
+      <button id="download" class="primary" type="button">下載呢面預覽圖 (PNG)</button>
     </div>
-    <p class="hint">正式版會將高清生產圖直接送去 order，唔使再問客攞圖。</p>
+    <p class="hint">正式版會將前後兩面高清生產圖直接送去 order，唔使再問客攞圖。</p>
   </div>
 
   <p class="foot">Hifill Design Studio · designer prototype</p>
@@ -122,41 +123,12 @@
 <script>
 (function(){
   const PRINT = { x: 218, y: 238, w: 164, h: 224 };
-  const canvas = new fabric.Canvas('c', { preserveObjectStacking: true, backgroundColor: '#ffffff' });
-
-  // ---- Tee shapes ----
   const BODY = 'M245 145 C270 168 330 168 355 145 L405 165 L478 232 L432 292 L392 262 L392 580 L208 580 L208 262 L168 292 L122 232 L195 165 Z';
   const COLLAR_F = 'M245 145 C270 168 330 168 355 145';
   const COLLAR_B = 'M250 150 C278 161 322 161 350 150';
   const HEM = 'M208 552 L392 552';
 
-  function teeGroup(collarD){
-    const body = new fabric.Path(BODY, { fill:'#ffffff', stroke:'rgba(0,0,0,0.14)', strokeWidth:2 });
-    const collar = new fabric.Path(collarD, { fill:'', stroke:'rgba(0,0,0,0.20)', strokeWidth:11, strokeLineCap:'round' });
-    const hem = new fabric.Path(HEM, { fill:'', stroke:'rgba(0,0,0,0.08)', strokeWidth:3 });
-    const g = new fabric.Group([body, collar, hem], { selectable:false, evented:false });
-    g._body = body;
-    return g;
-  }
-  const teeFront = teeGroup(COLLAR_F);
-  const teeBack = teeGroup(COLLAR_B);
-  teeBack.visible = false;
-  canvas.add(teeFront, teeBack);
-
-  // ---- Print-area guide ----
-  const guide = new fabric.Rect({
-    left: PRINT.x, top: PRINT.y, width: PRINT.w, height: PRINT.h,
-    fill: 'rgba(0,0,0,0)', stroke: '#9aa5b8', strokeDashArray: [9,7], strokeWidth: 1.5,
-    selectable: false, evented: false
-  });
-  const guideLabel = new fabric.Text('PRINT AREA', {
-    left: PRINT.x + PRINT.w/2, top: PRINT.y - 22, originX: 'center',
-    fontSize: 13, fill: '#9aa5b8', fontFamily: 'Arial', selectable: false, evented: false
-  });
-  canvas.add(guide, guideLabel);
-
-  // ---- Keep designs inside the print area ----
-  function clampToPrint(obj){
+  function clampToPrint(canvas, obj){
     obj.setCoords();
     const b = obj.getBoundingRect(true, true);
     let dx = 0, dy = 0;
@@ -166,13 +138,57 @@
     if (b.top + b.height > PRINT.y + PRINT.h) dy = PRINT.y + PRINT.h - (b.top + b.height);
     if (dx || dy){ obj.left += dx; obj.top += dy; obj.setCoords(); }
   }
-  ['object:moving','object:scaling','object:rotating'].forEach(ev =>
-    canvas.on(ev, e => { if (e.target && e.target.isDesign) clampToPrint(e.target); })
-  );
+
+  function makeDesigner(canvasId, collarD){
+    const canvas = new fabric.Canvas(canvasId, { preserveObjectStacking: true, backgroundColor: '#ffffff' });
+    const body = new fabric.Path(BODY, { fill:'#ffffff', stroke:'rgba(0,0,0,0.14)', strokeWidth:2 });
+    const collar = new fabric.Path(collarD, { fill:'', stroke:'rgba(0,0,0,0.20)', strokeWidth:11, strokeLineCap:'round' });
+    const hem = new fabric.Path(HEM, { fill:'', stroke:'rgba(0,0,0,0.08)', strokeWidth:3 });
+    canvas.add(new fabric.Group([body, collar, hem], { selectable:false, evented:false }));
+    const guide = new fabric.Rect({
+      left: PRINT.x, top: PRINT.y, width: PRINT.w, height: PRINT.h,
+      fill: 'rgba(0,0,0,0)', stroke: '#9aa5b8', strokeDashArray: [9,7], strokeWidth: 1.5,
+      selectable: false, evented: false
+    });
+    const guideLabel = new fabric.Text('PRINT AREA', {
+      left: PRINT.x + PRINT.w/2, top: PRINT.y - 22, originX: 'center',
+      fontSize: 13, fill: '#9aa5b8', fontFamily: 'Arial', selectable: false, evented: false
+    });
+    canvas.add(guide, guideLabel);
+    ['object:moving','object:scaling','object:rotating'].forEach(ev =>
+      canvas.on(ev, e => { if (e.target && e.target.isDesign) clampToPrint(canvas, e.target); })
+    );
+    canvas.requestRenderAll();
+    return { canvas: canvas, body: body, guide: guide, guideLabel: guideLabel };
+  }
+
+  const front = makeDesigner('cFront', COLLAR_F);
+  const back = makeDesigner('cBack', COLLAR_B);
+  let active = front;
+  function cur(){ return active.canvas; }
   function markDesign(o){ o.isDesign = true; return o; }
   function centerInPrint(o){ o.set({ left: PRINT.x + PRINT.w/2, top: PRINT.y + PRINT.h/2, originX:'center', originY:'center' }); }
 
-  // ---- Upload artwork ----
+  // ---- Front / Back toggle (independent canvases) ----
+  const wrapF = document.getElementById('wrapFront'), wrapB = document.getElementById('wrapBack');
+  const vF = document.getElementById('vFront'), vB = document.getElementById('vBack');
+  const tg = document.getElementById('toggleGuide');
+  function refreshGuideLabel(){
+    tg.textContent = active.guide.visible ? '隱藏印刷範圍' : '顯示印刷範圍';
+  }
+  function setView(isFront){
+    active = isFront ? front : back;
+    wrapF.style.display = isFront ? '' : 'none';
+    wrapB.style.display = isFront ? 'none' : '';
+    vF.className = 'small' + (isFront ? ' primary' : '');
+    vB.className = 'small' + (!isFront ? ' primary' : '');
+    refreshGuideLabel();
+    active.canvas.requestRenderAll();
+  }
+  vF.addEventListener('click', () => setView(true));
+  vB.addEventListener('click', () => setView(false));
+
+  // ---- Upload artwork (to current view) ----
   document.getElementById('upload').addEventListener('change', function(e){
     const f = e.target.files[0]; if(!f) return;
     const r = new FileReader();
@@ -181,8 +197,9 @@
         const s = Math.min((PRINT.w*0.96)/img.width, (PRINT.h*0.96)/img.height, 1);
         img.scale(s);
         markDesign(img); centerInPrint(img);
-        canvas.add(img); canvas.setActiveObject(img);
-        clampToPrint(img); canvas.requestRenderAll();
+        const c = cur();
+        c.add(img); c.setActiveObject(img);
+        clampToPrint(c, img); c.requestRenderAll();
       });
     };
     r.readAsDataURL(f);
@@ -198,18 +215,19 @@
       fill: document.getElementById('txtColor').value
     });
     markDesign(tb); centerInPrint(tb);
-    canvas.add(tb); canvas.setActiveObject(tb);
-    clampToPrint(tb); canvas.requestRenderAll();
+    const c = cur();
+    c.add(tb); c.setActiveObject(tb);
+    clampToPrint(c, tb); c.requestRenderAll();
   });
   document.getElementById('applyStyle').addEventListener('click', function(){
-    const o = canvas.getActiveObject();
+    const c = cur(), o = c.getActiveObject();
     if (o && o.isDesign && o.type === 'textbox'){
       o.set({ fontFamily: document.getElementById('fontSel').value, fill: document.getElementById('txtColor').value });
-      canvas.requestRenderAll();
+      c.requestRenderAll();
     }
   });
 
-  // ---- Garment colors ----
+  // ---- Garment colors (both views: same shirt) ----
   const COLORS = [
     ['白色','#ffffff'],['黑色','#1c1c1e'],['深藍','#1f3a5f'],['寶藍','#2456a6'],
     ['紅色','#c0392b'],['森林綠','#2d6a4f'],['粉紅','#f2a9c4'],['灰色','#9aa0a6']
@@ -218,74 +236,65 @@
   COLORS.forEach(function(c, i){
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'swatch' + (i===0 ? ' active' : '');
-    b.style.background = c[1].trim(); b.title = c[0]; b.setAttribute('aria-label', c[0]);
+    b.style.background = c[1]; b.title = c[0]; b.setAttribute('aria-label', c[0]);
     b.addEventListener('click', function(){
-      const col = c[1].trim();
-      teeFront._body.set('fill', col); teeBack._body.set('fill', col);
+      front.body.set('fill', c[1]); back.body.set('fill', c[1]);
       sw.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
-      canvas.requestRenderAll();
+      front.canvas.requestRenderAll(); back.canvas.requestRenderAll();
     });
     sw.appendChild(b);
   });
 
-  // ---- Front / back ----
-  const vF = document.getElementById('vFront'), vB = document.getElementById('vBack');
-  function setView(front){
-    teeFront.visible = front; teeBack.visible = !front;
-    vF.className = 'small' + (front ? ' primary' : '');
-    vB.className = 'small' + (!front ? ' primary' : '');
-    canvas.requestRenderAll();
-  }
-  vF.addEventListener('click', () => setView(true));
-  vB.addEventListener('click', () => setView(false));
-
-  // ---- Layer ops ----
-  function active(){ return canvas.getActiveObject(); }
+  // ---- Layer ops (current view) ----
   document.getElementById('del').addEventListener('click', () => {
-    const o = active(); if (o && o.isDesign){ canvas.remove(o); canvas.requestRenderAll(); }
+    const c = cur(), o = c.getActiveObject();
+    if (o && o.isDesign){ c.remove(o); c.requestRenderAll(); }
   });
   document.getElementById('dup').addEventListener('click', () => {
-    const o = active(); if (!o || !o.isDesign) return;
-    o.clone(function(c){ markDesign(c); c.set({ left:(c.left||0)+24, top:(c.top||0)+24 }); canvas.add(c); canvas.setActiveObject(c); canvas.requestRenderAll(); });
+    const c = cur(), o = c.getActiveObject();
+    if (!o || !o.isDesign) return;
+    o.clone(function(cl){ markDesign(cl); cl.set({ left:(cl.left||0)+24, top:(cl.top||0)+24 }); c.add(cl); c.setActiveObject(cl); c.requestRenderAll(); });
   });
   document.getElementById('flip').addEventListener('click', () => {
-    const o = active(); if (o && o.isDesign){ o.set('flipX', !o.flipX); canvas.requestRenderAll(); }
+    const c = cur(), o = c.getActiveObject();
+    if (o && o.isDesign){ o.set('flipX', !o.flipX); c.requestRenderAll(); }
   });
   document.getElementById('fwd').addEventListener('click', () => {
-    const o = active(); if (o && o.isDesign){ canvas.bringForward(o); canvas.requestRenderAll(); }
+    const c = cur(), o = c.getActiveObject();
+    if (o && o.isDesign){ c.bringForward(o); c.requestRenderAll(); }
   });
   document.getElementById('bwd').addEventListener('click', () => {
-    const o = active(); if (o && o.isDesign){ canvas.sendBackwards(o); canvas.requestRenderAll(); }
+    const c = cur(), o = c.getActiveObject();
+    if (o && o.isDesign){ c.sendBackwards(o); c.requestRenderAll(); }
   });
   document.getElementById('clear').addEventListener('click', () => {
-    canvas.getObjects().filter(o => o.isDesign).forEach(o => canvas.remove(o));
-    canvas.requestRenderAll();
+    const c = cur();
+    c.getObjects().filter(o => o.isDesign).forEach(o => c.remove(o));
+    c.requestRenderAll();
   });
 
-  // ---- Guide toggle ----
-  const tg = document.getElementById('toggleGuide');
+  // ---- Guide toggle (current view) ----
   tg.addEventListener('click', () => {
-    const v = !guide.visible;
-    guide.visible = v; guideLabel.visible = v;
-    tg.textContent = v ? '隱藏印刷範圍' : '顯示印刷範圍';
-    canvas.requestRenderAll();
+    const v = !active.guide.visible;
+    active.guide.visible = v; active.guideLabel.visible = v;
+    refreshGuideLabel();
+    active.canvas.requestRenderAll();
   });
 
-  // ---- Download preview ----
+  // ---- Download preview (current view) ----
   document.getElementById('download').addEventListener('click', () => {
-    const gv = guide.visible, lv = guideLabel.visible;
-    guide.visible = false; guideLabel.visible = false;
-    canvas.requestRenderAll();
-    const url = canvas.toDataURL({ format:'png', multiplier: 2 });
-    guide.visible = gv; guideLabel.visible = lv;
-    canvas.requestRenderAll();
+    const d = active, c = d.canvas;
+    const gv = d.guide.visible, lv = d.guideLabel.visible;
+    d.guide.visible = false; d.guideLabel.visible = false;
+    c.requestRenderAll();
+    const url = c.toDataURL({ format:'png', multiplier: 2 });
+    d.guide.visible = gv; d.guideLabel.visible = lv;
+    c.requestRenderAll();
     const a = document.createElement('a');
     a.href = url; a.download = 'tee-design.png';
     document.body.appendChild(a); a.click(); a.remove();
   });
-
-  canvas.requestRenderAll();
 })();
 </script>
 </body>
