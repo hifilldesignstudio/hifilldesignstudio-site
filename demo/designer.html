@@ -15,8 +15,9 @@
   .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; color:#fff; background:var(--coral); border-radius:999px; padding:3px 10px; margin-bottom:6px; }
   p.sub { color:var(--muted); font-size:14px; margin:0 0 14px; }
   .stage { background:#fff; border:1px solid var(--line); border-radius:16px; padding:10px; box-shadow:0 6px 24px rgba(28,43,74,.08); }
-  .canvas-container { width:100% !important; height:auto !important; aspect-ratio: 600 / 700; margin:0 auto; }
-  .canvas-container canvas { width:100% !important; height:100% !important; display:block; }
+  .canvas-scale { position:relative; width:100%; padding-top:116.6667%; }
+  .canvas-scale .canvas-container { position:absolute !important; left:0 !important; top:0 !important; width:100% !important; height:100% !important; margin:0; }
+  .canvas-scale .canvas-container canvas { position:absolute !important; left:0 !important; top:0 !important; width:100% !important; height:100% !important; display:block; }
   .view-toggle { display:flex; gap:8px; margin:12px 0 4px; }
   .view-toggle button { flex:1; }
   .panel { background:#fff; border:1px solid var(--line); border-radius:16px; padding:14px; margin-top:12px; }
@@ -58,7 +59,7 @@
   <p class="sub">試玩版 — upload 圖、加字、拉放擺位，睇下手感啱唔啱。</p>
 
   <div class="stage">
-    <canvas id="c" width="600" height="700"></canvas>
+    <div class="canvas-scale"><canvas id="c" width="600" height="700"></canvas></div>
   </div>
   <div class="view-toggle">
     <button id="vFront" class="small primary" type="button">Front</button>
