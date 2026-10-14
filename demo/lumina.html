@@ -151,12 +151,13 @@
   .rev b{display:block;margin-top:14px;font-weight:500;font-size:14.5px}
 
   /* booking */
-  .book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
-  @media(max-width:860px){.book-grid{grid-template-columns:1fr}}
+  .book-info{max-width:820px;margin:0 auto 34px;text-align:center}
+  .book-info ul{display:flex;flex-wrap:wrap;gap:4px 36px;justify-content:center}
+  .bk-side .cal{max-width:450px;width:100%;margin:0 auto}
   .book-info h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
   .book-info p{color:var(--muted);font-size:17px;margin-bottom:16px}
   .book-info ul{list-style:none;margin-top:8px}
-  .book-info li{padding:9px 0;border-bottom:1px dashed var(--line);font-size:16px}
+  .book-info li{padding:4px 0;font-size:16px}
   .book-info li b{font-weight:500}
   .widget{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 40px rgba(90,75,45,.08)}
   .widget h3{font-size:24px;margin-bottom:4px}
@@ -173,7 +174,7 @@
   .step{display:none}
   .step.on{display:block;animation:fadeUp .25s ease}
   @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .bk-pick{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;margin-top:6px}
+  .bk-pick{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;margin-top:6px}
   .bk-side{display:flex;flex-direction:column;gap:18px}
   .bk-side .step{display:none}
   .bk-side .step.on{display:block}
@@ -360,7 +361,7 @@
   </div>
 </div></section>
 
-<section id="book"><div class="wrap"><div class="book-grid">
+<section id="book"><div class="wrap">
   <div class="book-info">
     <div class="kicker">Online Booking</div>
     <h2>Book in about a minute.</h2>
@@ -421,7 +422,7 @@
     </div>
     <p class="demo-note">Sample booking form — in the live version, bookings email the shop and the customer. No real booking is sent from this preview.</p>
   </div>
-</div></div></section>
+</div></section>
 
 <section class="visit" id="visit"><div class="wrap">
   <div class="sec-head">
