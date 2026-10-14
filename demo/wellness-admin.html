@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serenity Wellness Spa — Staff Admin (Demo)</title>
+<style>
+  :root{--bg:#14110d;--panel:#1e1a14;--panel2:#262017;--line:#3d362a;--ink:#f0e9da;--muted:#b3a98f;--gold:#c9a35f;--gold-d:#a5813f;--green:#7fb069;--red:#d1603d;--radius:14px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:0 18px}
+  button{font:inherit;cursor:pointer}
+  input,select{font:inherit;background:#171410;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%}
+  input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px}
+  label{font-size:13.5px;color:var(--muted);display:block;margin-bottom:6px}
+
+  /* login */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:36px 30px;max-width:380px;width:100%;text-align:center}
+  .login-card img{height:44px;margin-bottom:14px}
+  .login-card h1{font-size:22px;font-weight:600;margin-bottom:4px}
+  .login-card p{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .login-card input{margin-bottom:12px;text-align:center}
+  .btn{display:inline-block;border:0;border-radius:999px;padding:13px 30px;background:var(--gold);color:#171410;font-weight:600;font-size:16px;width:100%}
+  .btn:hover{background:#dcbb77}
+  .demo-tag{display:inline-block;margin-top:16px;font-size:12.5px;color:var(--gold);border:1px solid var(--gold-d);border-radius:999px;padding:3px 12px}
+
+  /* app */
+  #app{display:none}
+  header.top{position:sticky;top:0;z-index:20;background:rgba(20,17,13,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;gap:12px}
+  header.top img{height:34px}
+  header.top .who{font-size:14px;color:var(--muted);text-align:right}
+  header.top .who b{color:var(--ink);display:block;font-size:15px}
+  nav.tabs{position:sticky;top:59px;z-index:19;background:rgba(20,17,13,.95);border-bottom:1px solid var(--line)}
+  nav.tabs .wrap{display:flex;gap:8px;padding-top:10px;padding-bottom:10px;overflow-x:auto}
+  .tab{flex:1;white-space:nowrap;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-size:15px;font-weight:600}
+  .tab.active{background:var(--gold);color:#171410;border-color:var(--gold)}
+  .tab .dot{display:inline-block;background:var(--red);color:#fff;border-radius:999px;font-size:11.5px;padding:0 7px;margin-left:6px;vertical-align:2px}
+  main{padding:24px 0 60px}
+  .pane{display:none}
+  .pane.active{display:block}
+  h2.pane-title{font-size:20px;margin-bottom:4px}
+  .pane-sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .alert{background:#2e2413;border:1px solid var(--gold-d);border-radius:var(--radius);padding:13px 16px;font-size:15px;margin-bottom:18px}
+  .alert b{color:var(--gold)}
+
+  .booking{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .booking .time{font-size:19px;font-weight:700;min-width:118px}
+  .booking .time small{display:block;font-size:13px;color:var(--muted);font-weight:400}
+  .booking .info{flex:1;min-width:200px}
+  .booking .info b{font-size:16.5px}
+  .booking .info div{color:var(--muted);font-size:14.5px}
+  .badge{font-size:12.5px;border-radius:999px;padding:2px 10px;border:1px solid var(--line);color:var(--muted)}
+  .badge.pending{color:#e8b34b;border-color:#8a6a1f}
+  .badge.confirmed{color:var(--green);border-color:#3c5a34}
+  .badge.cancelled{color:var(--red);border-color:#6e3423}
+  .booking .actions{display:flex;gap:8px}
+  .act{border-radius:10px;padding:11px 18px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+  .act.confirm{background:var(--green);border-color:var(--green);color:#10160c}
+  .act.cancel{background:transparent;color:var(--red);border-color:#6e3423}
+  .booking.done{opacity:.62}
+  .day-head{font-size:15px;color:var(--gold);letter-spacing:.08em;margin:22px 0 10px}
+
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:13.5px;background:var(--panel2)}
+  tr:last-child td{border-bottom:0}
+  td input{padding:7px 9px}
+  td .mini{width:76px}
+  .icon-btn{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:7px 12px;font-size:14px}
+  .icon-btn.del{color:var(--red);border-color:#6e3423}
+  .add-btn{margin-top:14px;background:transparent;border:1.5px dashed var(--gold-d);color:var(--gold);border-radius:var(--radius);padding:13px;width:100%;font-weight:600;font-size:15.5px}
+  .save-note{color:var(--green);font-size:14px;margin-top:10px;min-height:20px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}}
+  .card-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card-box h3{font-size:16.5px;margin-bottom:12px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+  .chip.off{background:#3a2320;color:#e08a72;border-color:#6e3423;text-decoration:line-through}
+  .switch-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .switch-row:last-child{border-bottom:0}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#10160c;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:60;font-size:15px}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .search-bar{margin-bottom:16px}
+  .cal{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:8px}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .cal-head b{font-size:17px}
+  .cal-nav{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:7px 14px;font-size:15px}
+  .cal table{border:0;background:transparent}
+  .cal th,.cal td{border:0;padding:0;text-align:center}
+  .cal th{font-size:12.5px;color:var(--muted);padding-bottom:8px;background:transparent}
+  .cal td button{width:100%;aspect-ratio:1.25;background:transparent;border:0;color:var(--ink);font-size:15px;border-radius:10px;position:relative;padding:4px 0 12px}
+  .cal td button:hover{background:var(--panel2)}
+  .cal td button.dim{color:#5d5648}
+  .cal td button.today{box-shadow:inset 0 0 0 1.5px var(--gold-d)}
+  .cal td button.sel{background:var(--gold);color:#171410;font-weight:700}
+  .cal td button .cnt{position:absolute;left:50%;transform:translateX(-50%);bottom:3px;font-size:10.5px;background:var(--gold-d);color:#fff;border-radius:999px;padding:0 6px;line-height:1.5}
+  .cal td button.sel .cnt{background:#171410;color:var(--gold)}
+  .viewas{background:var(--panel2);border-bottom:1px solid var(--line);padding:10px 0}
+  .viewas .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .viewas label{font-weight:600;font-size:14.5px}
+  .viewas select{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:14.5px;font-family:inherit}
+  #viewNote{color:var(--muted);font-size:13.5px}
+  .empty-note{color:var(--muted);font-size:14.5px;padding:8px 0 4px}
+  .foot-note{color:var(--muted);font-size:13.5px;text-align:center;padding:0 18px 34px;max-width:760px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<!-- Demo login -->
+<div id="login">
+  <div class="login-card">
+    <div style="font-family:Georgia,serif;letter-spacing:.3em;font-size:22px;color:var(--gold);font-weight:700">SERENITY</div>
+    <h1>Staff Admin</h1>
+    <p>Sign in to view bookings and manage treatments &amp; hours</p>
+    <input type="password" id="pw" placeholder="Password (demo: anything works)">
+    <button class="btn" id="loginBtn">Sign In</button>
+    <div><span class="demo-tag">Demo version · Sample data · A preview of how it will work</span></div>
+  </div>
+</div>
+
+<!-- Admin app -->
+<div id="app">
+  <header class="top"><div class="wrap">
+    <span style="font-family:Georgia,serif;letter-spacing:.28em;color:var(--gold);font-weight:700;font-size:19px">SERENITY</span>
+    <div class="who"><b>Admin</b>Wednesday, October 14, 2026</div>
+  </div></header>
+  <div class="viewas"><div class="wrap">
+    <label for="viewAs">👁 View as</label>
+    <select id="viewAs">
+      <option value="all">Owner — see everyone</option>
+      <option value="lily">Lily Chen — therapist view</option>
+      <option value="aisha">Aisha Khan — therapist view</option>
+      <option value="marcus">Marcus Reid — therapist view</option>
+      <option value="sofia">Sofia Marino — therapist view</option>
+      <option value="daniel">Daniel Kim — therapist view</option>
+    </select>
+    <span id="viewNote">Owner sees every therapist's bookings. In the live version, each therapist signs in with their own password and sees only their own list.</span>
+  </div></div>
+
+  <nav class="tabs"><div class="wrap">
+    <button class="tab active" data-pane="bookings">Bookings<span class="dot" id="pendingDot">2</span></button>
+    <button class="tab" data-pane="treatments">Treatments &amp; Team</button>
+    <button class="tab" data-pane="settings">Hours &amp; Settings</button>
+    <button class="tab" data-pane="manual">Phone Booking</button>
+  </div></nav>
+
+  <main><div class="wrap">
+
+    <!-- Bookings -->
+    <section class="pane active" id="pane-bookings">
+      <h2 class="pane-title">Bookings</h2>
+      <p class="pane-sub">New bookings are emailed to hello@serenitywellness.ca and appear here under the right therapist. When you tap Confirm, the guest gets a confirmation.</p>
+      <div class="alert" id="pendingAlert"></div>
+      <div class="search-bar"><input id="searchBox" type="search" placeholder="🔍 Search bookings by guest name or phone…"></div>
+
+      <div id="browseView">
+        <div class="day-head">⏳ Waiting for Confirmation</div>
+        <div id="pendingList"></div>
+        <div class="day-head">📅 Calendar — tap a date to see that day</div>
+        <div class="cal">
+          <div class="cal-head"><button class="cal-nav" id="calPrev">‹</button><b id="calTitle"></b><button class="cal-nav" id="calNext">›</button></div>
+          <table><thead><tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead><tbody id="calBody"></tbody></table>
+        </div>
+        <div class="day-head" id="dayTitle"></div>
+        <div id="dayList"></div>
+      </div>
+
+      <div id="searchView" style="display:none">
+        <div class="day-head">Search Results</div>
+        <div id="searchList"></div>
+      </div>
+    </section>
+
+    <!-- Treatments -->
+    <section class="pane" id="pane-treatments">
+      <h2 class="pane-title">Treatments &amp; Team</h2>
+      <p class="pane-sub">Change prices and durations, add or remove treatments — the website updates right away. No need to call anyone to edit the site.</p>
+      <table>
+        <thead><tr><th>Treatment name</th><th>Duration (min)</th><th>Price ($)</th><th></th></tr></thead>
+        <tbody id="treatBody">
+          <tr><td><input value="Signature Head Spa Ritual"></td><td><input class="mini" type="number" value="75"></td><td><input class="mini" type="number" value="118"></td><td><button class="icon-btn del">Delete</button></td></tr>
+          <tr><td><input value="Aromatherapy Massage"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="98"></td><td><button class="icon-btn del">Delete</button></td></tr>
+          <tr><td><input value="Deep Tissue Massage"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="105"></td><td><button class="icon-btn del">Delete</button></td></tr>
+          <tr><td><input value="Hot Stone Therapy"></td><td><input class="mini" type="number" value="90"></td><td><input class="mini" type="number" value="135"></td><td><button class="icon-btn del">Delete</button></td></tr>
+          <tr><td><input value="Radiance Facial"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="95"></td><td><button class="icon-btn del">Delete</button></td></tr>
+          <tr><td><input value="Foot Reflexology"></td><td><input class="mini" type="number" value="45"></td><td><input class="mini" type="number" value="68"></td><td><button class="icon-btn del">Delete</button></td></tr>
+        </tbody>
+      </table>
+      <button class="add-btn" id="addTreat">+ Add Treatment</button>
+      <button class="btn" id="saveTreat" style="margin-top:12px">Save Changes</button>
+      <div class="save-note" id="treatNote"></div>
+      <div class="card-box" style="margin-top:20px">
+        <h3 style="margin-bottom:6px">Therapists &amp; Skills</h3>
+        <p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">The booking page only offers a therapist for treatments they can do. Each therapist has one regular day off; holidays are blocked in Hours &amp; Settings.</p>
+        <table>
+          <thead><tr><th>Therapist</th><th>Day off</th><th>Can do</th></tr></thead>
+          <tbody>
+            <tr><td>Lily Chen · Senior Therapist</td><td>Monday</td><td>Head Spa, Facial</td></tr>
+            <tr><td>Aisha Khan · Wellness Therapist</td><td>Wednesday</td><td>Head Spa, Aromatherapy, Hot Stone, Reflexology</td></tr>
+            <tr><td>Marcus Reid · Massage Therapist</td><td>Tuesday</td><td>Deep Tissue, Hot Stone</td></tr>
+            <tr><td>Sofia Marino · Esthetician</td><td>Sunday</td><td>Facial, Aromatherapy</td></tr>
+            <tr><td>Daniel Kim · Therapist</td><td>Thursday</td><td>Reflexology, Deep Tissue</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Hours &amp; Settings -->
+    <section class="pane" id="pane-settings">
+      <h2 class="pane-title">Hours &amp; Settings</h2>
+      <p class="pane-sub">Set opening hours and shop-wide closures. Each therapist takes one guest at a time, and their own day off is set under Treatments &amp; Team.</p>
+      <div class="grid2">
+        <div class="card-box">
+          <h3>Opening Hours</h3>
+          <div class="row2">
+            <div><label>Opens</label><select id="openT"><option>9:00 AM</option><option selected>10:00 AM</option><option>11:00 AM</option></select></div>
+            <div><label>Closes</label><select id="closeT"><option>8:00 PM</option><option selected>9:00 PM</option><option>10:00 PM</option></select></div>
+          </div>
+          <label style="margin-top:16px">Days off (tap a day = closed that day)</label>
+          <div class="chips" id="dayChips">
+            <button class="chip">Mon</button><button class="chip">Tue</button><button class="chip">Wed</button><button class="chip">Thu</button><button class="chip">Fri</button><button class="chip">Sat</button><button class="chip">Sun</button>
+          </div>
+        </div>
+        <div class="card-box">
+          <h3>Booking Rules</h3>
+          <div class="switch-row"><span>Guests per therapist at one time</span><b>1 · always (staff model)</b></div>
+          <div class="switch-row"><span>Bookings accepted up to</span><select style="width:130px"><option>2 weeks</option><option selected>1 month</option><option>2 months</option></select></div>
+          <div class="switch-row"><span>Cleanup time between bookings</span><select style="width:130px"><option>0 min</option><option selected>10 min</option><option>15 min</option></select></div>
+        </div>
+        <div class="card-box">
+          <h3>Holidays / Special Closures</h3>
+          <label>Pick a date to block (no bookings that day)</label>
+          <div class="row2" style="grid-template-columns:1fr auto;align-items:end">
+            <input type="date" id="blockDate" value="2026-12-25">
+            <button class="act" id="blockBtn" style="white-space:nowrap">Block Date</button>
+          </div>
+          <div id="blockList" style="margin-top:12px"></div>
+        </div>
+        <div class="card-box">
+          <h3>Save</h3>
+          <p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">Tap save to apply these settings.</p>
+          <button class="btn" id="saveSettings">Save Settings</button>
+          <div class="save-note" id="setNote"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phone Booking -->
+    <section class="pane" id="pane-manual">
+      <h2 class="pane-title">Add a Phone Booking</h2>
+      <p class="pane-sub">When a guest books by phone, enter it here — it lands in that therapist’s calendar, so their times never clash.</p>
+      <div class="card-box">
+        <div class="grid2">
+          <div><label>Guest name</label><input id="mName" placeholder="e.g. Ms. Wang"></div>
+          <div><label>Phone</label><input id="mPhone" placeholder="e.g. 647-555-0100"></div>
+          <div><label>Email (optional)</label><input id="mEmail" type="email" placeholder="e.g. guest@email.com"></div>
+          <div><label>Therapist</label><select id="mStaff"><option>Lily Chen</option><option>Aisha Khan</option><option>Marcus Reid</option><option>Sofia Marino</option><option>Daniel Kim</option></select></div>
+          <div><label>Treatment</label><select id="mTreat"><option>Signature Head Spa Ritual</option><option>Aromatherapy Massage</option><option>Deep Tissue Massage</option><option>Hot Stone Therapy</option><option>Radiance Facial</option><option>Foot Reflexology</option></select></div>
+          <div class="row2">
+            <div><label>Date</label><input type="date" id="mDate" value="2026-10-14"></div>
+            <div><label>Time</label><input type="time" id="mTime" value="15:00"></div>
+          </div>
+        </div>
+        <button class="btn" id="mAdd" style="margin-top:16px">Add Booking</button>
+      </div>
+      <div class="day-head">Phone bookings added</div>
+      <div id="manualList"><p style="color:var(--muted);font-size:14.5px">None yet — try adding one above.</p></div>
+    </section>
+
+  </div></main>
+  <p class="foot-note">This is a demo — all data above is sample and nothing you tap goes live. The real version will sit behind a password on the spa’s own website and sync instantly.</p>
+</div>
+
+<div id="toast">✓ Done</div>
+
+<script>
+  function toast(msg){
+    var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+  document.getElementById('loginBtn').addEventListener('click', function(){
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
+    window.scrollTo(0,0);
+  });
+  document.getElementById('pw').addEventListener('keydown', function(e){
+    if(e.key==='Enter') document.getElementById('loginBtn').click();
+  });
+
+  /* tabs */
+  var tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.pane').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('pane-'+tab.getAttribute('data-pane')).classList.add('active');
+      window.scrollTo(0,0);
+    });
+  });
+
+  /* bookings data + rendering */
+  var BOOKINGS=[
+    {id:1, date:'2026-10-14', start:'11:00 AM', end:'12:15 PM', name:'Mr. Liu', treat:'Signature Head Spa Ritual · 75 min · $118', phone:'905-555-0114', staff:'lily', status:'confirmed'},
+    {id:2, date:'2026-10-14', start:'2:00 PM', end:'3:00 PM', name:'Ms. Chen', treat:'Deep Tissue Massage · 60 min · $105', phone:'647-555-0132', staff:'marcus', status:'pending'},
+    {id:3, date:'2026-10-14', start:'4:30 PM', end:'5:30 PM', name:'Emily W.', treat:'Radiance Facial · 60 min · $95', phone:'416-555-0187', staff:'sofia', status:'pending'},
+    {id:4, date:'2026-10-15', start:'10:30 AM', end:'11:15 AM', name:'Sarah K.', treat:'Foot Reflexology · 45 min · $68', phone:'647-555-0163', staff:'daniel', status:'confirmed'},
+    {id:5, date:'2026-10-15', start:'1:00 PM', end:'2:15 PM', name:'Ms. Wang', treat:'Signature Head Spa Ritual · 75 min · $118', phone:'437-555-0129', staff:'aisha', status:'pending'},
+    {id:6, date:'2026-10-16', start:'12:00 PM', end:'1:30 PM', name:'Jessica M.', treat:'Hot Stone Therapy · 90 min · $135', phone:'647-555-0145', staff:'aisha', status:'confirmed'},
+    {id:7, date:'2026-10-16', start:'3:30 PM', end:'4:30 PM', name:'Mr. Zhang', treat:'Aromatherapy Massage · 60 min · $98', phone:'905-555-0171', staff:'sofia', status:'confirmed'},
+    {id:8, date:'2026-10-18', start:'11:30 AM', end:'12:30 PM', name:'Amy T.', treat:'Aromatherapy Massage · 60 min · $98', phone:'416-555-0119', staff:'aisha', status:'confirmed'},
+    {id:9, date:'2026-10-20', start:'10:00 AM', end:'11:00 AM', name:'Grace L.', treat:'Deep Tissue Massage · 60 min · $105', phone:'647-555-0108', staff:'daniel', status:'confirmed'},
+    {id:10, date:'2026-10-21', start:'5:00 PM', end:'6:15 PM', name:'Tina R.', treat:'Signature Head Spa Ritual · 75 min · $118', phone:'905-555-0156', staff:'lily', status:'confirmed'}
+  ];
+  var STAFFN={lily:'Lily Chen', aisha:'Aisha Khan', marcus:'Marcus Reid', sofia:'Sofia Marino', daniel:'Daniel Kim'};
+  var viewStaff='all';
+  function visible(b){ return viewStaff==='all' || b.staff===viewStaff; }
+  var TODAY='2026-10-14', selDate='2026-10-14', viewY=2026, viewM=9;
+  function badgeFor(st){
+    if(st==='pending') return '<span class="badge pending">Pending</span>';
+    if(st==='confirmed') return '<span class="badge confirmed">Confirmed</span>';
+    return '<span class="badge cancelled">Cancelled</span>';
+  }
+  function fmtDay(dstr){
+    return new Date(dstr+'T12:00:00').toLocaleDateString('en-CA',{weekday:'long', month:'long', day:'numeric'});
+  }
+  function cardHTML(b, showDate){
+    var h='<div class="booking'+(b.status!=='pending'?' done':'')+'">'
+      +'<div class="time">'+b.start+'<small>to '+b.end+'</small>'+(showDate?'<small>'+fmtDay(b.date)+'</small>':'')+'</div>'
+      +'<div class="info"><b>'+b.name+'</b> '+badgeFor(b.status)
+      +'<div>'+b.treat+'</div><div>Therapist: '+(STAFFN[b.staff]||'First available')+'</div><div>Phone: '+b.phone+'</div></div>';
+    if(b.status==='pending') h+='<div class="actions"><button class="act confirm" data-act="confirm" data-id="'+b.id+'">Confirm</button><button class="act cancel" data-act="cancel" data-id="'+b.id+'">Cancel</button></div>';
+    return h+'</div>';
+  }
+  function sorted(list){ return list.slice().sort(function(a,b){ return (a.date+a.start)<(b.date+b.start)?-1:1; }); }
+  function renderAll(){ renderPending(); renderCal(); renderDay(); }
+  function renderPending(){
+    var pend=sorted(BOOKINGS.filter(function(b){ return b.status==='pending' && visible(b); }));
+    document.getElementById('pendingList').innerHTML = pend.length? pend.map(function(b){ return cardHTML(b,true); }).join('') : '<p class="empty-note">All caught up — nothing waiting. ✓</p>';
+    var dot=document.getElementById('pendingDot');
+    dot.textContent=pend.length; dot.style.display=pend.length?'inline-block':'none';
+    document.getElementById('pendingAlert').innerHTML = pend.length? '🔔 You have <b>'+pend.length+' new booking'+(pend.length>1?'s':'')+'</b> waiting for confirmation' : '✓ No bookings waiting — you are all caught up';
+  }
+  function renderCal(){
+    var first=new Date(viewY, viewM, 1);
+    var startOffset=(first.getDay()+6)%7;
+    var daysInMonth=new Date(viewY, viewM+1, 0).getDate();
+    var counts={};
+    BOOKINGS.forEach(function(b){ if(b.status!=='cancelled' && visible(b)) counts[b.date]=(counts[b.date]||0)+1; });
+    document.getElementById('calTitle').textContent=first.toLocaleDateString('en-CA',{month:'long', year:'numeric'});
+    var html='<tr>', cell=0;
+    for(var i=0;i<startOffset;i++){ html+='<td></td>'; cell++; }
+    for(var d=1; d<=daysInMonth; d++){
+      var ds=viewY+'-'+String(viewM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      var cls=(ds===TODAY?'today ':'')+(ds===selDate?'sel':'');
+      html+='<td><button data-date="'+ds+'" class="'+cls+'">'+d+(counts[ds]?'<span class="cnt">'+counts[ds]+'</span>':'')+'</button></td>';
+      cell++; if(cell%7===0 && d<daysInMonth) html+='</tr><tr>';
+    }
+    html+='</tr>';
+    document.getElementById('calBody').innerHTML=html;
+    document.querySelectorAll('#calBody button[data-date]').forEach(function(btn){
+      btn.addEventListener('click', function(){ selDate=btn.getAttribute('data-date'); renderCal(); renderDay(); });
+    });
+  }
+  function renderDay(){
+    document.getElementById('dayTitle').textContent='🗓 '+(selDate===TODAY?'Today — ':'')+fmtDay(selDate);
+    var list=sorted(BOOKINGS.filter(function(b){ return b.date===selDate && visible(b); }));
+    document.getElementById('dayList').innerHTML = list.length? list.map(function(b){ return cardHTML(b,false); }).join('') : '<p class="empty-note">No bookings on this day.</p>';
+  }
+  document.getElementById('calPrev').addEventListener('click', function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCal(); });
+  document.getElementById('calNext').addEventListener('click', function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCal(); });
+  document.getElementById('pane-bookings').addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-act]'); if(!btn) return;
+    var b=BOOKINGS.find(function(x){ return x.id==btn.getAttribute('data-id'); }); if(!b) return;
+    if(btn.getAttribute('data-act')==='confirm'){ b.status='confirmed'; toast('✓ Confirmed — the guest will be notified'); }
+    else { b.status='cancelled'; toast('Booking cancelled'); }
+    renderAll();
+    var q=document.getElementById('searchBox').value.trim(); if(q) runSearch(q);
+  });
+  function runSearch(q){
+    q=q.toLowerCase();
+    var hits=sorted(BOOKINGS.filter(function(b){ return visible(b) && (b.name.toLowerCase().indexOf(q)>-1 || b.phone.indexOf(q)>-1); }));
+    document.getElementById('searchList').innerHTML = hits.length? hits.map(function(b){ return cardHTML(b,true); }).join('') : '<p class="empty-note">No bookings match "'+q+'".</p>';
+  }
+  document.getElementById('searchBox').addEventListener('input', function(){
+    var q=this.value.trim();
+    document.getElementById('browseView').style.display = q? 'none':'block';
+    document.getElementById('searchView').style.display = q? 'block':'none';
+    if(q) runSearch(q);
+  });
+  document.getElementById('viewAs').addEventListener('change', function(){
+    viewStaff=this.value;
+    document.getElementById('viewNote').textContent = viewStaff==='all'
+      ? 'Owner sees every therapist\'s bookings. In the live version, each therapist signs in with their own password and sees only their own list.'
+      : 'This is exactly what '+STAFFN[viewStaff]+' sees after signing in — only their own bookings.';
+    renderAll();
+    var q=document.getElementById('searchBox').value.trim(); if(q) runSearch(q);
+  });
+  renderAll();
+
+  /* treatments */
+  var treatBody=document.getElementById('treatBody');
+  function bindDel(btn){
+    btn.addEventListener('click', function(){ btn.closest('tr').remove(); });
+  }
+  treatBody.querySelectorAll('.del').forEach(bindDel);
+  document.getElementById('addTreat').addEventListener('click', function(){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><input placeholder="New treatment name"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="0"></td><td><button class="icon-btn del">Delete</button></td>';
+    treatBody.appendChild(tr); bindDel(tr.querySelector('.del'));
+    tr.querySelector('input').focus();
+  });
+  document.getElementById('saveTreat').addEventListener('click', function(){
+    document.getElementById('treatNote').textContent='✓ Saved — the website is updated (demo: nothing really changes)';
+    toast('✓ Treatments saved');
+  });
+
+  /* settings */
+  document.querySelectorAll('#dayChips .chip').forEach(function(ch){
+    ch.addEventListener('click', function(){ ch.classList.toggle('off'); });
+  });
+  var blocked=[];
+  function fmtDate(d){
+    var dt=new Date(d+'T12:00:00');
+    return dt.toLocaleDateString('en-CA',{weekday:'short', month:'short', day:'numeric', year:'numeric'});
+  }
+  function renderBlocked(){
+    var box=document.getElementById('blockList');
+    if(!blocked.length){ box.innerHTML='<span style="font-size:14.5px;color:var(--muted)">Blocked dates: none yet</span>'; return; }
+    box.innerHTML='';
+    blocked.slice().sort().forEach(function(d){
+      var row=document.createElement('div');
+      row.style.cssText='display:flex;justify-content:space-between;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin-bottom:8px;font-size:15px';
+      var label=document.createElement('span'); label.textContent=fmtDate(d);
+      var btn=document.createElement('button'); btn.className='icon-btn del'; btn.textContent='✕ Remove';
+      btn.addEventListener('click', function(){
+        blocked=blocked.filter(function(x){ return x!==d; });
+        renderBlocked(); toast('Date unblocked');
+      });
+      row.appendChild(label); row.appendChild(btn); box.appendChild(row);
+    });
+  }
+  renderBlocked();
+  document.getElementById('blockBtn').addEventListener('click', function(){
+    var d=document.getElementById('blockDate').value; if(!d) return;
+    if(blocked.indexOf(d)<0){ blocked.push(d); renderBlocked(); toast('✓ Blocked '+fmtDate(d)); }
+    else toast('That date is already blocked');
+  });
+  document.getElementById('saveSettings').addEventListener('click', function(){
+    document.getElementById('setNote').textContent='✓ Saved — bookings now follow the new settings (demo: nothing really changes)';
+    toast('✓ Settings saved');
+  });
+
+  /* manual booking */
+  document.getElementById('mAdd').addEventListener('click', function(){
+    var name=document.getElementById('mName').value.trim()||'(no name)';
+    var phone=document.getElementById('mPhone').value.trim()||'—';
+    var treat=document.getElementById('mTreat').value;
+    var staff=document.getElementById('mStaff').value;
+    var date=document.getElementById('mDate').value, time=document.getElementById('mTime').value;
+    var list=document.getElementById('manualList');
+    if(list.querySelector('p')) list.innerHTML='';
+    var div=document.createElement('div'); div.className='booking done';
+    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone booking</span><div>'+treat+'</div><div>Therapist: '+staff+'</div><div>Phone: '+phone+'</div></div>';
+    list.appendChild(div);
+    toast('✓ Phone booking added');
+  });
+</script>
+</body>
+</html>
