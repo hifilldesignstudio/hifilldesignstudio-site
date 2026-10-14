@@ -428,7 +428,7 @@
       prevB=document.getElementById('calPrev'),
       nextB=document.getElementById('calNext'),
       timesEl=document.getElementById('times');
-  var selDay=null, selDayLabel='', selTime=null;
+  var selDay=null, selDayLabel='', selTime=null, selEnd=null;
   var today=new Date(); today.setHours(0,0,0,0);
   var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
   var viewY=today.getFullYear(), viewM=today.getMonth();
@@ -445,7 +445,7 @@
     if(!svcEl.value){ sumEl.className='bk-summary'; sumEl.innerHTML=''; return; }
     var html='<b>'+svcName()+'</b> · '+o.dataset.min+' min · $'+o.dataset.price;
     if(selDayLabel) html+=' · '+selDayLabel;
-    if(selTime) html+=' · '+selTime;
+    if(selTime) html+=' · '+selTime+(selEnd?' – '+selEnd:'');
     sumEl.innerHTML=html; sumEl.className='bk-summary on';
   }
 
@@ -470,6 +470,8 @@
           selDay=dt; selDayLabel=fmtFull.format(dt);
           grid.querySelectorAll('.cal-day').forEach(function(c){c.classList.remove('sel')});
           b.classList.add('sel');
+          selTime=null; selEnd=null; stepDet.classList.remove('on');
+          buildTimes();
           stepTime.classList.add('on'); updateSummary();
           stepTime.scrollIntoView({behavior:'smooth',block:'nearest'});
         });
@@ -480,21 +482,41 @@
   prevB.addEventListener('click',function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCal(); });
   nextB.addEventListener('click',function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCal(); });
 
-  var times=['10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
-  times.forEach(function(t){
-    var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=t;
-    b.addEventListener('click',function(){
-      timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
-      b.classList.add('sel'); selTime=t;
-      stepDet.classList.add('on'); updateSummary();
-      stepDet.scrollIntoView({behavior:'smooth',block:'nearest'});
-    });
-    timesEl.appendChild(b);
-  });
+  function fmtTime(mins){
+    var h=Math.floor(mins/60), m=mins%60, ap=h>=12?'PM':'AM', h12=h%12; if(h12===0)h12=12;
+    return h12+':'+(m<10?'0':'')+m+' '+ap;
+  }
+  function buildTimes(){
+    timesEl.innerHTML='';
+    var o=svcEl.options[svcEl.selectedIndex];
+    var dur=parseInt(o&&o.dataset? o.dataset.min:'60',10)||60;
+    var OPEN=10*60, CLOSE=21*60, STEP=30;
+    var now=new Date(); var isToday = selDay && selDay.getTime()===today.getTime();
+    var nowMin=now.getHours()*60+now.getMinutes();
+    for(var st=OPEN; st+dur<=CLOSE; st+=STEP){
+      if(isToday && st<=nowMin) continue;
+      (function(st){
+        var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=fmtTime(st);
+        b.addEventListener('click',function(){
+          timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+          b.classList.add('sel'); selTime=fmtTime(st); selEnd=fmtTime(st+dur);
+          stepDet.classList.add('on'); updateSummary();
+          stepDet.scrollIntoView({behavior:'smooth',block:'nearest'});
+        });
+        timesEl.appendChild(b);
+      })(st);
+    }
+    if(!timesEl.children.length){
+      var none=document.createElement('span'); none.style.cssText='color:var(--muted);font-size:14.5px';
+      none.textContent='No times left for this treatment today — please pick another day.';
+      timesEl.appendChild(none);
+    }
+  }
 
   svcEl.addEventListener('change',function(){
+    selTime=null; selEnd=null; stepDet.classList.remove('on');
     updateSummary();
-    if(svcEl.value){ stepCal.classList.add('on'); renderCal(); }
+    if(svcEl.value){ stepCal.classList.add('on'); renderCal(); if(selDay) buildTimes(); }
   });
   /* a treatment is pre-selected in the form — open the calendar straight away */
   if(svcEl.value){ stepCal.classList.add('on'); renderCal(); updateSummary(); }
@@ -505,7 +527,7 @@
     if(!svcEl.value||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
     document.getElementById('confirmText').textContent =
-      nm+' · '+svcName()+' on '+selDayLabel+' at '+selTime+'. We have your number as '+ph+'.';
+      nm+' · '+svcName()+' on '+selDayLabel+', '+selTime+' – '+selEnd+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
