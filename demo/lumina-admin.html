@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumina 後台管理（示範版）</title>
+<style>
+  :root{--bg:#14110d;--panel:#1e1a14;--panel2:#262017;--line:#3d362a;--ink:#f0e9da;--muted:#b3a98f;--gold:#c9a35f;--gold-d:#a5813f;--green:#7fb069;--red:#d1603d;--radius:14px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei",Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:0 18px}
+  button{font:inherit;cursor:pointer}
+  input,select{font:inherit;background:#171410;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%}
+  input:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px}
+  label{font-size:13.5px;color:var(--muted);display:block;margin-bottom:6px}
+
+  /* login */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:36px 30px;max-width:380px;width:100%;text-align:center}
+  .login-card img{height:44px;margin-bottom:14px}
+  .login-card h1{font-size:22px;font-weight:600;margin-bottom:4px}
+  .login-card p{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .login-card input{margin-bottom:12px;text-align:center}
+  .btn{display:inline-block;border:0;border-radius:999px;padding:13px 30px;background:var(--gold);color:#171410;font-weight:600;font-size:16px;width:100%}
+  .btn:hover{background:#dcbb77}
+  .demo-tag{display:inline-block;margin-top:16px;font-size:12.5px;color:var(--gold);border:1px solid var(--gold-d);border-radius:999px;padding:3px 12px}
+
+  /* app */
+  #app{display:none}
+  header.top{position:sticky;top:0;z-index:20;background:rgba(20,17,13,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px;gap:12px}
+  header.top img{height:34px}
+  header.top .who{font-size:14px;color:var(--muted);text-align:right}
+  header.top .who b{color:var(--ink);display:block;font-size:15px}
+  nav.tabs{position:sticky;top:59px;z-index:19;background:rgba(20,17,13,.95);border-bottom:1px solid var(--line)}
+  nav.tabs .wrap{display:flex;gap:8px;padding-top:10px;padding-bottom:10px;overflow-x:auto}
+  .tab{flex:1;white-space:nowrap;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-size:15px;font-weight:600}
+  .tab.active{background:var(--gold);color:#171410;border-color:var(--gold)}
+  .tab .dot{display:inline-block;background:var(--red);color:#fff;border-radius:999px;font-size:11.5px;padding:0 7px;margin-left:6px;vertical-align:2px}
+  main{padding:24px 0 60px}
+  .pane{display:none}
+  .pane.active{display:block}
+  h2.pane-title{font-size:20px;margin-bottom:4px}
+  .pane-sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .alert{background:#2e2413;border:1px solid var(--gold-d);border-radius:var(--radius);padding:13px 16px;font-size:15px;margin-bottom:18px}
+  .alert b{color:var(--gold)}
+
+  .booking{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .booking .time{font-size:19px;font-weight:700;min-width:118px}
+  .booking .time small{display:block;font-size:13px;color:var(--muted);font-weight:400}
+  .booking .info{flex:1;min-width:200px}
+  .booking .info b{font-size:16.5px}
+  .booking .info div{color:var(--muted);font-size:14.5px}
+  .badge{font-size:12.5px;border-radius:999px;padding:2px 10px;border:1px solid var(--line);color:var(--muted)}
+  .badge.pending{color:#e8b34b;border-color:#8a6a1f}
+  .badge.confirmed{color:var(--green);border-color:#3c5a34}
+  .badge.cancelled{color:var(--red);border-color:#6e3423}
+  .booking .actions{display:flex;gap:8px}
+  .act{border-radius:10px;padding:11px 18px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel2);color:var(--ink)}
+  .act.confirm{background:var(--green);border-color:var(--green);color:#10160c}
+  .act.cancel{background:transparent;color:var(--red);border-color:#6e3423}
+  .booking.done{opacity:.62}
+  .day-head{font-size:15px;color:var(--gold);letter-spacing:.08em;margin:22px 0 10px}
+
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:15px;vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:13.5px;background:var(--panel2)}
+  tr:last-child td{border-bottom:0}
+  td input{padding:7px 9px}
+  td .mini{width:76px}
+  .icon-btn{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:7px 12px;font-size:14px}
+  .icon-btn.del{color:var(--red);border-color:#6e3423}
+  .add-btn{margin-top:14px;background:transparent;border:1.5px dashed var(--gold-d);color:var(--gold);border-radius:var(--radius);padding:13px;width:100%;font-weight:600;font-size:15.5px}
+  .save-note{color:var(--green);font-size:14px;margin-top:10px;min-height:20px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}}
+  .card-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card-box h3{font-size:16.5px;margin-bottom:12px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:8px 15px;font-size:14.5px;font-weight:600}
+  .chip.off{background:#3a2320;color:#e08a72;border-color:#6e3423;text-decoration:line-through}
+  .switch-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .switch-row:last-child{border-bottom:0}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#10160c;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:60;font-size:15px}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot-note{color:var(--muted);font-size:13.5px;text-align:center;padding:0 18px 34px;max-width:760px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<!-- 示範登入 -->
+<div id="login">
+  <div class="login-card">
+    <img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty">
+    <h1>店員後台</h1>
+    <p>登入後可以睇預約、改療程同時間</p>
+    <input type="password" id="pw" placeholder="密碼（示範版：隨便打都入到）">
+    <button class="btn" id="loginBtn">登入</button>
+    <div><span class="demo-tag">示範版 · 資料係假嘅 · 俾你預覽將來點用</span></div>
+  </div>
+</div>
+
+<!-- 後台主畫面 -->
+<div id="app">
+  <header class="top"><div class="wrap">
+    <img src="lumina-logo.svg" alt="Lumina">
+    <div class="who"><b>後台管理</b>2026年10月14日（星期三）</div>
+  </div></header>
+
+  <nav class="tabs"><div class="wrap">
+    <button class="tab active" data-pane="bookings">預約<span class="dot" id="pendingDot">2</span></button>
+    <button class="tab" data-pane="treatments">療程管理</button>
+    <button class="tab" data-pane="settings">時間設定</button>
+    <button class="tab" data-pane="manual">人手加單</button>
+  </div></nav>
+
+  <main><div class="wrap">
+
+    <!-- 預約 -->
+    <section class="pane active" id="pane-bookings">
+      <h2 class="pane-title">預約清單</h2>
+      <p class="pane-sub">新預約會即時 email 去 info@luminaheadspa.ca，呢度都會見到。㩒「確認」之後，客人會收到確認通知。</p>
+      <div class="alert">🔔 有 <b>2 個新預約</b> 等緊你確認</div>
+
+      <div class="day-head">今日 · 10月14日（星期三）</div>
+      <div id="todayList">
+        <div class="booking" data-status="pending">
+          <div class="time">2:00 PM<small>至 3:15 PM</small></div>
+          <div class="info"><b>陳小姐</b> <span class="badge pending">待確認</span>
+            <div>Head Spa &amp; Shoulder Release · 75 分鐘 · $108</div>
+            <div>電話：647-555-0132</div></div>
+          <div class="actions"><button class="act confirm">確認</button><button class="act cancel">取消</button></div>
+        </div>
+        <div class="booking" data-status="pending">
+          <div class="time">4:30 PM<small>至 6:30 PM</small></div>
+          <div class="info"><b>Emily W.</b> <span class="badge pending">待確認</span>
+            <div>Signature Head Spa Ritual + Signature Facial · 共 120 分鐘 · $163</div>
+            <div>電話：416-555-0187</div></div>
+          <div class="actions"><button class="act confirm">確認</button><button class="act cancel">取消</button></div>
+        </div>
+        <div class="booking done" data-status="confirmed">
+          <div class="time">11:00 AM<small>至 12:00 PM</small></div>
+          <div class="info"><b>劉先生</b> <span class="badge confirmed">已確認</span>
+            <div>Classic Foot Reflexology · 45 分鐘 · $55（已完成）</div>
+            <div>電話：905-555-0114</div></div>
+          <div class="actions"></div>
+        </div>
+      </div>
+
+      <div class="day-head">聽日 · 10月15日（星期四）</div>
+      <div class="booking done" data-status="confirmed">
+        <div class="time">10:30 AM<small>至 12:00 PM</small></div>
+        <div class="info"><b>Sarah K.</b> <span class="badge confirmed">已確認</span>
+          <div>Head Spa &amp; Mini Facial · 90 分鐘 · $128</div>
+          <div>電話：647-555-0163</div></div>
+        <div class="actions"></div>
+      </div>
+    </section>
+
+    <!-- 療程管理 -->
+    <section class="pane" id="pane-treatments">
+      <h2 class="pane-title">療程管理</h2>
+      <p class="pane-sub">喺度改價錢、改時長、加新療程或者刪走，網站前台會即刻跟住變，唔使搵人改網站。</p>
+      <table>
+        <thead><tr><th>療程名稱</th><th>時長（分鐘）</th><th>價錢（$）</th><th></th></tr></thead>
+        <tbody id="treatBody">
+          <tr><td><input value="Signature Head Spa Ritual"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="88"></td><td><button class="icon-btn del">刪除</button></td></tr>
+          <tr><td><input value="Head Spa &amp; Shoulder Release"></td><td><input class="mini" type="number" value="75"></td><td><input class="mini" type="number" value="108"></td><td><button class="icon-btn del">刪除</button></td></tr>
+          <tr><td><input value="Classic Foot Reflexology"></td><td><input class="mini" type="number" value="45"></td><td><input class="mini" type="number" value="55"></td><td><button class="icon-btn del">刪除</button></td></tr>
+          <tr><td><input value="Himalayan Salt Stone Therapy"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="95"></td><td><button class="icon-btn del">刪除</button></td></tr>
+          <tr><td><input value="Signature Facial"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="75"></td><td><button class="icon-btn del">刪除</button></td></tr>
+        </tbody>
+      </table>
+      <button class="add-btn" id="addTreat">＋ 新增療程</button>
+      <button class="btn" id="saveTreat" style="margin-top:12px">儲存更改</button>
+      <div class="save-note" id="treatNote"></div>
+    </section>
+
+    <!-- 時間設定 -->
+    <section class="pane" id="pane-settings">
+      <h2 class="pane-title">時間設定</h2>
+      <p class="pane-sub">改營業時間、放假日子、同同一時間做得幾多位客人。改完前台預約會即刻跟。</p>
+      <div class="grid2">
+        <div class="card-box">
+          <h3>營業時間</h3>
+          <div class="row2">
+            <div><label>開門</label><select id="openT"><option>9:00 AM</option><option selected>10:00 AM</option><option>11:00 AM</option></select></div>
+            <div><label>關門</label><select id="closeT"><option>8:00 PM</option><option selected>9:00 PM</option><option>10:00 PM</option></select></div>
+          </div>
+          <label style="margin-top:16px">休息日（㩒一下 = 嗰日唔開）</label>
+          <div class="chips" id="dayChips">
+            <button class="chip">星期一</button><button class="chip">星期二</button><button class="chip">星期三</button><button class="chip">星期四</button><button class="chip">星期五</button><button class="chip">星期六</button><button class="chip">星期日</button>
+          </div>
+        </div>
+        <div class="card-box">
+          <h3>預約規則</h3>
+          <div class="switch-row"><span>同一時間最多客人（位置數）</span><input class="mini" type="number" value="3" style="width:76px"></div>
+          <div class="switch-row"><span>最遠可以預約</span><select style="width:130px"><option>2 星期</option><option selected>1 個月</option><option>2 個月</option></select></div>
+          <div class="switch-row"><span>每個預約之間清潔時間</span><select style="width:130px"><option>0 分鐘</option><option selected>10 分鐘</option><option>15 分鐘</option></select></div>
+        </div>
+        <div class="card-box">
+          <h3>假期 / 臨時休息</h3>
+          <label>揀日子封咗佢（全日唔接預約）</label>
+          <div class="row2" style="grid-template-columns:1fr auto;align-items:end">
+            <input type="date" id="blockDate" value="2026-12-25">
+            <button class="act" id="blockBtn" style="white-space:nowrap">封日</button>
+          </div>
+          <div id="blockList" style="margin-top:12px;font-size:14.5px;color:var(--muted)">已封日子：暫時冇</div>
+        </div>
+        <div class="card-box">
+          <h3>儲存</h3>
+          <p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">所有時間設定㩒儲存先生效。</p>
+          <button class="btn" id="saveSettings">儲存設定</button>
+          <div class="save-note" id="setNote"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 人手加單 -->
+    <section class="pane" id="pane-manual">
+      <h2 class="pane-title">人手加單（電話預約）</h2>
+      <p class="pane-sub">客人打電話嚟約，就喺度入返落去，同網上預約一齊睇，唔會撞期。</p>
+      <div class="card-box">
+        <div class="grid2">
+          <div><label>客人姓名</label><input id="mName" placeholder="例如：王小姐"></div>
+          <div><label>電話</label><input id="mPhone" placeholder="例如：647-555-0100"></div>
+          <div><label>療程</label><select id="mTreat"><option>Signature Head Spa Ritual</option><option>Head Spa &amp; Shoulder Release</option><option>Classic Foot Reflexology</option><option>Himalayan Salt Stone Therapy</option><option>Signature Facial</option></select></div>
+          <div class="row2">
+            <div><label>日期</label><input type="date" id="mDate" value="2026-10-14"></div>
+            <div><label>時間</label><input type="time" id="mTime" value="15:00"></div>
+          </div>
+        </div>
+        <button class="btn" id="mAdd" style="margin-top:16px">加入預約</button>
+      </div>
+      <div class="day-head">已加入嘅電話預約</div>
+      <div id="manualList"><p style="color:var(--muted);font-size:14.5px">暫時未有（試吓上面加一張）</p></div>
+    </section>
+
+  </div></main>
+  <p class="foot-note">示範版嚟㗎，上面所有資料都係假嘅，㩒咩都唔會真係出街。正式版會喺 luminaheadspa.ca 用密碼登入，資料即時同步。</p>
+</div>
+
+<div id="toast">✓ 搞掂</div>
+
+<script>
+  function toast(msg){
+    var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+  document.getElementById('loginBtn').addEventListener('click', function(){
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='block';
+    window.scrollTo(0,0);
+  });
+  document.getElementById('pw').addEventListener('keydown', function(e){
+    if(e.key==='Enter') document.getElementById('loginBtn').click();
+  });
+
+  /* tabs */
+  var tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.pane').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('pane-'+tab.getAttribute('data-pane')).classList.add('active');
+      window.scrollTo(0,0);
+    });
+  });
+
+  /* booking confirm / cancel */
+  function refreshPending(){
+    var n=document.querySelectorAll('#todayList .booking[data-status="pending"]').length;
+    var dot=document.getElementById('pendingDot');
+    dot.textContent=n; dot.style.display = n? 'inline-block':'none';
+  }
+  document.querySelectorAll('#todayList .booking').forEach(function(b){
+    var badge=b.querySelector('.badge');
+    var cBtn=b.querySelector('.act.confirm'), xBtn=b.querySelector('.act.cancel');
+    if(cBtn) cBtn.addEventListener('click', function(){
+      b.setAttribute('data-status','confirmed'); b.classList.add('done');
+      badge.textContent='已確認'; badge.className='badge confirmed';
+      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('✓ 已確認，會通知客人');
+    });
+    if(xBtn) xBtn.addEventListener('click', function(){
+      b.setAttribute('data-status','cancelled'); b.classList.add('done');
+      badge.textContent='已取消'; badge.className='badge cancelled';
+      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('已取消呢個預約');
+    });
+  });
+
+  /* treatments */
+  var treatBody=document.getElementById('treatBody');
+  function bindDel(btn){
+    btn.addEventListener('click', function(){ btn.closest('tr').remove(); });
+  }
+  treatBody.querySelectorAll('.del').forEach(bindDel);
+  document.getElementById('addTreat').addEventListener('click', function(){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><input placeholder="新療程名稱"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="0"></td><td><button class="icon-btn del">刪除</button></td>';
+    treatBody.appendChild(tr); bindDel(tr.querySelector('.del'));
+    tr.querySelector('input').focus();
+  });
+  document.getElementById('saveTreat').addEventListener('click', function(){
+    document.getElementById('treatNote').textContent='✓ 已儲存，前台已經更新（示範版唔會真改）';
+    toast('✓ 療程已儲存');
+  });
+
+  /* settings */
+  document.querySelectorAll('#dayChips .chip').forEach(function(ch){
+    ch.addEventListener('click', function(){ ch.classList.toggle('off'); });
+  });
+  var blocked=[];
+  document.getElementById('blockBtn').addEventListener('click', function(){
+    var d=document.getElementById('blockDate').value; if(!d) return;
+    if(blocked.indexOf(d)<0) blocked.push(d);
+    document.getElementById('blockList').textContent='已封日子：'+blocked.join('、');
+    toast('✓ 已封 '+d);
+  });
+  document.getElementById('saveSettings').addEventListener('click', function(){
+    document.getElementById('setNote').textContent='✓ 已儲存，前台預約即刻跟新設定（示範版唔會真改）';
+    toast('✓ 設定已儲存');
+  });
+
+  /* manual booking */
+  document.getElementById('mAdd').addEventListener('click', function(){
+    var name=document.getElementById('mName').value.trim()||'（未填名）';
+    var phone=document.getElementById('mPhone').value.trim()||'—';
+    var treat=document.getElementById('mTreat').value;
+    var date=document.getElementById('mDate').value, time=document.getElementById('mTime').value;
+    var list=document.getElementById('manualList');
+    if(list.querySelector('p')) list.innerHTML='';
+    var div=document.createElement('div'); div.className='booking done';
+    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">電話預約</span><div>'+treat+'</div><div>電話：'+phone+'</div></div>';
+    list.appendChild(div);
+    toast('✓ 電話預約已加入');
+  });
+</script>
+</body>
+</html>
