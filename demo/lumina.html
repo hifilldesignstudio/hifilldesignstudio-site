@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lumina Head Spa &amp; Beauty — Maple, Vaughan | Head Spa &amp; Online Booking</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="shortcut icon" href="favicon.ico">
 <meta name="description" content="Lumina Head Spa & Beauty in Maple, Vaughan. A calm head spa ritual for scalp, neck and shoulders. Open 7 days, 10 AM – 9 PM. Book online in minutes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +13,8 @@
 <style>
   :root{
     --cream:#faf6ef; --cream2:#f3ecdf; --ink:#2e2a25; --muted:#7a7266;
-    --brass:#a98548; --brass-d:#8a6c38; --sage:#8a9a8b; --line:#e3d9c8;
-    --card:#fffdf9; --deep:#33302a;
+    --brass:#a98548; --brass-d:#8a6c38; --gold:#c9a35c; --sage:#8a9a8b; --line:#e3d9c8;
+    --card:#fffdf9; --deep:#171410;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -30,16 +32,26 @@
   .topbar{background:var(--deep);color:#e9e2d4;font-size:13px;letter-spacing:.06em}
   .topbar .wrap{display:flex;justify-content:space-between;gap:14px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
   .topbar a{color:#e9e2d4;text-decoration:none}
-  header.site{position:sticky;top:0;background:rgba(250,246,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:50}
+  header.site{position:sticky;top:0;background:rgba(20,17,13,.97);backdrop-filter:blur(8px);border-bottom:1px solid #3a332a;z-index:50}
   header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;gap:16px}
-  .logo{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:700;letter-spacing:.02em;color:var(--ink);text-decoration:none;line-height:1}
-  .logo small{display:block;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);font-weight:500;margin-top:3px}
+  .logo{text-decoration:none;line-height:0}
+  .logo img{height:46px;width:auto;display:block}
+  @media(max-width:860px){.logo img{height:36px}}
   nav.main{display:flex;gap:26px;align-items:center}
-  nav.main a{color:var(--ink);text-decoration:none;font-size:15px;letter-spacing:.04em}
-  nav.main a:hover{color:var(--brass-d)}
+  nav.main a{color:#e9e2d4;text-decoration:none;font-size:15px;letter-spacing:.04em}
+  nav.main a:hover{color:var(--gold)}
   .btn{display:inline-block;background:var(--brass);color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:15px;letter-spacing:.06em;font-weight:500;border:1px solid var(--brass);cursor:pointer;transition:.2s}
   .btn:hover{background:var(--brass-d);border-color:var(--brass-d)}
   .btn.ghost{background:transparent;color:var(--ink);border-color:#c9bda6}
+  .hero-photo{border-radius:18px;overflow:hidden;box-shadow:0 24px 50px rgba(60,45,20,.22);border:1px solid #d9c9a8}
+  .hero-photo img{display:block;width:100%;height:auto}
+  .card .card-photo{width:100%;height:185px;object-fit:cover;border-radius:12px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .price-cat{padding:15px 26px 13px;background:#f6efe1;border-bottom:1px solid var(--line);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass-d);font-weight:600}
+  .tile{background-size:cover;background-position:center}
+  .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,10,0) 45%,rgba(20,16,10,.55))}
+  footer .logo img{height:40px}
   .btn.ghost:hover{border-color:var(--brass);color:var(--brass-d)}
   nav.main .btn{padding:9px 20px}
   @media(max-width:860px){nav.main a:not(.btn){display:none}}
@@ -172,7 +184,7 @@
 </div></div>
 
 <header class="site"><div class="wrap">
-  <a class="logo" href="#top">Lumina<small>Head Spa &amp; Beauty</small></a>
+  <a class="logo" href="#top"><img src="lumina-sign.jpg" alt="Lumina Head Spa &amp; Beauty"></a>
   <nav class="main">
     <a href="#treatments">Treatments</a>
     <a href="#prices">Services &amp; Prices</a>
@@ -184,8 +196,8 @@
 
 <section class="hero" id="top"><div class="wrap">
   <div>
-    <div class="kicker">Head Spa · Maple, Vaughan</div>
-    <h1>A quiet hour for your <em>scalp, neck &amp; shoulders</em>.</h1>
+    <div class="kicker">Head Spa &amp; Beauty · Maple, Vaughan</div>
+    <h1>Your beauty, <em>our care</em>.</h1>
     <p class="lede">Warm water, slow hands and a calm room. Lumina is a head spa in Maple where every visit is a small reset — for your hair, your head and your day.</p>
     <div class="hero-cta">
       <a class="btn" href="#book">Book an Appointment</a>
@@ -198,29 +210,32 @@
     </div>
   </div>
   <div class="hero-art">
-    <div class="arch"><div class="arch-cap"><div class="serif">Breathe in. Slow down.</div><span>Your photos will go here</span></div></div>
-    <div class="hero-badge"><b>Walk-ins welcome</b>Subject to availability</div>
+    <div class="hero-photo"><img src="lumina-storefront.jpg" alt="Lumina Head Spa &amp; Beauty storefront, Maple"></div>
+    <div class="hero-badge"><b>Now open in Maple</b>9505 Keele St, Unit 1A</div>
   </div>
 </div></section>
 
 <section id="treatments"><div class="wrap">
   <div class="sec-head">
-    <div class="kicker">Signature Treatments</div>
-    <h2>Where to begin.</h2>
-    <p>Our three most-loved rituals. Every treatment can be booked online in about a minute.</p>
+    <div class="kicker">Our Treatments</div>
+    <h2>Four ways to slow down.</h2>
+    <p>Head spa, foot reflexology, salt stone therapy and facial care — every treatment can be booked online in about a minute.</p>
   </div>
   <div class="cards">
-    <div class="card"><div class="num">No. 1</div><h3>Signature Head Spa Ritual</h3>
-      <p>A full head spa ritual: scalp cleanse, warm-water massage, deep conditioning care, and neck &amp; shoulder release.</p>
-      <div class="meta"><span>60 min</span><span class="price">$88</span></div><a href="#book">Book this →</a></div>
-    <div class="card"><div class="num">No. 2</div><h3>Head Spa &amp; Shoulder Release</h3>
-      <p>Our signature ritual, with extra time on the neck, shoulders and upper back — for desk shoulders and long weeks.</p>
-      <div class="meta"><span>75 min</span><span class="price">$108</span></div><a href="#book">Book this →</a></div>
-    <div class="card"><div class="num">No. 3</div><h3>Deep Scalp Detox &amp; Care</h3>
-      <p>A focused treatment for oily, dry or stressed scalps: gentle exfoliation, detox cleanse and nourishing finish.</p>
-      <div class="meta"><span>45 min</span><span class="price">$68</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="svc-headspa.jpg" alt="Head spa treatment"><h3>Head Spa</h3>
+      <p>Purify the scalp, boost circulation and grow healthier hair — our signature warm-water ritual for head, neck and shoulders.</p>
+      <div class="meta"><span>45–75 min</span><span class="price">from $68</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="svc-foot.jpg" alt="Foot reflexology"><h3>Foot Reflexology</h3>
+      <p>Relax, rebalance, rejuvenate. A warm soak and pressure-point foot ritual that resets tired legs and the whole body.</p>
+      <div class="meta"><span>45–60 min</span><span class="price">from $55</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="svc-saltstone.jpg" alt="Himalayan salt stone therapy"><h3>Himalayan Salt Stone Therapy</h3>
+      <p>Natural healing, deep relaxation and muscle relief — warm salt stones melt tension from neck, shoulders and back.</p>
+      <div class="meta"><span>60–90 min</span><span class="price">from $95</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="svc-facial.jpg" alt="Facial care"><h3>Facial Care</h3>
+      <p>Firm &amp; brighten, hydrate and rejuvenate — gentle facial care that leaves skin calm, bright and rested.</p>
+      <div class="meta"><span>60–90 min</span><span class="price">from $75</span></div><a href="#book">Book this →</a></div>
   </div>
-  <p class="sample-note">Sample services and prices shown for preview — these will be replaced with the shop's real price list.</p>
+  <p class="sample-note">Sample prices shown for preview — these will be replaced with the shop's real price list.</p>
 </div></section>
 
 <section class="prices" id="prices"><div class="wrap">
@@ -230,12 +245,21 @@
     <p>No packages to decode. Pick a treatment, pick a time — that's it.</p>
   </div>
   <div class="price-table">
+    <div class="price-cat">Head Spa</div>
     <div class="price-row"><div><h3>Express Refresh Head Spa</h3><p>A short reset: cleanse, warm-water massage and blow-dry finish.</p></div><div class="amt">$48<small>30 MIN</small></div></div>
     <div class="price-row"><div><h3>Deep Scalp Detox &amp; Care</h3><p>Exfoliation, detox cleanse and nourishing scalp care.</p></div><div class="amt">$68<small>45 MIN</small></div></div>
     <div class="price-row"><div><h3>Signature Head Spa Ritual</h3><p>Our full ritual for scalp, hair, neck and shoulders.</p></div><div class="amt">$88<small>60 MIN</small></div></div>
     <div class="price-row"><div><h3>Aromatherapy Scalp &amp; Neck Ritual</h3><p>Essential-oil scalp massage with extended neck work.</p></div><div class="amt">$98<small>60 MIN</small></div></div>
     <div class="price-row"><div><h3>Head Spa &amp; Shoulder Release</h3><p>Signature ritual plus extra neck, shoulder and upper-back time.</p></div><div class="amt">$108<small>75 MIN</small></div></div>
-    <div class="price-row"><div><h3>Head Spa &amp; Mini Facial</h3><p>The full ritual paired with a gentle mini facial.</p></div><div class="amt">$128<small>90 MIN</small></div></div>
+    <div class="price-cat">Foot Reflexology</div>
+    <div class="price-row"><div><h3>Classic Foot Reflexology</h3><p>Warm soak and pressure-point foot massage.</p></div><div class="amt">$55<small>45 MIN</small></div></div>
+    <div class="price-row"><div><h3>Foot Reflexology &amp; Soak Ritual</h3><p>Extended soak, scrub and reflexology session.</p></div><div class="amt">$70<small>60 MIN</small></div></div>
+    <div class="price-cat">Himalayan Salt Stone Therapy</div>
+    <div class="price-row"><div><h3>Salt Stone Therapy</h3><p>Warm Himalayan salt stones for neck, shoulders and back.</p></div><div class="amt">$95<small>60 MIN</small></div></div>
+    <div class="price-row"><div><h3>Salt Stone Full Ritual</h3><p>The full-body salt stone ritual, unhurried.</p></div><div class="amt">$125<small>90 MIN</small></div></div>
+    <div class="price-cat">Facial Care</div>
+    <div class="price-row"><div><h3>Signature Facial</h3><p>Cleanse, hydrate and brighten — for calm, rested skin.</p></div><div class="amt">$75<small>60 MIN</small></div></div>
+    <div class="price-row"><div><h3>Head Spa &amp; Mini Facial</h3><p>The full head spa ritual paired with a gentle mini facial.</p></div><div class="amt">$128<small>90 MIN</small></div></div>
   </div>
   <p class="sample-note">Sample price list for preview only.</p>
 </div></section>
@@ -244,13 +268,13 @@
   <div class="sec-head">
     <div class="kicker">Inside the Spa</div>
     <h2>A room made to slow down.</h2>
-    <p>Soft light, warm tones and quiet corners. Your own shop photos will fill this gallery.</p>
+    <p>Soft light, warm tones and quiet corners — a first look at the treatments waiting for you at Lumina.</p>
   </div>
   <div class="gallery">
-    <div class="tile t1"><span><small>Photo 1</small>Reception</span></div>
-    <div class="tile t2"><span><small>Photo 2</small>Treatment room</span></div>
-    <div class="tile t3"><span><small>Photo 3</small>Wash &amp; ritual area</span></div>
-    <div class="tile t4"><span><small>Photo 4</small>Relaxation corner</span></div>
+    <div class="tile" style="background-image:url('svc-headspa.jpg')"><span><small>Treatment</small>Head Spa</span></div>
+    <div class="tile" style="background-image:url('svc-foot.jpg')"><span><small>Treatment</small>Foot Reflexology</span></div>
+    <div class="tile" style="background-image:url('svc-saltstone.jpg')"><span><small>Treatment</small>Salt Stone Therapy</span></div>
+    <div class="tile" style="background-image:url('svc-facial.jpg')"><span><small>Treatment</small>Facial Care</span></div>
   </div>
 </div></section>
 
@@ -314,6 +338,11 @@
         <option selected>Signature Head Spa Ritual — 60 min · $88</option>
         <option>Aromatherapy Scalp &amp; Neck Ritual — 60 min · $98</option>
         <option>Head Spa &amp; Shoulder Release — 75 min · $108</option>
+        <option>Classic Foot Reflexology — 45 min · $55</option>
+        <option>Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
+        <option>Salt Stone Therapy — 60 min · $95</option>
+        <option>Salt Stone Full Ritual — 90 min · $125</option>
+        <option>Signature Facial — 60 min · $75</option>
         <option>Head Spa &amp; Mini Facial — 90 min · $128</option>
       </select></div>
     <div class="fld"><label>2 · Pick a day</label><div class="chips" id="days"></div></div>
@@ -344,7 +373,7 @@
 </div></section>
 
 <footer><div class="wrap">
-  <a class="logo" href="#top">Lumina<small>Head Spa &amp; Beauty</small></a>
+  <a class="logo" href="#top"><img src="lumina-sign.jpg" alt="Lumina Head Spa &amp; Beauty"></a>
   <div>9505 Keele Street, Unit 1A, Maple, ON L6A 1W3 · Open 7 days 10 AM – 9 PM · <a href="tel:+16473688148">647-368-8148</a></div>
 </div>
 <div class="credit">Preview sample prepared by Hifill Design Studio. Sample services, prices, reviews and photo placeholders will be replaced with the shop's real content before launch.</div>
