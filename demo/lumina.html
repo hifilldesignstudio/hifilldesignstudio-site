@@ -210,6 +210,7 @@
   #toTop{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(20,17,13,.88);color:var(--gold);font-size:20px;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;box-shadow:0 6px 18px rgba(0,0,0,.35)}
   #toTop.show{opacity:1;pointer-events:auto}
   #toTop:hover{background:var(--gold);color:#171410}
+  .treat-banner{width:100%;height:auto;border-radius:18px;display:block;margin-bottom:28px;box-shadow:0 18px 40px rgba(60,45,20,.18)}
   .cards.sig{grid-template-columns:repeat(2,1fr)}
   @media(max-width:640px){.cards.sig{grid-template-columns:1fr}}
   .card .price s{color:var(--muted);font-weight:400;font-size:15px;margin-right:5px}
@@ -233,7 +234,6 @@
   <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
   <nav class="main">
     <a href="#treatments">Treatments</a>
-    <a href="#prices">Prices</a>
     <a href="#inside">Inside</a>
     <a href="#story">Why Us</a>
     <a href="#visit">Visit Us</a>
@@ -247,7 +247,7 @@
     <p class="lede">Warm water, slow hands and a calm room. Lumina is a head spa in Maple where every visit is a small reset — for your hair, your head and your day.</p>
     <div class="hero-cta">
       <a class="btn" href="#book">Book an Appointment</a>
-      <a class="btn ghost" href="#prices">See Services &amp; Prices</a>
+      <a class="btn ghost" href="#treatments">See Treatments &amp; Prices</a>
     </div>
     <div class="hero-meta">
       <span><b>Open 7 days</b><br>10:00 AM – 9:00 PM</span>
@@ -256,40 +256,14 @@
     </div>
   </div></div></section>
 
-<section id="treatments"><div class="wrap">
+<section class="prices" id="treatments"><div class="wrap">
   <div class="sec-head">
-    <div class="kicker">Signature Head Therapies</div>
+    <div class="kicker">Treatments &amp; Prices</div>
     <h2>Our signature therapies.</h2>
-    <p>Four premium head therapies — each one includes added care products and device-assisted essence infusion. Now at promotional prices, and every one can be booked online in about a minute.</p>
+    <p>Four premium head therapies — each one includes added care products and device-assisted essence infusion, now at promotional prices. Foot reflexology, salt stone therapy and facial care follow below — everything can be booked online in about a minute.</p>
   </div>
-  <div class="cards sig">
-    <div class="card"><img class="card-photo" src="treat-herbal.jpg" alt="Herbal Hot Compress Head Treatment"><h3>Herbal Hot Compress Head Treatment</h3>
-      <p>A warm herbal pouch with ginger and lemon essential oils, worked in with massage techniques to dispel cold and dampness, ease headaches and improve sleep.</p>
-      <div class="meta"><span>90 min</span><span class="price"><s>$179</s> $149</span></div>
-      <div class="promo">✦ Promotional price — save $30</div><a href="#book">Book this →</a></div>
-    <div class="card"><img class="card-photo" src="treat-chinese.jpg" alt="New Chinese-Style Wellness Head Therapy"><h3>New Chinese-Style Wellness Head Therapy</h3>
-      <p>Deep cleansing and nourishment with traditional Chinese herbal decoctions — improves scalp circulation, eases headaches and anxiety, and restores balance.</p>
-      <div class="meta"><span>75 min</span><span class="price"><s>$159</s> $129</span></div>
-      <div class="promo">✦ Promotional price — save $30</div><a href="#book">Book this →</a></div>
-    <div class="card"><img class="card-photo" src="treat-aroma.jpg" alt="Aromatherapy Head Spa for Relaxation"><h3>Aromatherapy Head Spa for Relaxation</h3>
-      <p>Scalp and facial massage with aromatherapy to release tension, relieve tired eyes and dark circles, and improve sleep.</p>
-      <div class="meta"><span>75 min</span><span class="price"><s>$119</s> $99</span></div>
-      <div class="promo">✦ Promotional price — save $20</div><a href="#book">Book this →</a></div>
-    <div class="card"><img class="card-photo" src="treat-floral.jpg" alt="Floral Head Spa"><h3>Floral Head Spa</h3>
-      <p>A floral bath ritual for scalp and hair that engages the senses — promotes circulation, relieves fatigue and headaches, and lifts mood and mental tension.</p>
-      <div class="meta"><span>75 min</span><span class="price"><s>$159</s> $129</span></div>
-      <div class="promo">✦ Promotional price — save $30</div><a href="#book">Book this →</a></div>
-  </div>
-  <p class="sample-note">Head spa therapies above are the shop's real treatments and prices. Foot, salt stone and facial prices further down are samples, pending the shop's price list.</p>
-</div></section>
-
-<section class="prices" id="prices"><div class="wrap">
-  <div class="sec-head">
-    <div class="kicker">Services &amp; Prices</div>
-    <h2>Simple, honest pricing.</h2>
-    <p>No packages to decode. Pick a treatment, pick a time — that's it.</p>
-  </div>
-  <div class="price-table">
+  <img class="treat-banner" src="treat-banner.jpg" alt="Signature head spa therapies at Lumina">
+<div class="price-table">
     <div class="price-cat">Head Spa</div>
     <div class="price-row"><div><h3>Herbal Hot Compress Head Treatment</h3><p>Warm herbal compress ritual with ginger &amp; lemon oils.</p></div><div class="amt"><s class="was">$179</s> $149<small>90 MIN</small></div></div>
     <div class="price-row"><div><h3>New Chinese-Style Wellness Head Therapy</h3><p>Chinese herbal decoction therapy for scalp &amp; balance.</p></div><div class="amt"><s class="was">$159</s> $129<small>75 MIN</small></div></div>
@@ -306,8 +280,10 @@
     <div class="price-row"><div><h3>Signature Facial</h3><p>Cleanse, hydrate and brighten — for calm, rested skin.</p></div><div class="amt">$75<small>60 MIN</small></div></div>
     <div class="price-row"><div><h3>Head Spa &amp; Mini Facial</h3><p>The full head spa ritual paired with a gentle mini facial.</p></div><div class="amt">$128<small>90 MIN</small></div></div>
   </div>
-  <p class="sample-note">Head Spa prices are the shop's real prices. Foot, salt stone and facial prices are samples, pending the shop's price list.</p>
+  <p class="sample-note">Head spa therapies and prices are the shop's real ones. Foot, salt stone and facial prices are samples, pending the shop's price list.</p>
 </div></section>
+
+
 
 <section id="inside"><div class="wrap">
   <div class="sec-head">
