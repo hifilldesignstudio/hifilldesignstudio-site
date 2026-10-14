@@ -371,6 +371,21 @@
         <option data-min="60" data-price="75">Signature Facial — 60 min · $75</option>
         <option data-min="90" data-price="128">Head Spa &amp; Mini Facial — 90 min · $128</option>
       </select></div>
+    <div class="fld"><label for="svc2">Add a second treatment <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional — done right after the first, in the same visit)</span></label>
+      <select id="svc2">
+        <option value="">None — just one treatment</option>
+        <option data-min="30" data-price="48">Express Refresh Head Spa — 30 min · $48</option>
+        <option data-min="45" data-price="68">Deep Scalp Detox &amp; Care — 45 min · $68</option>
+        <option data-min="60" data-price="88">Signature Head Spa Ritual — 60 min · $88</option>
+        <option data-min="60" data-price="98">Aromatherapy Scalp &amp; Neck Ritual — 60 min · $98</option>
+        <option data-min="75" data-price="108">Head Spa &amp; Shoulder Release — 75 min · $108</option>
+        <option data-min="45" data-price="55">Classic Foot Reflexology — 45 min · $55</option>
+        <option data-min="60" data-price="70">Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
+        <option data-min="60" data-price="95">Salt Stone Therapy — 60 min · $95</option>
+        <option data-min="90" data-price="125">Salt Stone Full Ritual — 90 min · $125</option>
+        <option data-min="60" data-price="75">Signature Facial — 60 min · $75</option>
+        <option data-min="90" data-price="128">Head Spa &amp; Mini Facial — 90 min · $128</option>
+      </select></div>
     <div class="bk-summary" id="bkSummary"></div>
     <div class="fld step" id="stepCal"><label>2 · Pick a date</label>
       <div class="cal">
@@ -418,6 +433,7 @@
 (function(){
   var WINDOW_DAYS = 30;          /* how far ahead guests can book (1 month) */
   var svcEl=document.getElementById('svc'),
+      svc2El=document.getElementById('svc2'),
       sumEl=document.getElementById('bkSummary'),
       stepCal=document.getElementById('stepCal'),
       stepTime=document.getElementById('stepTime'),
@@ -428,7 +444,7 @@
       prevB=document.getElementById('calPrev'),
       nextB=document.getElementById('calNext'),
       timesEl=document.getElementById('times');
-  var selDay=null, selDayLabel='', selTime=null, selEnd=null;
+  var selDay=null, selDayLabel='', selTime=null, selEnd=null, selStartMin=null;
   var today=new Date(); today.setHours(0,0,0,0);
   var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
   var viewY=today.getFullYear(), viewM=today.getMonth();
@@ -440,10 +456,14 @@
   });
 
   function svcName(){ var o=svcEl.options[svcEl.selectedIndex]; return svcEl.value? o.text.split(' — ')[0] : ''; }
+  function svc2Name(){ var o=svc2El.options[svc2El.selectedIndex]; return svc2El.value? o.text.split(' — ')[0] : ''; }
+  function durOf(el){ var o=el.options[el.selectedIndex]; return el.value? (parseInt(o.dataset.min,10)||0) : 0; }
+  function priceOf(el){ var o=el.options[el.selectedIndex]; return el.value? (parseInt(o.dataset.price,10)||0) : 0; }
   function updateSummary(){
-    var o=svcEl.options[svcEl.selectedIndex];
     if(!svcEl.value){ sumEl.className='bk-summary'; sumEl.innerHTML=''; return; }
-    var html='<b>'+svcName()+'</b> · '+o.dataset.min+' min · $'+o.dataset.price;
+    var totalMin=durOf(svcEl)+durOf(svc2El), totalPrice=priceOf(svcEl)+priceOf(svc2El);
+    var names=svcName()+(svc2El.value?' + '+svc2Name():'');
+    var html='<b>'+names+'</b> · '+totalMin+' min · $'+totalPrice;
     if(selDayLabel) html+=' · '+selDayLabel;
     if(selTime) html+=' · '+selTime+(selEnd?' – '+selEnd:'');
     sumEl.innerHTML=html; sumEl.className='bk-summary on';
@@ -488,8 +508,7 @@
   }
   function buildTimes(){
     timesEl.innerHTML='';
-    var o=svcEl.options[svcEl.selectedIndex];
-    var dur=parseInt(o&&o.dataset? o.dataset.min:'60',10)||60;
+    var dur=durOf(svcEl)+durOf(svc2El); if(!dur) dur=60;
     var OPEN=10*60, CLOSE=21*60, STEP=30;
     var now=new Date(); var isToday = selDay && selDay.getTime()===today.getTime();
     var nowMin=now.getHours()*60+now.getMinutes();
@@ -499,7 +518,7 @@
         var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=fmtTime(st);
         b.addEventListener('click',function(){
           timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
-          b.classList.add('sel'); selTime=fmtTime(st); selEnd=fmtTime(st+dur);
+          b.classList.add('sel'); selTime=fmtTime(st); selEnd=fmtTime(st+dur); selStartMin=st;
           stepDet.classList.add('on'); updateSummary();
           stepDet.scrollIntoView({behavior:'smooth',block:'nearest'});
         });
@@ -513,11 +532,13 @@
     }
   }
 
-  svcEl.addEventListener('change',function(){
-    selTime=null; selEnd=null; stepDet.classList.remove('on');
+  function onSvcChange(){
+    selTime=null; selEnd=null; selStartMin=null; stepDet.classList.remove('on');
     updateSummary();
     if(svcEl.value){ stepCal.classList.add('on'); renderCal(); if(selDay) buildTimes(); }
-  });
+  }
+  svcEl.addEventListener('change',onSvcChange);
+  svc2El.addEventListener('change',onSvcChange);
   /* a treatment is pre-selected in the form — open the calendar straight away */
   if(svcEl.value){ stepCal.classList.add('on'); renderCal(); updateSummary(); }
 
@@ -526,8 +547,10 @@
         err=document.getElementById('err'), box=document.getElementById('confirmBox');
     if(!svcEl.value||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
+    var d1=durOf(svcEl), detail=svcName()+' '+selTime+' – '+fmtTime(selStartMin+d1);
+    if(svc2El.value) detail+=' · '+svc2Name()+' '+fmtTime(selStartMin+d1)+' – '+selEnd;
     document.getElementById('confirmText').textContent =
-      nm+' · '+svcName()+' on '+selDayLabel+', '+selTime+' – '+selEnd+'. We have your number as '+ph+'.';
+      nm+' · '+detail+' on '+selDayLabel+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
