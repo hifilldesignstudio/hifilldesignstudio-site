@@ -87,6 +87,22 @@
   .switch-row:last-child{border-bottom:0}
   #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--green);color:#10160c;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:60;font-size:15px}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .search-bar{margin-bottom:16px}
+  .cal{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:8px}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .cal-head b{font-size:17px}
+  .cal-nav{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:7px 14px;font-size:15px}
+  .cal table{border:0;background:transparent}
+  .cal th,.cal td{border:0;padding:0;text-align:center}
+  .cal th{font-size:12.5px;color:var(--muted);padding-bottom:8px;background:transparent}
+  .cal td button{width:100%;aspect-ratio:1.25;background:transparent;border:0;color:var(--ink);font-size:15px;border-radius:10px;position:relative;padding:4px 0 12px}
+  .cal td button:hover{background:var(--panel2)}
+  .cal td button.dim{color:#5d5648}
+  .cal td button.today{box-shadow:inset 0 0 0 1.5px var(--gold-d)}
+  .cal td button.sel{background:var(--gold);color:#171410;font-weight:700}
+  .cal td button .cnt{position:absolute;left:50%;transform:translateX(-50%);bottom:3px;font-size:10.5px;background:var(--gold-d);color:#fff;border-radius:999px;padding:0 6px;line-height:1.5}
+  .cal td button.sel .cnt{background:#171410;color:var(--gold)}
+  .empty-note{color:var(--muted);font-size:14.5px;padding:8px 0 4px}
   .foot-note{color:var(--muted);font-size:13.5px;text-align:center;padding:0 18px 34px;max-width:760px;margin:0 auto}
 </style>
 </head>
@@ -124,40 +140,24 @@
     <section class="pane active" id="pane-bookings">
       <h2 class="pane-title">Bookings</h2>
       <p class="pane-sub">New bookings are emailed to info@luminaheadspa.ca and appear here. When you tap Confirm, the guest gets a confirmation.</p>
-      <div class="alert">🔔 You have <b>2 new bookings</b> waiting for confirmation</div>
+      <div class="alert" id="pendingAlert"></div>
+      <div class="search-bar"><input id="searchBox" type="search" placeholder="🔍 Search bookings by guest name or phone…"></div>
 
-      <div class="day-head">Today · Wednesday, October 14</div>
-      <div id="todayList">
-        <div class="booking" data-status="pending">
-          <div class="time">2:00 PM<small>to 3:15 PM</small></div>
-          <div class="info"><b>Ms. Chen</b> <span class="badge pending">Pending</span>
-            <div>Head Spa &amp; Shoulder Release · 75 min · $108</div>
-            <div>Phone: 647-555-0132</div></div>
-          <div class="actions"><button class="act confirm">Confirm</button><button class="act cancel">Cancel</button></div>
+      <div id="browseView">
+        <div class="day-head">⏳ Waiting for Confirmation</div>
+        <div id="pendingList"></div>
+        <div class="day-head">📅 Calendar — tap a date to see that day</div>
+        <div class="cal">
+          <div class="cal-head"><button class="cal-nav" id="calPrev">‹</button><b id="calTitle"></b><button class="cal-nav" id="calNext">›</button></div>
+          <table><thead><tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead><tbody id="calBody"></tbody></table>
         </div>
-        <div class="booking" data-status="pending">
-          <div class="time">4:30 PM<small>to 6:30 PM</small></div>
-          <div class="info"><b>Emily W.</b> <span class="badge pending">Pending</span>
-            <div>Signature Head Spa Ritual + Signature Facial · 120 min total · $163</div>
-            <div>Phone: 416-555-0187</div></div>
-          <div class="actions"><button class="act confirm">Confirm</button><button class="act cancel">Cancel</button></div>
-        </div>
-        <div class="booking done" data-status="confirmed">
-          <div class="time">11:00 AM<small>to 12:00 PM</small></div>
-          <div class="info"><b>Mr. Liu</b> <span class="badge confirmed">Confirmed</span>
-            <div>Classic Foot Reflexology · 45 min · $55(completed)</div>
-            <div>Phone: 905-555-0114</div></div>
-          <div class="actions"></div>
-        </div>
+        <div class="day-head" id="dayTitle"></div>
+        <div id="dayList"></div>
       </div>
 
-      <div class="day-head">Tomorrow · Thursday, October 15</div>
-      <div class="booking done" data-status="confirmed">
-        <div class="time">10:30 AM<small>to 12:00 PM</small></div>
-        <div class="info"><b>Sarah K.</b> <span class="badge confirmed">Confirmed</span>
-          <div>Head Spa &amp; Mini Facial · 90 min · $128</div>
-          <div>Phone: 647-555-0163</div></div>
-        <div class="actions"></div>
+      <div id="searchView" style="display:none">
+        <div class="day-head">Search Results</div>
+        <div id="searchList"></div>
       </div>
     </section>
 
@@ -272,26 +272,93 @@
     });
   });
 
-  /* booking confirm / cancel */
-  function refreshPending(){
-    var n=document.querySelectorAll('#todayList .booking[data-status="pending"]').length;
-    var dot=document.getElementById('pendingDot');
-    dot.textContent=n; dot.style.display = n? 'inline-block':'none';
+  /* bookings data + rendering */
+  var BOOKINGS=[
+    {id:1, date:'2026-10-14', start:'11:00 AM', end:'12:00 PM', name:'Mr. Liu', treat:'Classic Foot Reflexology · 45 min · $55', phone:'905-555-0114', status:'confirmed'},
+    {id:2, date:'2026-10-14', start:'2:00 PM', end:'3:15 PM', name:'Ms. Chen', treat:'Head Spa & Shoulder Release · 75 min · $108', phone:'647-555-0132', status:'pending'},
+    {id:3, date:'2026-10-14', start:'4:30 PM', end:'6:30 PM', name:'Emily W.', treat:'Signature Head Spa Ritual + Signature Facial · 120 min total · $163', phone:'416-555-0187', status:'pending'},
+    {id:4, date:'2026-10-15', start:'10:30 AM', end:'12:00 PM', name:'Sarah K.', treat:'Head Spa & Mini Facial · 90 min · $128', phone:'647-555-0163', status:'confirmed'},
+    {id:5, date:'2026-10-15', start:'1:00 PM', end:'2:30 PM', name:'Ms. Wang', treat:'Herbal Hot Compress Head Treatment · 90 min · $149', phone:'437-555-0129', status:'pending'},
+    {id:6, date:'2026-10-16', start:'12:00 PM', end:'1:15 PM', name:'Jessica M.', treat:'Floral Head Spa · 75 min · $129', phone:'647-555-0145', status:'confirmed'},
+    {id:7, date:'2026-10-16', start:'3:30 PM', end:'5:00 PM', name:'Mr. Zhang', treat:'Herbal Hot Compress Head Treatment · 90 min · $149', phone:'905-555-0171', status:'confirmed'},
+    {id:8, date:'2026-10-18', start:'11:30 AM', end:'12:45 PM', name:'Amy T.', treat:'Aromatherapy Head Spa for Relaxation · 75 min · $99', phone:'416-555-0119', status:'confirmed'},
+    {id:9, date:'2026-10-20', start:'10:00 AM', end:'11:15 AM', name:'Grace L.', treat:'New Chinese-Style Wellness Head Therapy · 75 min · $129', phone:'647-555-0108', status:'confirmed'},
+    {id:10, date:'2026-10-21', start:'5:00 PM', end:'6:00 PM', name:'Tina R.', treat:'Himalayan Salt Stone Therapy · 60 min · $95', phone:'905-555-0156', status:'confirmed'}
+  ];
+  var TODAY='2026-10-14', selDate='2026-10-14', viewY=2026, viewM=9;
+  function badgeFor(st){
+    if(st==='pending') return '<span class="badge pending">Pending</span>';
+    if(st==='confirmed') return '<span class="badge confirmed">Confirmed</span>';
+    return '<span class="badge cancelled">Cancelled</span>';
   }
-  document.querySelectorAll('#todayList .booking').forEach(function(b){
-    var badge=b.querySelector('.badge');
-    var cBtn=b.querySelector('.act.confirm'), xBtn=b.querySelector('.act.cancel');
-    if(cBtn) cBtn.addEventListener('click', function(){
-      b.setAttribute('data-status','confirmed'); b.classList.add('done');
-      badge.textContent='Confirmed'; badge.className='badge confirmed';
-      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('✓ Confirmed — the guest will be notified');
+  function fmtDay(dstr){
+    return new Date(dstr+'T12:00:00').toLocaleDateString('en-CA',{weekday:'long', month:'long', day:'numeric'});
+  }
+  function cardHTML(b, showDate){
+    var h='<div class="booking'+(b.status!=='pending'?' done':'')+'">'
+      +'<div class="time">'+b.start+'<small>to '+b.end+'</small>'+(showDate?'<small>'+fmtDay(b.date)+'</small>':'')+'</div>'
+      +'<div class="info"><b>'+b.name+'</b> '+badgeFor(b.status)
+      +'<div>'+b.treat+'</div><div>Phone: '+b.phone+'</div></div>';
+    if(b.status==='pending') h+='<div class="actions"><button class="act confirm" data-act="confirm" data-id="'+b.id+'">Confirm</button><button class="act cancel" data-act="cancel" data-id="'+b.id+'">Cancel</button></div>';
+    return h+'</div>';
+  }
+  function sorted(list){ return list.slice().sort(function(a,b){ return (a.date+a.start)<(b.date+b.start)?-1:1; }); }
+  function renderAll(){ renderPending(); renderCal(); renderDay(); }
+  function renderPending(){
+    var pend=sorted(BOOKINGS.filter(function(b){ return b.status==='pending'; }));
+    document.getElementById('pendingList').innerHTML = pend.length? pend.map(function(b){ return cardHTML(b,true); }).join('') : '<p class="empty-note">All caught up — nothing waiting. ✓</p>';
+    var dot=document.getElementById('pendingDot');
+    dot.textContent=pend.length; dot.style.display=pend.length?'inline-block':'none';
+    document.getElementById('pendingAlert').innerHTML = pend.length? '🔔 You have <b>'+pend.length+' new booking'+(pend.length>1?'s':'')+'</b> waiting for confirmation' : '✓ No bookings waiting — you are all caught up';
+  }
+  function renderCal(){
+    var first=new Date(viewY, viewM, 1);
+    var startOffset=(first.getDay()+6)%7;
+    var daysInMonth=new Date(viewY, viewM+1, 0).getDate();
+    var counts={};
+    BOOKINGS.forEach(function(b){ if(b.status!=='cancelled') counts[b.date]=(counts[b.date]||0)+1; });
+    document.getElementById('calTitle').textContent=first.toLocaleDateString('en-CA',{month:'long', year:'numeric'});
+    var html='<tr>', cell=0;
+    for(var i=0;i<startOffset;i++){ html+='<td></td>'; cell++; }
+    for(var d=1; d<=daysInMonth; d++){
+      var ds=viewY+'-'+String(viewM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      var cls=(ds===TODAY?'today ':'')+(ds===selDate?'sel':'');
+      html+='<td><button data-date="'+ds+'" class="'+cls+'">'+d+(counts[ds]?'<span class="cnt">'+counts[ds]+'</span>':'')+'</button></td>';
+      cell++; if(cell%7===0 && d<daysInMonth) html+='</tr><tr>';
+    }
+    html+='</tr>';
+    document.getElementById('calBody').innerHTML=html;
+    document.querySelectorAll('#calBody button[data-date]').forEach(function(btn){
+      btn.addEventListener('click', function(){ selDate=btn.getAttribute('data-date'); renderCal(); renderDay(); });
     });
-    if(xBtn) xBtn.addEventListener('click', function(){
-      b.setAttribute('data-status','cancelled'); b.classList.add('done');
-      badge.textContent='Cancelled'; badge.className='badge cancelled';
-      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('Booking cancelled');
-    });
+  }
+  function renderDay(){
+    document.getElementById('dayTitle').textContent='🗓 '+(selDate===TODAY?'Today — ':'')+fmtDay(selDate);
+    var list=sorted(BOOKINGS.filter(function(b){ return b.date===selDate; }));
+    document.getElementById('dayList').innerHTML = list.length? list.map(function(b){ return cardHTML(b,false); }).join('') : '<p class="empty-note">No bookings on this day.</p>';
+  }
+  document.getElementById('calPrev').addEventListener('click', function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCal(); });
+  document.getElementById('calNext').addEventListener('click', function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCal(); });
+  document.getElementById('pane-bookings').addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-act]'); if(!btn) return;
+    var b=BOOKINGS.find(function(x){ return x.id==btn.getAttribute('data-id'); }); if(!b) return;
+    if(btn.getAttribute('data-act')==='confirm'){ b.status='confirmed'; toast('✓ Confirmed — the guest will be notified'); }
+    else { b.status='cancelled'; toast('Booking cancelled'); }
+    renderAll();
+    var q=document.getElementById('searchBox').value.trim(); if(q) runSearch(q);
   });
+  function runSearch(q){
+    q=q.toLowerCase();
+    var hits=sorted(BOOKINGS.filter(function(b){ return b.name.toLowerCase().indexOf(q)>-1 || b.phone.indexOf(q)>-1; }));
+    document.getElementById('searchList').innerHTML = hits.length? hits.map(function(b){ return cardHTML(b,true); }).join('') : '<p class="empty-note">No bookings match "'+q+'".</p>';
+  }
+  document.getElementById('searchBox').addEventListener('input', function(){
+    var q=this.value.trim();
+    document.getElementById('browseView').style.display = q? 'none':'block';
+    document.getElementById('searchView').style.display = q? 'block':'none';
+    if(q) runSearch(q);
+  });
+  renderAll();
 
   /* treatments */
   var treatBody=document.getElementById('treatBody');
