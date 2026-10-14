@@ -342,8 +342,7 @@
     <p>Choose your treatment and a time that suits you — no need to pick a technician, we arrange that for you on the day. We confirm every booking personally.</p>
     <ul>
       <li><b>Hours</b> — Open 7 days, 10:00 AM – 9:00 PM</li>
-      <li><b>Booking ahead</b> — You can book online up to 2 months in advance</li>
-      <li><b>Groups</b> — Book for up to 3 guests in one reservation</li>
+      <li><b>Booking ahead</b> — You can book online up to 1 month in advance</li>
       <li><b>Technicians</b> — No need to choose; bookings run on opening hours and we arrange your technician</li>
       <li><b>Payment</b> — Nothing to pay online; pay at the shop</li>
       <li><b>Questions?</b> — Call us at <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:500;text-decoration:none">647-368-8148</a></li>
@@ -373,13 +372,12 @@
         <div class="cal-head"><button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">‹</button><div class="mname" id="calTitle"></div><button type="button" class="cal-nav" id="calNext" aria-label="Next month">›</button></div>
         <div class="cal-grid" id="calDow"></div>
         <div class="cal-grid" id="calGrid"></div>
-        <div class="cal-tz">America/Toronto · Book up to 2 months ahead</div>
+        <div class="cal-tz">America/Toronto · Book up to 1 month ahead</div>
       </div>
     </div>
     <div class="fld step" id="stepTime"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
     <div class="step" id="stepDetails">
-      <div class="fld"><label>4 · How many guests?</label><div class="chips" id="guests"></div></div>
-      <div class="fld"><label for="nm">5 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+      <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
       <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
       <button class="btn" id="confirmBtn">Confirm Booking</button>
     </div>
@@ -413,8 +411,7 @@
 
 <script>
 (function(){
-  var WINDOW_DAYS = 60;          /* how far ahead guests can book */
-  var MAX_GUESTS  = 3;           /* max guests per booking (shop to confirm) */
+  var WINDOW_DAYS = 30;          /* how far ahead guests can book (1 month) */
   var svcEl=document.getElementById('svc'),
       sumEl=document.getElementById('bkSummary'),
       stepCal=document.getElementById('stepCal'),
@@ -425,9 +422,8 @@
       titleEl=document.getElementById('calTitle'),
       prevB=document.getElementById('calPrev'),
       nextB=document.getElementById('calNext'),
-      timesEl=document.getElementById('times'),
-      guestsEl=document.getElementById('guests');
-  var selDay=null, selDayLabel='', selTime=null, selGuests=1;
+      timesEl=document.getElementById('times');
+  var selDay=null, selDayLabel='', selTime=null;
   var today=new Date(); today.setHours(0,0,0,0);
   var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
   var viewY=today.getFullYear(), viewM=today.getMonth();
@@ -445,7 +441,6 @@
     var html='<b>'+svcName()+'</b> · '+o.dataset.min+' min · $'+o.dataset.price;
     if(selDayLabel) html+=' · '+selDayLabel;
     if(selTime) html+=' · '+selTime;
-    html+=' · '+selGuests+' guest'+(selGuests>1?'s':'');
     sumEl.innerHTML=html; sumEl.className='bk-summary on';
   }
 
@@ -492,18 +487,6 @@
     timesEl.appendChild(b);
   });
 
-  for(var g=1; g<=MAX_GUESTS; g++){
-    (function(g){
-      var b=document.createElement('button'); b.type='button'; b.className='chip'+(g===1?' sel':'');
-      b.textContent=g+(g===1?' guest':' guests');
-      b.addEventListener('click',function(){
-        guestsEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
-        b.classList.add('sel'); selGuests=g; updateSummary();
-      });
-      guestsEl.appendChild(b);
-    })(g);
-  }
-
   svcEl.addEventListener('change',function(){
     updateSummary();
     if(svcEl.value){ stepCal.classList.add('on'); renderCal(); }
@@ -517,7 +500,7 @@
     if(!svcEl.value||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
     document.getElementById('confirmText').textContent =
-      nm+' · '+svcName()+' on '+selDayLabel+' at '+selTime+' · '+selGuests+' guest'+(selGuests>1?'s':'')+'. We have your number as '+ph+'.';
+      nm+' · '+svcName()+' on '+selDayLabel+' at '+selTime+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
