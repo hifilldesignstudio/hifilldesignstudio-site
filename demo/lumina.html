@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina Head Spa &amp; Beauty — Maple, Vaughan | Head Spa &amp; Online Booking</title>
+<meta name="description" content="Lumina Head Spa & Beauty in Maple, Vaughan. A calm head spa ritual for scalp, neck and shoulders. Open 7 days, 10 AM – 9 PM. Book online in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ef; --cream2:#f3ecdf; --ink:#2e2a25; --muted:#7a7266;
+    --brass:#a98548; --brass-d:#8a6c38; --sage:#8a9a8b; --line:#e3d9c8;
+    --card:#fffdf9; --deep:#33302a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-weight:300}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.12}
+  img{max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:11px;color:var(--brass);font-weight:500}
+  section{padding:84px 0}
+  .sec-head{max-width:640px;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(32px,4.4vw,46px);margin:10px 0 12px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* header */
+  .topbar{background:var(--deep);color:#e9e2d4;font-size:13px;letter-spacing:.06em}
+  .topbar .wrap{display:flex;justify-content:space-between;gap:14px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .topbar a{color:#e9e2d4;text-decoration:none}
+  header.site{position:sticky;top:0;background:rgba(250,246,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:50}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;gap:16px}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:700;letter-spacing:.02em;color:var(--ink);text-decoration:none;line-height:1}
+  .logo small{display:block;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);font-weight:500;margin-top:3px}
+  nav.main{display:flex;gap:26px;align-items:center}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px;letter-spacing:.04em}
+  nav.main a:hover{color:var(--brass-d)}
+  .btn{display:inline-block;background:var(--brass);color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:15px;letter-spacing:.06em;font-weight:500;border:1px solid var(--brass);cursor:pointer;transition:.2s}
+  .btn:hover{background:var(--brass-d);border-color:var(--brass-d)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:#c9bda6}
+  .btn.ghost:hover{border-color:var(--brass);color:var(--brass-d)}
+  nav.main .btn{padding:9px 20px}
+  @media(max-width:860px){nav.main a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{padding:0;position:relative;overflow:hidden;background:
+    radial-gradient(900px 480px at 85% -10%, #e9dcc2 0%, rgba(233,220,194,0) 60%),
+    radial-gradient(700px 500px at -10% 110%, #dde3d8 0%, rgba(221,227,216,0) 55%),
+    linear-gradient(160deg,#faf6ef 0%,#f1e8d8 100%)}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-top:76px;padding-bottom:76px}
+  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-top:52px;padding-bottom:52px}}
+  .hero h1{font-size:clamp(42px,5.6vw,64px);margin:14px 0 18px}
+  .hero h1 em{font-style:italic;color:var(--brass-d)}
+  .hero p.lede{font-size:19px;color:#5c554a;max-width:520px;margin-bottom:28px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .hero-meta{display:flex;gap:26px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .hero-meta b{color:var(--ink);font-weight:500}
+  .hero-art{position:relative}
+  .arch{background:linear-gradient(170deg,#e7dbc4,#d9c8a6 55%,#c9b184);border-radius:999px 999px 18px 18px;aspect-ratio:4/5;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative}
+  .arch::before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.55);border-radius:inherit}
+  .arch::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,251,240,.85),rgba(255,251,240,0) 65%);top:6%;left:50%;transform:translateX(-50%)}
+  .arch .arch-cap{position:relative;z-index:2;text-align:center;color:#4c4232;padding:26px}
+  .arch .arch-cap .serif{font-size:30px;font-style:italic}
+  .arch .arch-cap span{display:block;font-size:12px;letter-spacing:.3em;text-transform:uppercase;margin-top:6px}
+  .hero-badge{position:absolute;bottom:22px;left:-14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:0 14px 30px rgba(90,75,45,.13);font-size:14px}
+  .hero-badge b{display:block;font-family:'Cormorant Garamond',serif;font-size:19px}
+  @media(max-width:860px){.hero-badge{left:8px}}
+
+  /* treatments */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;gap:10px}
+  .card .num{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--brass);font-size:19px}
+  .card h3{font-size:25px}
+  .card p{color:var(--muted);font-size:15.5px;flex:1}
+  .card .meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;font-size:15px}
+  .card .price{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700}
+  .card a{color:var(--brass-d);text-decoration:none;font-weight:500;letter-spacing:.05em;font-size:14px}
+  .sample-note{font-size:13px;color:var(--muted);margin-top:16px;font-style:italic}
+
+  /* price list */
+  .prices{background:var(--cream2)}
+  .price-table{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .price-row{display:flex;justify-content:space-between;gap:18px;padding:19px 26px;border-bottom:1px solid var(--line);align-items:baseline}
+  .price-row:last-child{border-bottom:none}
+  .price-row h3{font-size:21px}
+  .price-row p{color:var(--muted);font-size:14.5px}
+  .price-row .amt{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;white-space:nowrap}
+  .price-row .amt small{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:12.5px;color:var(--muted);text-align:right;letter-spacing:.08em}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:860px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  .tile{border-radius:16px;aspect-ratio:1/1.15;display:flex;align-items:flex-end;padding:16px;color:#fff;position:relative;overflow:hidden}
+  .tile span{font-size:14px;letter-spacing:.05em;position:relative;z-index:2}
+  .tile small{display:block;font-size:11.5px;opacity:.85;letter-spacing:.14em;text-transform:uppercase}
+  .t1{background:linear-gradient(165deg,#cbb489,#a98548)}
+  .t2{background:linear-gradient(165deg,#a9b6a4,#77896f)}
+  .t3{background:linear-gradient(165deg,#d8c6a5,#b3986d)}
+  .t4{background:linear-gradient(165deg,#b7a58e,#8d7c64)}
+
+  /* why / story / reviews */
+  .why{background:var(--deep);color:#efe9dc}
+  .why .sec-head p{color:#c9c0ac}
+  .why .kicker{color:#d3af6f}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.why-grid{grid-template-columns:1fr}}
+  .why-item{border:1px solid #4c473d;border-radius:18px;padding:28px 26px;background:#38352f}
+  .why-item .num{font-family:'Cormorant Garamond',serif;font-style:italic;color:#d3af6f;font-size:20px}
+  .why-item h3{font-size:24px;margin:8px 0}
+  .why-item p{color:#c9c0ac;font-size:15.5px}
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:860px){.story{grid-template-columns:1fr}}
+  .story h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
+  .story p{color:var(--muted);font-size:17px;margin-bottom:14px}
+  .story-art{background:linear-gradient(150deg,#e2d5ba,#c3ab7f);border-radius:18px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#4c4232;text-align:center;padding:20px}
+  .story-art .serif{font-size:28px;font-style:italic}
+  .reviews{background:var(--cream2)}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.rev-grid{grid-template-columns:1fr}}
+  .rev{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .rev .stars{color:var(--brass);letter-spacing:.2em;margin-bottom:10px}
+  .rev p{font-size:16px;color:#4c463d}
+  .rev b{display:block;margin-top:14px;font-weight:500;font-size:14.5px}
+
+  /* booking */
+  .book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
+  @media(max-width:860px){.book-grid{grid-template-columns:1fr}}
+  .book-info h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
+  .book-info p{color:var(--muted);font-size:17px;margin-bottom:16px}
+  .book-info ul{list-style:none;margin-top:8px}
+  .book-info li{padding:9px 0;border-bottom:1px dashed var(--line);font-size:16px}
+  .book-info li b{font-weight:500}
+  .widget{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 40px rgba(90,75,45,.08)}
+  .widget h3{font-size:24px;margin-bottom:4px}
+  .widget .sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-weight:500}
+  select,input[type=text],input[type=tel]{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid #d8cdb8;background:#fff;border-radius:999px;padding:8px 15px;font-size:14.5px;cursor:pointer;font-family:'Jost',sans-serif}
+  .chip:hover{border-color:var(--brass)}
+  .chip.sel{background:var(--brass);color:#fff;border-color:var(--brass)}
+  .widget .btn{width:100%;text-align:center;margin-top:6px}
+  .demo-note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
+  .confirm{display:none;background:#eef2ea;border:1px solid #c8d4c2;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .confirm h4{font-family:'Cormorant Garamond',serif;font-size:23px;margin-bottom:6px}
+  .confirm p{font-size:15.5px}
+  .err{display:none;color:#a33d2a;font-size:14px;margin-top:10px}
+
+  /* visit / footer */
+  .visit{background:var(--cream2)}
+  .visit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.visit-grid{grid-template-columns:1fr}}
+  .visit-item h3{font-size:22px;margin-bottom:8px}
+  .visit-item p{color:#5c554a;font-size:16.5px}
+  .visit-item a{color:var(--brass-d);text-decoration:none;font-weight:500}
+  footer{background:var(--deep);color:#c9c0ac;padding:44px 0 34px;font-size:14.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer .logo{color:#efe9dc}
+  footer a{color:#e9e2d4}
+  .credit{max-width:1120px;margin:22px auto 0;padding:18px 22px 0;border-top:1px solid #4c473d;font-size:12.5px;color:#8f8776}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>Head Spa &amp; Beauty · Maple, Vaughan</span>
+  <span>Open 7 days · 10:00 AM – 9:00 PM &nbsp;·&nbsp; <a href="tel:+16473688148">647-368-8148</a></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="logo" href="#top">Lumina<small>Head Spa &amp; Beauty</small></a>
+  <nav class="main">
+    <a href="#treatments">Treatments</a>
+    <a href="#prices">Services &amp; Prices</a>
+    <a href="#inside">Inside</a>
+    <a href="#visit">Visit Us</a>
+    <a class="btn" href="#book">Book Now</a>
+  </nav>
+</div></header>
+
+<section class="hero" id="top"><div class="wrap">
+  <div>
+    <div class="kicker">Head Spa · Maple, Vaughan</div>
+    <h1>A quiet hour for your <em>scalp, neck &amp; shoulders</em>.</h1>
+    <p class="lede">Warm water, slow hands and a calm room. Lumina is a head spa in Maple where every visit is a small reset — for your hair, your head and your day.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#book">Book an Appointment</a>
+      <a class="btn ghost" href="#prices">See Services &amp; Prices</a>
+    </div>
+    <div class="hero-meta">
+      <span><b>Open 7 days</b><br>10:00 AM – 9:00 PM</span>
+      <span><b>9505 Keele St, Unit 1A</b><br>Maple, ON L6A 1W3</span>
+      <span><b>647-368-8148</b><br>Call or book online</span>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="arch"><div class="arch-cap"><div class="serif">Breathe in. Slow down.</div><span>Your photos will go here</span></div></div>
+    <div class="hero-badge"><b>Walk-ins welcome</b>Subject to availability</div>
+  </div>
+</div></section>
+
+<section id="treatments"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Signature Treatments</div>
+    <h2>Where to begin.</h2>
+    <p>Our three most-loved rituals. Every treatment can be booked online in about a minute.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="num">No. 1</div><h3>Signature Head Spa Ritual</h3>
+      <p>A full head spa ritual: scalp cleanse, warm-water massage, deep conditioning care, and neck &amp; shoulder release.</p>
+      <div class="meta"><span>60 min</span><span class="price">$88</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><div class="num">No. 2</div><h3>Head Spa &amp; Shoulder Release</h3>
+      <p>Our signature ritual, with extra time on the neck, shoulders and upper back — for desk shoulders and long weeks.</p>
+      <div class="meta"><span>75 min</span><span class="price">$108</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><div class="num">No. 3</div><h3>Deep Scalp Detox &amp; Care</h3>
+      <p>A focused treatment for oily, dry or stressed scalps: gentle exfoliation, detox cleanse and nourishing finish.</p>
+      <div class="meta"><span>45 min</span><span class="price">$68</span></div><a href="#book">Book this →</a></div>
+  </div>
+  <p class="sample-note">Sample services and prices shown for preview — these will be replaced with the shop's real price list.</p>
+</div></section>
+
+<section class="prices" id="prices"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Services &amp; Prices</div>
+    <h2>Simple, honest pricing.</h2>
+    <p>No packages to decode. Pick a treatment, pick a time — that's it.</p>
+  </div>
+  <div class="price-table">
+    <div class="price-row"><div><h3>Express Refresh Head Spa</h3><p>A short reset: cleanse, warm-water massage and blow-dry finish.</p></div><div class="amt">$48<small>30 MIN</small></div></div>
+    <div class="price-row"><div><h3>Deep Scalp Detox &amp; Care</h3><p>Exfoliation, detox cleanse and nourishing scalp care.</p></div><div class="amt">$68<small>45 MIN</small></div></div>
+    <div class="price-row"><div><h3>Signature Head Spa Ritual</h3><p>Our full ritual for scalp, hair, neck and shoulders.</p></div><div class="amt">$88<small>60 MIN</small></div></div>
+    <div class="price-row"><div><h3>Aromatherapy Scalp &amp; Neck Ritual</h3><p>Essential-oil scalp massage with extended neck work.</p></div><div class="amt">$98<small>60 MIN</small></div></div>
+    <div class="price-row"><div><h3>Head Spa &amp; Shoulder Release</h3><p>Signature ritual plus extra neck, shoulder and upper-back time.</p></div><div class="amt">$108<small>75 MIN</small></div></div>
+    <div class="price-row"><div><h3>Head Spa &amp; Mini Facial</h3><p>The full ritual paired with a gentle mini facial.</p></div><div class="amt">$128<small>90 MIN</small></div></div>
+  </div>
+  <p class="sample-note">Sample price list for preview only.</p>
+</div></section>
+
+<section id="inside"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Inside the Spa</div>
+    <h2>A room made to slow down.</h2>
+    <p>Soft light, warm tones and quiet corners. Your own shop photos will fill this gallery.</p>
+  </div>
+  <div class="gallery">
+    <div class="tile t1"><span><small>Photo 1</small>Reception</span></div>
+    <div class="tile t2"><span><small>Photo 2</small>Treatment room</span></div>
+    <div class="tile t3"><span><small>Photo 3</small>Wash &amp; ritual area</span></div>
+    <div class="tile t4"><span><small>Photo 4</small>Relaxation corner</span></div>
+  </div>
+</div></section>
+
+<section class="why"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Why Lumina</div>
+    <h2>Care you can feel.</h2>
+    <p>Three reasons guests make Lumina part of their week.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-item"><div class="num">01</div><h3>Unhurried, by design</h3><p>Appointments are spaced so nothing feels rushed — your technician stays with you from welcome to finish.</p></div>
+    <div class="why-item"><div class="num">02</div><h3>Gentle, clean products</h3><p>Scalp-friendly products chosen for sensitive skin, so every treatment nourishes instead of stripping.</p></div>
+    <div class="why-item"><div class="num">03</div><h3>Easy to fit in</h3><p>Open 7 days until 9 PM, with online booking in about a minute. Come after work, or on a quiet Sunday.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap"><div class="story">
+  <div>
+    <div class="kicker">Our Story</div>
+    <h2>A small spa with a simple idea.</h2>
+    <p>Lumina Head Spa &amp; Beauty opened in Maple with one belief: an hour of real quiet does more than rest your head — it resets your whole day.</p>
+    <p>Every ritual here is done slowly and by hand, in a warm, softly lit room. Come as you are; leave a little lighter.</p>
+    <a class="btn ghost" href="#book">Book your hour</a>
+  </div>
+  <div class="story-art"><div><div class="serif">“Slow hands,<br>warm water, quiet room.”</div><p style="margin-top:8px;font-size:13px;letter-spacing:.25em;text-transform:uppercase">Shop photo will go here</p></div></div>
+</div></div></section>
+
+<section class="reviews"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Guest Words</div>
+    <h2>What guests say.</h2>
+    <p>Your Google reviews will appear here once the site is live.</p>
+  </div>
+  <div class="rev-grid">
+    <div class="rev"><div class="stars">★★★★★</div><p>“So relaxing — my scalp felt brand new and I nearly fell asleep. Booking online took less than a minute.”</p><b>Sample review · Google</b></div>
+    <div class="rev"><div class="stars">★★★★★</div><p>“Beautiful, calm space and kind staff. The shoulder work at the end is the best part of my week now.”</p><b>Sample review · Google</b></div>
+    <div class="rev"><div class="stars">★★★★★</div><p>“Booked after work and left feeling completely reset. Easy parking, fair prices, lovely people.”</p><b>Sample review · Google</b></div>
+  </div>
+</div></section>
+
+<section id="book"><div class="wrap"><div class="book-grid">
+  <div class="book-info">
+    <div class="kicker">Online Booking</div>
+    <h2>Book in about a minute.</h2>
+    <p>Choose your treatment, your technician and a time that suits you. We confirm every booking personally.</p>
+    <ul>
+      <li><b>Hours</b> — Open 7 days, 10:00 AM – 9:00 PM</li>
+      <li><b>Technician</b> — Request a specific technician, or first available</li>
+      <li><b>Payment</b> — Nothing to pay online; pay at the shop</li>
+      <li><b>Questions?</b> — Call us at <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:500;text-decoration:none">647-368-8148</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h3>Book an appointment</h3>
+    <p class="sub">Lumina Head Spa &amp; Beauty · Maple</p>
+    <div class="fld"><label for="svc">1 · Choose a treatment</label>
+      <select id="svc">
+        <option value="">Select a treatment…</option>
+        <option>Express Refresh Head Spa — 30 min · $48</option>
+        <option>Deep Scalp Detox &amp; Care — 45 min · $68</option>
+        <option selected>Signature Head Spa Ritual — 60 min · $88</option>
+        <option>Aromatherapy Scalp &amp; Neck Ritual — 60 min · $98</option>
+        <option>Head Spa &amp; Shoulder Release — 75 min · $108</option>
+        <option>Head Spa &amp; Mini Facial — 90 min · $128</option>
+      </select></div>
+    <div class="fld"><label for="tech">2 · Choose a technician</label>
+      <select id="tech">
+        <option selected>First available</option>
+        <option>Technician 1</option>
+        <option>Technician 2</option>
+        <option>Technician 3</option>
+      </select></div>
+    <div class="fld"><label>3 · Pick a day</label><div class="chips" id="days"></div></div>
+    <div class="fld"><label>4 · Pick a time</label><div class="chips" id="times"></div></div>
+    <div class="fld"><label for="nm">5 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+    <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
+    <button class="btn" id="confirmBtn">Confirm Booking</button>
+    <p class="err" id="err">Please pick a day, a time, and add your name and phone number.</p>
+    <div class="confirm" id="confirmBox">
+      <h4>You're booked in.</h4>
+      <p id="confirmText"></p>
+      <p style="margin-top:8px;color:var(--muted);font-size:14px">The shop will confirm by phone shortly. Please arrive 5 minutes early.</p>
+    </div>
+    <p class="demo-note">Sample booking form — in the live version, bookings email the shop and the customer. No real booking is sent from this preview.</p>
+  </div>
+</div></div></section>
+
+<section class="visit" id="visit"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Visit Us</div>
+    <h2>Maple · Vaughan</h2>
+  </div>
+  <div class="visit-grid">
+    <div class="visit-item"><h3>Address</h3><p>9505 Keele Street, Unit 1A<br>Maple, ON L6A 1W3<br><a href="https://www.google.com/maps/search/?api=1&amp;query=9505+Keele+Street+Unit+1A+Maple+ON+L6A+1W3" target="_blank" rel="noopener">Get directions →</a></p></div>
+    <div class="visit-item"><h3>Hours</h3><p>Monday – Sunday<br>10:00 AM – 9:00 PM<br>Open 7 days a week</p></div>
+    <div class="visit-item"><h3>Contact</h3><p>Phone: <a href="tel:+16473688148">647-368-8148</a><br>Email: <a href="mailto:info@luminaheadspa.ca">info@luminaheadspa.ca</a><br>luminaheadspa.ca</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <a class="logo" href="#top">Lumina<small>Head Spa &amp; Beauty</small></a>
+  <div>9505 Keele Street, Unit 1A, Maple, ON L6A 1W3 · Open 7 days 10 AM – 9 PM · <a href="tel:+16473688148">647-368-8148</a></div>
+</div>
+<div class="credit">Preview sample prepared by Hifill Design Studio. Sample services, prices, reviews and photo placeholders will be replaced with the shop's real content before launch.</div>
+</footer>
+
+<script>
+(function(){
+  var daysEl=document.getElementById('days'), timesEl=document.getElementById('times');
+  var selDay=null, selTime=null;
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'short',month:'short',day:'numeric'});
+  var fmtFull=new Intl.DateTimeFormat('en-CA',{weekday:'long',month:'long',day:'numeric'});
+  var today=new Date();
+  for(var i=0;i<14;i++){
+    var d=new Date(today); d.setDate(today.getDate()+i);
+    var b=document.createElement('button'); b.type='button'; b.className='chip';
+    b.textContent=(i===0?'Today · ':'')+fmt.format(d);
+    b.dataset.label=fmtFull.format(d);
+    (function(btn){btn.addEventListener('click',function(){
+      daysEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+      btn.classList.add('sel'); selDay=btn.dataset.label;
+    });})(b);
+    daysEl.appendChild(b);
+  }
+  var times=['10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
+  times.forEach(function(t){
+    var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=t;
+    b.addEventListener('click',function(){
+      timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+      b.classList.add('sel'); selTime=t;
+    });
+    timesEl.appendChild(b);
+  });
+  document.getElementById('confirmBtn').addEventListener('click',function(){
+    var svc=document.getElementById('svc').value, tech=document.getElementById('tech').value,
+        nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
+        err=document.getElementById('err'), box=document.getElementById('confirmBox');
+    if(!svc||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
+    err.style.display='none';
+    document.getElementById('confirmText').textContent =
+      nm+' · '+svc.split(' — ')[0]+' with '+tech+' on '+selDay+' at '+selTime+'. We have your number as '+ph+'.';
+    box.style.display='block';
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+})();
+</script>
+</body>
+</html>
