@@ -127,7 +127,8 @@
   @media(max-width:860px){.story{grid-template-columns:1fr}}
   .story h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
   .story p{color:var(--muted);font-size:17px;margin-bottom:14px}
-  .story-art{background:linear-gradient(150deg,#e2d5ba,#c3ab7f);border-radius:18px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#4c4232;text-align:center;padding:20px}
+  .story-art{border-radius:18px;aspect-ratio:4/3;overflow:hidden}
+  .story-art img{width:100%;height:100%;object-fit:cover;display:block}
   .story-art .serif{font-size:28px;font-style:italic}
   .reviews{background:var(--cream2)}
   .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -288,13 +289,17 @@
   <div class="sec-head">
     <div class="kicker">Inside the Spa</div>
     <h2>A room made to slow down.</h2>
-    <p>Soft light, warm tones and quiet corners — a first look at the treatments waiting for you at Lumina.</p>
+    <p>Soft light, warm tones and quiet corners — take a look inside our Maple spa.</p>
   </div>
   <div class="gallery">
-    <div class="tile" style="background-image:url('svc-headspa.jpg')"><span><small>Treatment</small>Head Spa</span></div>
-    <div class="tile" style="background-image:url('svc-foot.jpg')"><span><small>Treatment</small>Foot Reflexology</span></div>
-    <div class="tile" style="background-image:url('svc-saltstone.jpg')"><span><small>Treatment</small>Salt Stone Therapy</span></div>
-    <div class="tile" style="background-image:url('svc-facial.jpg')"><span><small>Treatment</small>Facial Care</span></div>
+    <div class="tile" style="background-image:url('gallery-room.jpg')"><span><small>Inside</small>Treatment Room</span></div>
+    <div class="tile" style="background-image:url('gallery-basin.jpg')"><span><small>Inside</small>Head Spa Basin</span></div>
+    <div class="tile" style="background-image:url('gallery-styling.jpg')"><span><small>Inside</small>Styling Area</span></div>
+    <div class="tile" style="background-image:url('gallery-corner.jpg')"><span><small>Inside</small>Relaxation Corner</span></div>
+    <div class="tile" style="background-image:url('gallery-hall.jpg')"><span><small>Inside</small>Welcome Hall</span></div>
+    <div class="tile" style="background-image:url('gallery-analysis.jpg')"><span><small>Inside</small>Scalp Analysis</span></div>
+    <div class="tile" style="background-image:url('gallery-ritual.jpg')"><span><small>Inside</small>Ritual Details</span></div>
+    <div class="tile" style="background-image:url('gallery-clean.jpg')"><span><small>Inside</small>Disinfected Daily</span></div>
   </div>
 </div></section>
 
@@ -319,7 +324,7 @@
     <p>Every ritual here is done slowly and by hand, in a warm, softly lit room. Come as you are; leave a little lighter.</p>
     <a class="btn ghost" href="#book">Book your hour</a>
   </div>
-  <div class="story-art"><div><div class="serif">“Slow hands,<br>warm water, quiet room.”</div><p style="margin-top:8px;font-size:13px;letter-spacing:.25em;text-transform:uppercase">Shop photo will go here</p></div></div>
+  <div class="story-art"><img src="gallery-hall.jpg" alt="Inside Lumina Head Spa &amp; Beauty, Maple"></div>
 </div></div></section>
 
 <section class="reviews"><div class="wrap">
