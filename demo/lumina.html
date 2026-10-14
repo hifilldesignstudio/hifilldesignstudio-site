@@ -157,6 +157,26 @@
   .chip.sel{background:var(--brass);color:#fff;border-color:var(--brass)}
   .widget .btn{width:100%;text-align:center;margin-top:6px}
   .demo-note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
+  .step{display:none}
+  .step.on{display:block;animation:fadeUp .25s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .bk-summary{display:none;background:#171410;color:#e9e2d4;border-radius:12px;padding:11px 16px;font-size:14.5px;margin-bottom:18px;letter-spacing:.03em}
+  .bk-summary.on{display:block}
+  .bk-summary b{color:var(--gold);font-weight:500}
+  .cal{border:1px solid #d8cdb8;border-radius:14px;padding:14px;background:#fff}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cal-head .mname{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700}
+  .cal-nav{border:1px solid #d8cdb8;background:#fff;border-radius:8px;width:34px;height:34px;font-size:17px;cursor:pointer;line-height:1}
+  .cal-nav:hover{border-color:var(--brass)}
+  .cal-nav:disabled{opacity:.3;cursor:default}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .cal-dow{text-align:center;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:4px 0;font-weight:500}
+  .cal-day{border:1px solid #e7ddc9;background:#fffdf9;border-radius:9px;padding:9px 0;font-size:15px;cursor:pointer;font-family:'Jost',sans-serif;text-align:center}
+  .cal-day:hover{border-color:var(--brass)}
+  .cal-day.sel{background:var(--brass);color:#fff;border-color:var(--brass);font-weight:500}
+  .cal-day.off{opacity:.32;cursor:default;background:transparent;border-color:transparent}
+  .cal-day.today{box-shadow:inset 0 0 0 1px var(--brass)}
+  .cal-tz{text-align:center;font-size:12.5px;color:var(--muted);margin-top:9px;letter-spacing:.05em}
   .confirm{display:none;background:#eef2ea;border:1px solid #c8d4c2;border-radius:14px;padding:20px 22px;margin-top:18px}
   .confirm h4{font-family:'Cormorant Garamond',serif;font-size:23px;margin-bottom:6px}
   .confirm p{font-size:15.5px}
@@ -322,6 +342,8 @@
     <p>Choose your treatment and a time that suits you — no need to pick a technician, we arrange that for you on the day. We confirm every booking personally.</p>
     <ul>
       <li><b>Hours</b> — Open 7 days, 10:00 AM – 9:00 PM</li>
+      <li><b>Booking ahead</b> — You can book online up to 2 months in advance</li>
+      <li><b>Groups</b> — Book for up to 3 guests in one reservation</li>
       <li><b>Technicians</b> — No need to choose; bookings run on opening hours and we arrange your technician</li>
       <li><b>Payment</b> — Nothing to pay online; pay at the shop</li>
       <li><b>Questions?</b> — Call us at <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:500;text-decoration:none">647-368-8148</a></li>
@@ -330,35 +352,45 @@
   <div class="widget">
     <h3>Book an appointment</h3>
     <p class="sub">Lumina Head Spa &amp; Beauty · Maple</p>
+    <div class="bk-summary" id="bkSummary"></div>
     <div class="fld"><label for="svc">1 · Choose a treatment</label>
       <select id="svc">
         <option value="">Select a treatment…</option>
-        <option>Express Refresh Head Spa — 30 min · $48</option>
-        <option>Deep Scalp Detox &amp; Care — 45 min · $68</option>
-        <option selected>Signature Head Spa Ritual — 60 min · $88</option>
-        <option>Aromatherapy Scalp &amp; Neck Ritual — 60 min · $98</option>
-        <option>Head Spa &amp; Shoulder Release — 75 min · $108</option>
-        <option>Classic Foot Reflexology — 45 min · $55</option>
-        <option>Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
-        <option>Salt Stone Therapy — 60 min · $95</option>
-        <option>Salt Stone Full Ritual — 90 min · $125</option>
-        <option>Signature Facial — 60 min · $75</option>
-        <option>Head Spa &amp; Mini Facial — 90 min · $128</option>
+        <option data-min="30" data-price="48">Express Refresh Head Spa — 30 min · $48</option>
+        <option data-min="45" data-price="68">Deep Scalp Detox &amp; Care — 45 min · $68</option>
+        <option data-min="60" data-price="88" selected>Signature Head Spa Ritual — 60 min · $88</option>
+        <option data-min="60" data-price="98">Aromatherapy Scalp &amp; Neck Ritual — 60 min · $98</option>
+        <option data-min="75" data-price="108">Head Spa &amp; Shoulder Release — 75 min · $108</option>
+        <option data-min="45" data-price="55">Classic Foot Reflexology — 45 min · $55</option>
+        <option data-min="60" data-price="70">Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
+        <option data-min="60" data-price="95">Salt Stone Therapy — 60 min · $95</option>
+        <option data-min="90" data-price="125">Salt Stone Full Ritual — 90 min · $125</option>
+        <option data-min="60" data-price="75">Signature Facial — 60 min · $75</option>
+        <option data-min="90" data-price="128">Head Spa &amp; Mini Facial — 90 min · $128</option>
       </select></div>
-    <div class="fld"><label>2 · Pick a day</label><div class="chips" id="days"></div></div>
-    <div class="fld"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
-    <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
-    <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
-    <button class="btn" id="confirmBtn">Confirm Booking</button>
-    <p class="err" id="err">Please pick a day, a time, and add your name and phone number.</p>
+    <div class="fld step" id="stepCal"><label>2 · Pick a date</label>
+      <div class="cal">
+        <div class="cal-head"><button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">‹</button><div class="mname" id="calTitle"></div><button type="button" class="cal-nav" id="calNext" aria-label="Next month">›</button></div>
+        <div class="cal-grid" id="calDow"></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-tz">America/Toronto · Book up to 2 months ahead</div>
+      </div>
+    </div>
+    <div class="fld step" id="stepTime"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
+    <div class="step" id="stepDetails">
+      <div class="fld"><label>4 · How many guests?</label><div class="chips" id="guests"></div></div>
+      <div class="fld"><label for="nm">5 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+      <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
+      <button class="btn" id="confirmBtn">Confirm Booking</button>
+    </div>
+    <p class="err" id="err">Please complete each step: treatment, date, time, and your name and phone number.</p>
     <div class="confirm" id="confirmBox">
       <h4>You're booked in.</h4>
       <p id="confirmText"></p>
       <p style="margin-top:8px;color:var(--muted);font-size:14px">The shop will confirm by phone shortly. Please arrive 5 minutes early.</p>
     </div>
     <p class="demo-note">Sample booking form — in the live version, bookings email the shop and the customer. No real booking is sent from this preview.</p>
-  </div>
-</div></div></section>
+  </div></div></div></section>
 
 <section class="visit" id="visit"><div class="wrap">
   <div class="sec-head">
@@ -381,38 +413,111 @@
 
 <script>
 (function(){
-  var daysEl=document.getElementById('days'), timesEl=document.getElementById('times');
-  var selDay=null, selTime=null;
-  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'short',month:'short',day:'numeric'});
+  var WINDOW_DAYS = 60;          /* how far ahead guests can book */
+  var MAX_GUESTS  = 3;           /* max guests per booking (shop to confirm) */
+  var svcEl=document.getElementById('svc'),
+      sumEl=document.getElementById('bkSummary'),
+      stepCal=document.getElementById('stepCal'),
+      stepTime=document.getElementById('stepTime'),
+      stepDet=document.getElementById('stepDetails'),
+      grid=document.getElementById('calGrid'),
+      dowEl=document.getElementById('calDow'),
+      titleEl=document.getElementById('calTitle'),
+      prevB=document.getElementById('calPrev'),
+      nextB=document.getElementById('calNext'),
+      timesEl=document.getElementById('times'),
+      guestsEl=document.getElementById('guests');
+  var selDay=null, selDayLabel='', selTime=null, selGuests=1;
+  var today=new Date(); today.setHours(0,0,0,0);
+  var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
+  var viewY=today.getFullYear(), viewM=today.getMonth();
   var fmtFull=new Intl.DateTimeFormat('en-CA',{weekday:'long',month:'long',day:'numeric'});
-  var today=new Date();
-  for(var i=0;i<14;i++){
-    var d=new Date(today); d.setDate(today.getDate()+i);
-    var b=document.createElement('button'); b.type='button'; b.className='chip';
-    b.textContent=(i===0?'Today · ':'')+fmt.format(d);
-    b.dataset.label=fmtFull.format(d);
-    (function(btn){btn.addEventListener('click',function(){
-      daysEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
-      btn.classList.add('sel'); selDay=btn.dataset.label;
-    });})(b);
-    daysEl.appendChild(b);
+  var fmtMon=new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'});
+
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){
+    var c=document.createElement('div'); c.className='cal-dow'; c.textContent=d; dowEl.appendChild(c);
+  });
+
+  function svcName(){ var o=svcEl.options[svcEl.selectedIndex]; return svcEl.value? o.text.split(' — ')[0] : ''; }
+  function updateSummary(){
+    var o=svcEl.options[svcEl.selectedIndex];
+    if(!svcEl.value){ sumEl.className='bk-summary'; sumEl.innerHTML=''; return; }
+    var html='<b>'+svcName()+'</b> · '+o.dataset.min+' min · $'+o.dataset.price;
+    if(selDayLabel) html+=' · '+selDayLabel;
+    if(selTime) html+=' · '+selTime;
+    html+=' · '+selGuests+' guest'+(selGuests>1?'s':'');
+    sumEl.innerHTML=html; sumEl.className='bk-summary on';
   }
+
+  function renderCal(){
+    titleEl.textContent=fmtMon.format(new Date(viewY,viewM,1));
+    prevB.disabled = (viewY<today.getFullYear()) || (viewY===today.getFullYear() && viewM<=today.getMonth());
+    var firstOfLast=new Date(lastDay.getFullYear(),lastDay.getMonth(),1);
+    nextB.disabled = (new Date(viewY,viewM,1) >= firstOfLast);
+    grid.innerHTML='';
+    var first=new Date(viewY,viewM,1);
+    var lead=(first.getDay()+6)%7;               /* Monday-first offset */
+    var dim=new Date(viewY,viewM+1,0).getDate();
+    for(var i=0;i<lead;i++){ var e=document.createElement('div'); grid.appendChild(e); }
+    for(var d=1; d<=dim; d++){
+      (function(d){
+        var dt=new Date(viewY,viewM,d);
+        var b=document.createElement('button'); b.type='button'; b.className='cal-day'; b.textContent=d;
+        if(dt<today || dt>lastDay){ b.classList.add('off'); b.disabled=true; }
+        if(dt.getTime()===today.getTime()) b.classList.add('today');
+        if(selDay && dt.getTime()===selDay.getTime()) b.classList.add('sel');
+        b.addEventListener('click',function(){
+          selDay=dt; selDayLabel=fmtFull.format(dt);
+          grid.querySelectorAll('.cal-day').forEach(function(c){c.classList.remove('sel')});
+          b.classList.add('sel');
+          stepTime.classList.add('on'); updateSummary();
+          stepTime.scrollIntoView({behavior:'smooth',block:'nearest'});
+        });
+        grid.appendChild(b);
+      })(d);
+    }
+  }
+  prevB.addEventListener('click',function(){ viewM--; if(viewM<0){viewM=11;viewY--;} renderCal(); });
+  nextB.addEventListener('click',function(){ viewM++; if(viewM>11){viewM=0;viewY++;} renderCal(); });
+
   var times=['10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
   times.forEach(function(t){
     var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=t;
     b.addEventListener('click',function(){
       timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
       b.classList.add('sel'); selTime=t;
+      stepDet.classList.add('on'); updateSummary();
+      stepDet.scrollIntoView({behavior:'smooth',block:'nearest'});
     });
     timesEl.appendChild(b);
   });
+
+  for(var g=1; g<=MAX_GUESTS; g++){
+    (function(g){
+      var b=document.createElement('button'); b.type='button'; b.className='chip'+(g===1?' sel':'');
+      b.textContent=g+(g===1?' guest':' guests');
+      b.addEventListener('click',function(){
+        guestsEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+        b.classList.add('sel'); selGuests=g; updateSummary();
+      });
+      guestsEl.appendChild(b);
+    })(g);
+  }
+
+  svcEl.addEventListener('change',function(){
+    updateSummary();
+    if(svcEl.value){ stepCal.classList.add('on'); renderCal(); }
+  });
+  /* a treatment is pre-selected in the form — open the calendar straight away */
+  if(svcEl.value){ stepCal.classList.add('on'); renderCal(); updateSummary(); }
+
   document.getElementById('confirmBtn').addEventListener('click',function(){
-    var svc=document.getElementById('svc').value,        nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
+    var nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
         err=document.getElementById('err'), box=document.getElementById('confirmBox');
-    if(!svc||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
+    if(!svcEl.value||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
     document.getElementById('confirmText').textContent =
-      nm+' · '+svc.split(' — ')[0]+' on '+selDay+' at '+selTime+'. We have your number as '+ph+'.';
+      nm+' · '+svcName()+' on '+selDayLabel+' at '+selTime+' · '+selGuests+' guest'+(selGuests>1?'s':'')+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
