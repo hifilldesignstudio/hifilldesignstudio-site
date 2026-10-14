@@ -405,7 +405,7 @@
             <div class="cal-tz">America/Toronto · Book up to 1 month ahead</div>
           </div>
         </div>
-        <div class="fld step" id="stepTime" style="margin:0"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
+        <div class="fld step on" id="stepTime" style="margin:0"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
         <div class="step" id="stepDetails">
           <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
           <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
@@ -559,10 +559,11 @@
     }
   }
 
-  /* first treatment pre-selected — calendar ready straight away */
+  /* first treatment + today pre-selected — time slots visible straight away */
   var firstRow=document.querySelector('.trow.sel');
   if(firstRow){ picks=[firstRow]; }
-  renderCal(); updateSummary();
+  selDay=today; selDayLabel=fmtFull.format(today);
+  renderCal(); buildTimes(); stepTime.classList.add('on'); updateSummary();
 
   document.getElementById('confirmBtn').addEventListener('click',function(){
     var nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
