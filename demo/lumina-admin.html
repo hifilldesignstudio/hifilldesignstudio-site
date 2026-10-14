@@ -209,7 +209,7 @@
             <input type="date" id="blockDate" value="2026-12-25">
             <button class="act" id="blockBtn" style="white-space:nowrap">Block Date</button>
           </div>
-          <div id="blockList" style="margin-top:12px;font-size:14.5px;color:var(--muted)">Blocked dates: none yet</div>
+          <div id="blockList" style="margin-top:12px"></div>
         </div>
         <div class="card-box">
           <h3>Save</h3>
@@ -315,11 +315,31 @@
     ch.addEventListener('click', function(){ ch.classList.toggle('off'); });
   });
   var blocked=[];
+  function fmtDate(d){
+    var dt=new Date(d+'T12:00:00');
+    return dt.toLocaleDateString('en-CA',{weekday:'short', month:'short', day:'numeric', year:'numeric'});
+  }
+  function renderBlocked(){
+    var box=document.getElementById('blockList');
+    if(!blocked.length){ box.innerHTML='<span style="font-size:14.5px;color:var(--muted)">Blocked dates: none yet</span>'; return; }
+    box.innerHTML='';
+    blocked.slice().sort().forEach(function(d){
+      var row=document.createElement('div');
+      row.style.cssText='display:flex;justify-content:space-between;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin-bottom:8px;font-size:15px';
+      var label=document.createElement('span'); label.textContent=fmtDate(d);
+      var btn=document.createElement('button'); btn.className='icon-btn del'; btn.textContent='✕ Remove';
+      btn.addEventListener('click', function(){
+        blocked=blocked.filter(function(x){ return x!==d; });
+        renderBlocked(); toast('Date unblocked');
+      });
+      row.appendChild(label); row.appendChild(btn); box.appendChild(row);
+    });
+  }
+  renderBlocked();
   document.getElementById('blockBtn').addEventListener('click', function(){
     var d=document.getElementById('blockDate').value; if(!d) return;
-    if(blocked.indexOf(d)<0) blocked.push(d);
-    document.getElementById('blockList').textContent='Blocked dates: '+blocked.join(', ');
-    toast('✓ Blocked '+d);
+    if(blocked.indexOf(d)<0){ blocked.push(d); renderBlocked(); toast('✓ Blocked '+fmtDate(d)); }
+    else toast('That date is already blocked');
   });
   document.getElementById('saveSettings').addEventListener('click', function(){
     document.getElementById('setNote').textContent='✓ Saved — bookings now follow the new settings (demo: nothing really changes)';
