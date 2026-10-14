@@ -186,7 +186,9 @@
   .trow:hover{border-color:var(--brass)}
   .trow.sel{border-color:var(--brass-d);background:#fdf6ea;box-shadow:0 4px 14px rgba(146,114,52,.14)}
   .trow .tn{font-size:15.5px;color:var(--ink);font-weight:400;line-height:1.3}
-  .trow .tm{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .trow .td{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .trow .tp{text-align:right}
+  .trow .tmin{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:400;margin-top:3px}
   .trow .tp{font-size:15.5px;color:var(--brass-d);font-weight:600;white-space:nowrap}
   .trow .tp s{color:#b9a888;font-weight:400;font-size:13px;margin-right:5px}
   .trow .badge{display:none;font-size:10.5px;letter-spacing:.1em;background:var(--brass-d);color:#fff;border-radius:99px;padding:2px 8px;margin-left:8px;vertical-align:2px}
@@ -254,7 +256,6 @@
 <header class="site"><div class="wrap">
   <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
   <nav class="main">
-    <a href="#treatments">Treatments</a>
     <a href="#inside">Inside</a>
     <a href="#story">Why Us</a>
     <a href="#visit">Visit Us</a>
@@ -268,7 +269,7 @@
     <p class="lede">Warm water, slow hands and a calm room. Lumina is a head spa in Maple where every visit is a small reset — for your hair, your head and your day.</p>
     <div class="hero-cta">
       <a class="btn" href="#book">Book an Appointment</a>
-      <a class="btn ghost" href="#treatments">See Treatments &amp; Prices</a>
+      <a class="btn ghost" href="#book">See Treatments &amp; Book</a>
     </div>
     <div class="hero-meta">
       <span><b>Open 7 days</b><br>10:00 AM – 9:00 PM</span>
@@ -277,32 +278,7 @@
     </div>
   </div></div></section>
 
-<section class="prices" id="treatments"><div class="wrap">
-  <div class="sec-head">
-    <div class="kicker">Treatments &amp; Prices</div>
-    <h2>Our signature therapies.</h2>
-    <p>Four premium head therapies — each one includes added care products and device-assisted essence infusion, now at promotional prices. Foot reflexology, salt stone therapy and facial care follow below — everything can be booked online in about a minute.</p>
-  </div>
-  <img class="treat-banner" src="treat-banner.jpg" alt="Signature head spa therapies at Lumina">
-<div class="price-table">
-    <div class="price-cat">Head Spa</div>
-    <div class="price-row"><div><h3>Herbal Hot Compress Head Treatment</h3><p>Warm herbal compress ritual with ginger &amp; lemon oils.</p></div><div class="amt"><s class="was">$179</s> $149<small>90 MIN</small></div></div>
-    <div class="price-row"><div><h3>New Chinese-Style Wellness Head Therapy</h3><p>Chinese herbal decoction therapy for scalp &amp; balance.</p></div><div class="amt"><s class="was">$159</s> $129<small>75 MIN</small></div></div>
-    <div class="price-row"><div><h3>Aromatherapy Head Spa for Relaxation</h3><p>Aromatherapy scalp &amp; facial ritual for deep relaxation.</p></div><div class="amt"><s class="was">$119</s> $99<small>75 MIN</small></div></div>
-    <div class="price-row"><div><h3>Floral Head Spa</h3><p>Floral bath ritual for scalp, hair &amp; senses.</p></div><div class="amt"><s class="was">$159</s> $129<small>75 MIN</small></div></div>
-    <p class="promo-note">✦ Promotional prices — every signature therapy includes premium care products and device-assisted essence infusion.</p>
-    <div class="price-cat">Foot Reflexology</div>
-    <div class="price-row"><div><h3>Classic Foot Reflexology</h3><p>Warm soak and pressure-point foot massage.</p></div><div class="amt">$55<small>45 MIN</small></div></div>
-    <div class="price-row"><div><h3>Foot Reflexology &amp; Soak Ritual</h3><p>Extended soak, scrub and reflexology session.</p></div><div class="amt">$70<small>60 MIN</small></div></div>
-    <div class="price-cat">Himalayan Salt Stone Therapy</div>
-    <div class="price-row"><div><h3>Salt Stone Therapy</h3><p>Warm Himalayan salt stones for neck, shoulders and back.</p></div><div class="amt">$95<small>60 MIN</small></div></div>
-    <div class="price-row"><div><h3>Salt Stone Full Ritual</h3><p>The full-body salt stone ritual, unhurried.</p></div><div class="amt">$125<small>90 MIN</small></div></div>
-    <div class="price-cat">Facial Care</div>
-    <div class="price-row"><div><h3>Signature Facial</h3><p>Cleanse, hydrate and brighten — for calm, rested skin.</p></div><div class="amt">$75<small>60 MIN</small></div></div>
-    <div class="price-row"><div><h3>Head Spa &amp; Mini Facial</h3><p>The full head spa ritual paired with a gentle mini facial.</p></div><div class="amt">$128<small>90 MIN</small></div></div>
-  </div>
-  <p class="sample-note">Head spa therapies and prices are the shop's real ones. Foot, salt stone and facial prices are samples, pending the shop's price list.</p>
-</div></section>
+
 
 
 
@@ -372,6 +348,7 @@
       <li><b>Need assistance?</b> — Call us at <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:500;text-decoration:none">647-368-8148</a></li>
     </ul>
   </div>
+  <img class="treat-banner" src="treat-banner.jpg" alt="Signature head spa therapies at Lumina">
   <div class="widget">
     <h3>Book an appointment</h3>
     <p class="sub">Lumina Head Spa &amp; Beauty · Maple</p>
@@ -380,20 +357,22 @@
         <div class="pick-h">1 · Choose your treatment(s)</div>
         <div class="tlist" id="tlist">
       <div class="tgroup">Head Spa — Signature Therapies</div>
-      <button type="button" class="trow sel" data-min="90" data-price="149" data-name="Herbal Hot Compress Head Treatment"><span><span class="tn">Herbal Hot Compress Head Treatment</span><span class="badge">1st</span><span class="tm" style="display:block">90 min</span></span><span class="tp"><s>$179</s> $149</span></button>
-      <button type="button" class="trow" data-min="75" data-price="129" data-name="New Chinese-Style Wellness Head Therapy"><span><span class="tn">New Chinese-Style Wellness Head Therapy</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$159</s> $129</span></button>
-      <button type="button" class="trow" data-min="75" data-price="99" data-name="Aromatherapy Head Spa for Relaxation"><span><span class="tn">Aromatherapy Head Spa for Relaxation</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$119</s> $99</span></button>
-      <button type="button" class="trow" data-min="75" data-price="129" data-name="Floral Head Spa"><span><span class="tn">Floral Head Spa</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$159</s> $129</span></button>
+      <button type="button" class="trow sel" data-min="90" data-price="149" data-name="Herbal Hot Compress Head Treatment"><span class="tmain"><span class="tn">Herbal Hot Compress Head Treatment</span><span class="badge">1st</span><span class="td">Warm herbal compress ritual with ginger &amp; lemon oils.</span></span><span class="tp"><s>$179</s> $149<span class="tmin">90 MIN</span></span></button>
+      <button type="button" class="trow" data-min="75" data-price="129" data-name="New Chinese-Style Wellness Head Therapy"><span class="tmain"><span class="tn">New Chinese-Style Wellness Head Therapy</span><span class="badge"></span><span class="td">Chinese herbal decoction therapy for scalp &amp; balance.</span></span><span class="tp"><s>$159</s> $129<span class="tmin">75 MIN</span></span></button>
+      <button type="button" class="trow" data-min="75" data-price="99" data-name="Aromatherapy Head Spa for Relaxation"><span class="tmain"><span class="tn">Aromatherapy Head Spa for Relaxation</span><span class="badge"></span><span class="td">Aromatherapy scalp &amp; facial ritual for deep relaxation.</span></span><span class="tp"><s>$119</s> $99<span class="tmin">75 MIN</span></span></button>
+      <button type="button" class="trow" data-min="75" data-price="129" data-name="Floral Head Spa"><span class="tmain"><span class="tn">Floral Head Spa</span><span class="badge"></span><span class="td">Floral bath ritual for scalp, hair &amp; senses.</span></span><span class="tp"><s>$159</s> $129<span class="tmin">75 MIN</span></span></button>
       <div class="tgroup">Foot Reflexology</div>
-      <button type="button" class="trow" data-min="45" data-price="55" data-name="Classic Foot Reflexology"><span><span class="tn">Classic Foot Reflexology</span><span class="badge"></span><span class="tm" style="display:block">45 min</span></span><span class="tp">$55</span></button>
-      <button type="button" class="trow" data-min="60" data-price="70" data-name="Foot Reflexology & Soak Ritual"><span><span class="tn">Foot Reflexology &amp; Soak Ritual</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$70</span></button>
+      <button type="button" class="trow" data-min="45" data-price="55" data-name="Classic Foot Reflexology"><span class="tmain"><span class="tn">Classic Foot Reflexology</span><span class="badge"></span><span class="td">Warm soak and pressure-point foot massage.</span></span><span class="tp">$55<span class="tmin">45 MIN</span></span></button>
+      <button type="button" class="trow" data-min="60" data-price="70" data-name="Foot Reflexology & Soak Ritual"><span class="tmain"><span class="tn">Foot Reflexology &amp; Soak Ritual</span><span class="badge"></span><span class="td">Extended soak, scrub and reflexology session.</span></span><span class="tp">$70<span class="tmin">60 MIN</span></span></button>
       <div class="tgroup">Salt Stone Therapy</div>
-      <button type="button" class="trow" data-min="60" data-price="95" data-name="Salt Stone Therapy"><span><span class="tn">Salt Stone Therapy</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$95</span></button>
-      <button type="button" class="trow" data-min="90" data-price="125" data-name="Salt Stone Full Ritual"><span><span class="tn">Salt Stone Full Ritual</span><span class="badge"></span><span class="tm" style="display:block">90 min</span></span><span class="tp">$125</span></button>
+      <button type="button" class="trow" data-min="60" data-price="95" data-name="Salt Stone Therapy"><span class="tmain"><span class="tn">Salt Stone Therapy</span><span class="badge"></span><span class="td">Warm Himalayan salt stones for neck, shoulders and back.</span></span><span class="tp">$95<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="90" data-price="125" data-name="Salt Stone Full Ritual"><span class="tmain"><span class="tn">Salt Stone Full Ritual</span><span class="badge"></span><span class="td">The full-body salt stone ritual, unhurried.</span></span><span class="tp">$125<span class="tmin">90 MIN</span></span></button>
       <div class="tgroup">Facial &amp; Combos</div>
-      <button type="button" class="trow" data-min="60" data-price="75" data-name="Signature Facial"><span><span class="tn">Signature Facial</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$75</span></button>
-      <button type="button" class="trow" data-min="90" data-price="128" data-name="Head Spa & Mini Facial"><span><span class="tn">Head Spa &amp; Mini Facial</span><span class="badge"></span><span class="tm" style="display:block">90 min</span></span><span class="tp">$128</span></button>
+      <button type="button" class="trow" data-min="60" data-price="75" data-name="Signature Facial"><span class="tmain"><span class="tn">Signature Facial</span><span class="badge"></span><span class="td">Cleanse, hydrate and brighten — for calm, rested skin.</span></span><span class="tp">$75<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="90" data-price="128" data-name="Head Spa & Mini Facial"><span class="tmain"><span class="tn">Head Spa &amp; Mini Facial</span><span class="badge"></span><span class="td">The full head spa ritual paired with a gentle mini facial.</span></span><span class="tp">$128<span class="tmin">90 MIN</span></span></button>
         </div>
+        <p class="pick-note" style="color:var(--brass-d)">✦ Promotional prices — every signature therapy includes premium care products and device-assisted essence infusion.</p>
+        <p class="sample-note">Head spa therapies and prices are the shop's real ones. Foot, salt stone and facial prices are samples, pending the shop's price list.</p>
         <p class="pick-note">Tap a treatment to select it. Tap a second one and it runs right after the first, in the same visit — tap again to remove it.</p>
         <div class="bk-summary" id="bkSummary"></div>
       </div>
