@@ -261,7 +261,7 @@
     <p>Three reasons guests make Lumina part of their week.</p>
   </div>
   <div class="why-grid">
-    <div class="why-item"><div class="num">01</div><h3>Unhurried, by design</h3><p>Appointments are spaced so nothing feels rushed — your technician stays with you from welcome to finish.</p></div>
+    <div class="why-item"><div class="num">01</div><h3>Unhurried, by design</h3><p>Appointments are spaced so nothing feels rushed — the same caring hands stay with you from welcome to finish.</p></div>
     <div class="why-item"><div class="num">02</div><h3>Gentle, clean products</h3><p>Scalp-friendly products chosen for sensitive skin, so every treatment nourishes instead of stripping.</p></div>
     <div class="why-item"><div class="num">03</div><h3>Easy to fit in</h3><p>Open 7 days until 9 PM, with online booking in about a minute. Come after work, or on a quiet Sunday.</p></div>
   </div>
@@ -295,10 +295,10 @@
   <div class="book-info">
     <div class="kicker">Online Booking</div>
     <h2>Book in about a minute.</h2>
-    <p>Choose your treatment, your technician and a time that suits you. We confirm every booking personally.</p>
+    <p>Choose your treatment and a time that suits you — no need to pick a technician, we arrange that for you on the day. We confirm every booking personally.</p>
     <ul>
       <li><b>Hours</b> — Open 7 days, 10:00 AM – 9:00 PM</li>
-      <li><b>Technician</b> — Request a specific technician, or first available</li>
+      <li><b>Technicians</b> — No need to choose; bookings run on opening hours and we arrange your technician</li>
       <li><b>Payment</b> — Nothing to pay online; pay at the shop</li>
       <li><b>Questions?</b> — Call us at <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:500;text-decoration:none">647-368-8148</a></li>
     </ul>
@@ -316,16 +316,9 @@
         <option>Head Spa &amp; Shoulder Release — 75 min · $108</option>
         <option>Head Spa &amp; Mini Facial — 90 min · $128</option>
       </select></div>
-    <div class="fld"><label for="tech">2 · Choose a technician</label>
-      <select id="tech">
-        <option selected>First available</option>
-        <option>Technician 1</option>
-        <option>Technician 2</option>
-        <option>Technician 3</option>
-      </select></div>
-    <div class="fld"><label>3 · Pick a day</label><div class="chips" id="days"></div></div>
-    <div class="fld"><label>4 · Pick a time</label><div class="chips" id="times"></div></div>
-    <div class="fld"><label for="nm">5 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+    <div class="fld"><label>2 · Pick a day</label><div class="chips" id="days"></div></div>
+    <div class="fld"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
+    <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
     <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
     <button class="btn" id="confirmBtn">Confirm Booking</button>
     <p class="err" id="err">Please pick a day, a time, and add your name and phone number.</p>
@@ -385,13 +378,12 @@
     timesEl.appendChild(b);
   });
   document.getElementById('confirmBtn').addEventListener('click',function(){
-    var svc=document.getElementById('svc').value, tech=document.getElementById('tech').value,
-        nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
+    var svc=document.getElementById('svc').value,        nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
         err=document.getElementById('err'), box=document.getElementById('confirmBox');
     if(!svc||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
     document.getElementById('confirmText').textContent =
-      nm+' · '+svc.split(' — ')[0]+' with '+tech+' on '+selDay+' at '+selTime+'. We have your number as '+ph+'.';
+      nm+' · '+svc.split(' — ')[0]+' on '+selDay+' at '+selTime+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
