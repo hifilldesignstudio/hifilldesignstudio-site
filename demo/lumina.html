@@ -173,6 +173,26 @@
   .step{display:none}
   .step.on{display:block;animation:fadeUp .25s ease}
   @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .bk-pick{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;margin-top:6px}
+  .bk-side{display:flex;flex-direction:column;gap:18px}
+  .bk-side .step{display:none}
+  .bk-side .step.on{display:block}
+  .pick-h{font-family:'Jost',sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500}
+  .tlist{display:flex;flex-direction:column;gap:8px}
+  .tgroup{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-d);margin:10px 0 2px;font-weight:600}
+  .tgroup:first-child{margin-top:0}
+  .trow{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:13px;background:#fffdf9;cursor:pointer;font-family:'Jost',sans-serif;transition:border-color .15s,background .15s,box-shadow .15s}
+  .trow:hover{border-color:var(--brass)}
+  .trow.sel{border-color:var(--brass-d);background:#fdf6ea;box-shadow:0 4px 14px rgba(146,114,52,.14)}
+  .trow .tn{font-size:15.5px;color:var(--ink);font-weight:400;line-height:1.3}
+  .trow .tm{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .trow .tp{font-size:15.5px;color:var(--brass-d);font-weight:600;white-space:nowrap}
+  .trow .tp s{color:#b9a888;font-weight:400;font-size:13px;margin-right:5px}
+  .trow .badge{display:none;font-size:10.5px;letter-spacing:.1em;background:var(--brass-d);color:#fff;border-radius:99px;padding:2px 8px;margin-left:8px;vertical-align:2px}
+  .trow.sel .badge{display:inline-block}
+  .pick-note{font-size:13px;color:var(--muted);margin-top:10px}
+  .bk-summary{margin-top:14px}
+  @media(max-width:760px){.bk-pick{grid-template-columns:1fr}}
   .bk-summary{display:none;background:#171410;color:#e9e2d4;border-radius:12px;padding:11px 16px;font-size:14.5px;margin-bottom:18px;letter-spacing:.03em}
   .bk-summary.on{display:block}
   .bk-summary b{color:var(--gold);font-weight:500}
@@ -354,57 +374,54 @@
   <div class="widget">
     <h3>Book an appointment</h3>
     <p class="sub">Lumina Head Spa &amp; Beauty · Maple</p>
-    <div class="fld"><label for="svc">1 · Choose a treatment</label>
-      <select id="svc">
-        <option value="">Select a treatment…</option>
-        <option data-min="90" data-price="149" selected>Herbal Hot Compress Head Treatment — 90 min · $149 (reg. $179)</option>
-        <option data-min="75" data-price="129">New Chinese-Style Wellness Head Therapy — 75 min · $129 (reg. $159)</option>
-        <option data-min="75" data-price="99">Aromatherapy Head Spa for Relaxation — 75 min · $99 (reg. $119)</option>
-        <option data-min="75" data-price="129">Floral Head Spa — 75 min · $129 (reg. $159)</option>
-        <option data-min="45" data-price="55">Classic Foot Reflexology — 45 min · $55</option>
-        <option data-min="60" data-price="70">Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
-        <option data-min="60" data-price="95">Salt Stone Therapy — 60 min · $95</option>
-        <option data-min="90" data-price="125">Salt Stone Full Ritual — 90 min · $125</option>
-        <option data-min="60" data-price="75">Signature Facial — 60 min · $75</option>
-        <option data-min="90" data-price="128">Head Spa &amp; Mini Facial — 90 min · $128</option>
-      </select></div>
-    <div class="fld"><label for="svc2">Add a second treatment <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional — done right after the first, in the same visit)</span></label>
-      <select id="svc2">
-        <option value="">None — just one treatment</option>
-        <option data-min="90" data-price="149">Herbal Hot Compress Head Treatment — 90 min · $149 (reg. $179)</option>
-        <option data-min="75" data-price="129">New Chinese-Style Wellness Head Therapy — 75 min · $129 (reg. $159)</option>
-        <option data-min="75" data-price="99">Aromatherapy Head Spa for Relaxation — 75 min · $99 (reg. $119)</option>
-        <option data-min="75" data-price="129">Floral Head Spa — 75 min · $129 (reg. $159)</option>
-        <option data-min="45" data-price="55">Classic Foot Reflexology — 45 min · $55</option>
-        <option data-min="60" data-price="70">Foot Reflexology &amp; Soak Ritual — 60 min · $70</option>
-        <option data-min="60" data-price="95">Salt Stone Therapy — 60 min · $95</option>
-        <option data-min="90" data-price="125">Salt Stone Full Ritual — 90 min · $125</option>
-        <option data-min="60" data-price="75">Signature Facial — 60 min · $75</option>
-        <option data-min="90" data-price="128">Head Spa &amp; Mini Facial — 90 min · $128</option>
-      </select></div>
-    <div class="bk-summary" id="bkSummary"></div>
-    <div class="fld step" id="stepCal"><label>2 · Pick a date</label>
-      <div class="cal">
-        <div class="cal-head"><button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">‹</button><div class="mname" id="calTitle"></div><button type="button" class="cal-nav" id="calNext" aria-label="Next month">›</button></div>
-        <div class="cal-grid" id="calDow"></div>
-        <div class="cal-grid" id="calGrid"></div>
-        <div class="cal-tz">America/Toronto · Book up to 1 month ahead</div>
+    <div class="bk-pick">
+      <div>
+        <div class="pick-h">1 · Choose your treatment(s)</div>
+        <div class="tlist" id="tlist">
+      <div class="tgroup">Head Spa — Signature Therapies</div>
+      <button type="button" class="trow sel" data-min="90" data-price="149" data-name="Herbal Hot Compress Head Treatment"><span><span class="tn">Herbal Hot Compress Head Treatment</span><span class="badge">1st</span><span class="tm" style="display:block">90 min</span></span><span class="tp"><s>$179</s> $149</span></button>
+      <button type="button" class="trow" data-min="75" data-price="129" data-name="New Chinese-Style Wellness Head Therapy"><span><span class="tn">New Chinese-Style Wellness Head Therapy</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$159</s> $129</span></button>
+      <button type="button" class="trow" data-min="75" data-price="99" data-name="Aromatherapy Head Spa for Relaxation"><span><span class="tn">Aromatherapy Head Spa for Relaxation</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$119</s> $99</span></button>
+      <button type="button" class="trow" data-min="75" data-price="129" data-name="Floral Head Spa"><span><span class="tn">Floral Head Spa</span><span class="badge"></span><span class="tm" style="display:block">75 min</span></span><span class="tp"><s>$159</s> $129</span></button>
+      <div class="tgroup">Foot Reflexology</div>
+      <button type="button" class="trow" data-min="45" data-price="55" data-name="Classic Foot Reflexology"><span><span class="tn">Classic Foot Reflexology</span><span class="badge"></span><span class="tm" style="display:block">45 min</span></span><span class="tp">$55</span></button>
+      <button type="button" class="trow" data-min="60" data-price="70" data-name="Foot Reflexology & Soak Ritual"><span><span class="tn">Foot Reflexology &amp; Soak Ritual</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$70</span></button>
+      <div class="tgroup">Salt Stone Therapy</div>
+      <button type="button" class="trow" data-min="60" data-price="95" data-name="Salt Stone Therapy"><span><span class="tn">Salt Stone Therapy</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$95</span></button>
+      <button type="button" class="trow" data-min="90" data-price="125" data-name="Salt Stone Full Ritual"><span><span class="tn">Salt Stone Full Ritual</span><span class="badge"></span><span class="tm" style="display:block">90 min</span></span><span class="tp">$125</span></button>
+      <div class="tgroup">Facial &amp; Combos</div>
+      <button type="button" class="trow" data-min="60" data-price="75" data-name="Signature Facial"><span><span class="tn">Signature Facial</span><span class="badge"></span><span class="tm" style="display:block">60 min</span></span><span class="tp">$75</span></button>
+      <button type="button" class="trow" data-min="90" data-price="128" data-name="Head Spa & Mini Facial"><span><span class="tn">Head Spa &amp; Mini Facial</span><span class="badge"></span><span class="tm" style="display:block">90 min</span></span><span class="tp">$128</span></button>
+        </div>
+        <p class="pick-note">Tap a treatment to select it. Tap a second one and it runs right after the first, in the same visit — tap again to remove it.</p>
+        <div class="bk-summary" id="bkSummary"></div>
       </div>
-    </div>
-    <div class="fld step" id="stepTime"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
-    <div class="step" id="stepDetails">
-      <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
-      <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
-      <button class="btn" id="confirmBtn">Confirm Booking</button>
-    </div>
-    <p class="err" id="err">Please complete each step: treatment, date, time, and your name and phone number.</p>
-    <div class="confirm" id="confirmBox">
+      <div class="bk-side">
+        <div class="fld step on" id="stepCal" style="margin:0"><label>2 · Pick a date</label>
+          <div class="cal">
+            <div class="cal-head"><button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">‹</button><div class="mname" id="calTitle"></div><button type="button" class="cal-nav" id="calNext" aria-label="Next month">›</button></div>
+            <div class="cal-grid" id="calDow"></div>
+            <div class="cal-grid" id="calGrid"></div>
+            <div class="cal-tz">America/Toronto · Book up to 1 month ahead</div>
+          </div>
+        </div>
+        <div class="fld step" id="stepTime" style="margin:0"><label>3 · Pick a time</label><div class="chips" id="times"></div></div>
+        <div class="step" id="stepDetails">
+          <div class="fld"><label for="nm">4 · Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+          <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
+          <button class="btn" id="confirmBtn">Confirm Booking</button>
+        </div>
+        <p class="err" id="err">Please complete each step: treatment, date, time, and your name and phone number.</p>
+        <div class="confirm" id="confirmBox">
       <h4>You're booked in.</h4>
       <p id="confirmText"></p>
       <p style="margin-top:8px;color:var(--muted);font-size:14px">The shop will confirm by phone shortly. Please arrive 5 minutes early.</p>
     </div>
+      </div>
+    </div>
     <p class="demo-note">Sample booking form — in the live version, bookings email the shop and the customer. No real booking is sent from this preview.</p>
-  </div></div></div></section>
+  </div>
+</div></div></section>
 
 <section class="visit" id="visit"><div class="wrap">
   <div class="sec-head">
@@ -429,10 +446,7 @@
 <script>
 (function(){
   var WINDOW_DAYS = 30;          /* how far ahead guests can book (1 month) */
-  var svcEl=document.getElementById('svc'),
-      svc2El=document.getElementById('svc2'),
-      sumEl=document.getElementById('bkSummary'),
-      stepCal=document.getElementById('stepCal'),
+  var sumEl=document.getElementById('bkSummary'),
       stepTime=document.getElementById('stepTime'),
       stepDet=document.getElementById('stepDetails'),
       grid=document.getElementById('calGrid'),
@@ -441,6 +455,7 @@
       prevB=document.getElementById('calPrev'),
       nextB=document.getElementById('calNext'),
       timesEl=document.getElementById('times');
+  var picks=[];   /* selected treatment rows, in order (max 2) */
   var selDay=null, selDayLabel='', selTime=null, selEnd=null, selStartMin=null;
   var today=new Date(); today.setHours(0,0,0,0);
   var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
@@ -452,19 +467,36 @@
     var c=document.createElement('div'); c.className='cal-dow'; c.textContent=d; dowEl.appendChild(c);
   });
 
-  function svcName(){ var o=svcEl.options[svcEl.selectedIndex]; return svcEl.value? o.text.split(' — ')[0] : ''; }
-  function svc2Name(){ var o=svc2El.options[svc2El.selectedIndex]; return svc2El.value? o.text.split(' — ')[0] : ''; }
-  function durOf(el){ var o=el.options[el.selectedIndex]; return el.value? (parseInt(o.dataset.min,10)||0) : 0; }
-  function priceOf(el){ var o=el.options[el.selectedIndex]; return el.value? (parseInt(o.dataset.price,10)||0) : 0; }
+  function totalMin(){ return picks.reduce(function(a,r){return a+(parseInt(r.dataset.min,10)||0)},0); }
+  function totalPrice(){ return picks.reduce(function(a,r){return a+(parseInt(r.dataset.price,10)||0)},0); }
   function updateSummary(){
-    if(!svcEl.value){ sumEl.className='bk-summary'; sumEl.innerHTML=''; return; }
-    var totalMin=durOf(svcEl)+durOf(svc2El), totalPrice=priceOf(svcEl)+priceOf(svc2El);
-    var names=svcName()+(svc2El.value?' + '+svc2Name():'');
-    var html='<b>'+names+'</b> · '+totalMin+' min · $'+totalPrice;
+    if(!picks.length){ sumEl.className='bk-summary'; sumEl.innerHTML=''; return; }
+    var names=picks.map(function(r){return r.dataset.name}).join(' + ');
+    var html='<b>'+names+'</b> · '+totalMin()+' min · $'+totalPrice();
     if(selDayLabel) html+=' · '+selDayLabel;
     if(selTime) html+=' · '+selTime+(selEnd?' – '+selEnd:'');
     sumEl.innerHTML=html; sumEl.className='bk-summary on';
   }
+  function refreshBadges(){
+    document.querySelectorAll('.trow').forEach(function(r){
+      var idx=picks.indexOf(r), b=r.querySelector('.badge');
+      r.classList.toggle('sel', idx>=0);
+      if(b) b.textContent = idx===0 ? '1st' : (idx===1 ? '2nd' : '');
+    });
+  }
+  function onPickChange(){
+    selTime=null; selEnd=null; selStartMin=null; stepDet.classList.remove('on');
+    refreshBadges(); updateSummary();
+    if(selDay) buildTimes();
+  }
+  document.querySelectorAll('.trow').forEach(function(r){
+    r.addEventListener('click',function(){
+      var idx=picks.indexOf(r);
+      if(idx>=0){ picks.splice(idx,1); }
+      else { if(picks.length>=2) picks.shift(); picks.push(r); }
+      onPickChange();
+    });
+  });
 
   function renderCal(){
     titleEl.textContent=fmtMon.format(new Date(viewY,viewM,1));
@@ -490,7 +522,6 @@
           selTime=null; selEnd=null; stepDet.classList.remove('on');
           buildTimes();
           stepTime.classList.add('on'); updateSummary();
-          stepTime.scrollIntoView({behavior:'smooth',block:'nearest'});
         });
         grid.appendChild(b);
       })(d);
@@ -505,7 +536,7 @@
   }
   function buildTimes(){
     timesEl.innerHTML='';
-    var dur=durOf(svcEl)+durOf(svc2El); if(!dur) dur=60;
+    var dur=totalMin(); if(!dur) dur=60;
     var OPEN=10*60, CLOSE=21*60, STEP=30;
     var now=new Date(); var isToday = selDay && selDay.getTime()===today.getTime();
     var nowMin=now.getHours()*60+now.getMinutes();
@@ -517,7 +548,6 @@
           timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
           b.classList.add('sel'); selTime=fmtTime(st); selEnd=fmtTime(st+dur); selStartMin=st;
           stepDet.classList.add('on'); updateSummary();
-          stepDet.scrollIntoView({behavior:'smooth',block:'nearest'});
         });
         timesEl.appendChild(b);
       })(st);
@@ -529,25 +559,24 @@
     }
   }
 
-  function onSvcChange(){
-    selTime=null; selEnd=null; selStartMin=null; stepDet.classList.remove('on');
-    updateSummary();
-    if(svcEl.value){ stepCal.classList.add('on'); renderCal(); if(selDay) buildTimes(); }
-  }
-  svcEl.addEventListener('change',onSvcChange);
-  svc2El.addEventListener('change',onSvcChange);
-  /* a treatment is pre-selected in the form — open the calendar straight away */
-  if(svcEl.value){ stepCal.classList.add('on'); renderCal(); updateSummary(); }
+  /* first treatment pre-selected — calendar ready straight away */
+  var firstRow=document.querySelector('.trow.sel');
+  if(firstRow){ picks=[firstRow]; }
+  renderCal(); updateSummary();
 
   document.getElementById('confirmBtn').addEventListener('click',function(){
     var nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
         err=document.getElementById('err'), box=document.getElementById('confirmBox');
-    if(!svcEl.value||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
+    if(!picks.length||!selDay||!selTime||!nm||!ph){ err.style.display='block'; box.style.display='none'; return; }
     err.style.display='none';
-    var d1=durOf(svcEl), detail=svcName()+' '+selTime+' – '+fmtTime(selStartMin+d1);
-    if(svc2El.value) detail+=' · '+svc2Name()+' '+fmtTime(selStartMin+d1)+' – '+selEnd;
+    var t=selStartMin, parts=[];
+    picks.forEach(function(r){
+      var d=parseInt(r.dataset.min,10)||0;
+      parts.push(r.dataset.name+' '+fmtTime(t)+' – '+fmtTime(t+d));
+      t+=d;
+    });
     document.getElementById('confirmText').textContent =
-      nm+' · '+detail+' on '+selDayLabel+'. We have your number as '+ph+'.';
+      nm+' · '+parts.join(' · ')+' on '+selDayLabel+'. We have your number as '+ph+'.';
     box.style.display='block';
     box.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
