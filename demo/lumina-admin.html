@@ -335,7 +335,7 @@
     var list=document.getElementById('manualList');
     if(list.querySelector('p')) list.innerHTML='';
     var div=document.createElement('div'); div.className='booking done';
-    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone預約</span><div>'+treat+'</div><div>Phone: '+phone+'</div></div>';
+    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone booking</span><div>'+treat+'</div><div>Phone: '+phone+'</div></div>';
     list.appendChild(div);
     toast('✓ Phone booking added');
   });
