@@ -92,7 +92,7 @@
 </head>
 <body>
 
-<!-- 示範登入 -->
+<!-- Demo login -->
 <div id="login">
   <div class="login-card">
     <img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty">
@@ -104,7 +104,7 @@
   </div>
 </div>
 
-<!-- 後台主畫面 -->
+<!-- Admin app -->
 <div id="app">
   <header class="top"><div class="wrap">
     <img src="lumina-logo.svg" alt="Lumina">
@@ -120,7 +120,7 @@
 
   <main><div class="wrap">
 
-    <!-- 預約 -->
+    <!-- Bookings -->
     <section class="pane active" id="pane-bookings">
       <h2 class="pane-title">Bookings</h2>
       <p class="pane-sub">New bookings are emailed to info@luminaheadspa.ca and appear here. When you tap Confirm, the guest gets a confirmation.</p>
@@ -138,7 +138,7 @@
         <div class="booking" data-status="pending">
           <div class="time">4:30 PM<small>to 6:30 PM</small></div>
           <div class="info"><b>Emily W.</b> <span class="badge pending">Pending</span>
-            <div>Signature Head Spa Ritual + Signature Facial · 共 120 min · $163</div>
+            <div>Signature Head Spa Ritual + Signature Facial · 120 min total · $163</div>
             <div>Phone: 416-555-0187</div></div>
           <div class="actions"><button class="act confirm">Confirm</button><button class="act cancel">Cancel</button></div>
         </div>
@@ -213,7 +213,7 @@
         </div>
         <div class="card-box">
           <h3>Save</h3>
-          <p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">所有Hours &amp; Settings㩒儲存先生效。</p>
+          <p style="color:var(--muted);font-size:14.5px;margin-bottom:12px">Tap save to apply these settings.</p>
           <button class="btn" id="saveSettings">Save Settings</button>
           <div class="save-note" id="setNote"></div>
         </div>
@@ -222,7 +222,7 @@
 
     <!-- Phone Booking -->
     <section class="pane" id="pane-manual">
-      <h2 class="pane-title">Phone Booking（Phone預約）</h2>
+      <h2 class="pane-title">Add a Phone Booking</h2>
       <p class="pane-sub">When a guest books by phone, enter it here. It sits with the online bookings so times never clash.</p>
       <div class="card-box">
         <div class="grid2">
@@ -236,7 +236,7 @@
         </div>
         <button class="btn" id="mAdd" style="margin-top:16px">Add Booking</button>
       </div>
-      <div class="day-head">已加入嘅Phone預約</div>
+      <div class="day-head">Phone bookings added</div>
       <div id="manualList"><p style="color:var(--muted);font-size:14.5px">None yet — try adding one above.</p></div>
     </section>
 
@@ -244,7 +244,7 @@
   <p class="foot-note">This is a demo — all data above is sample and nothing you tap goes live. The real version will sit behind a password on luminaheadspa.ca and sync instantly.</p>
 </div>
 
-<div id="toast">✓ 搞掂</div>
+<div id="toast">✓ Done</div>
 
 <script>
   function toast(msg){
@@ -284,7 +284,7 @@
     if(cBtn) cBtn.addEventListener('click', function(){
       b.setAttribute('data-status','confirmed'); b.classList.add('done');
       badge.textContent='Confirmed'; badge.className='badge confirmed';
-      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('✓ Confirmed，會通知客人');
+      b.querySelector('.actions').innerHTML=''; refreshPending(); toast('✓ Confirmed — the guest will be notified');
     });
     if(xBtn) xBtn.addEventListener('click', function(){
       b.setAttribute('data-status','cancelled'); b.classList.add('done');
@@ -301,13 +301,13 @@
   treatBody.querySelectorAll('.del').forEach(bindDel);
   document.getElementById('addTreat').addEventListener('click', function(){
     var tr=document.createElement('tr');
-    tr.innerHTML='<td><input placeholder="新Treatment name"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="0"></td><td><button class="icon-btn del">Delete</button></td>';
+    tr.innerHTML='<td><input placeholder="New treatment name"></td><td><input class="mini" type="number" value="60"></td><td><input class="mini" type="number" value="0"></td><td><button class="icon-btn del">Delete</button></td>';
     treatBody.appendChild(tr); bindDel(tr.querySelector('.del'));
     tr.querySelector('input').focus();
   });
   document.getElementById('saveTreat').addEventListener('click', function(){
     document.getElementById('treatNote').textContent='✓ Saved — the website is updated (demo: nothing really changes)';
-    toast('✓ Treatment已儲存');
+    toast('✓ Treatments saved');
   });
 
   /* settings */
@@ -337,7 +337,7 @@
     var div=document.createElement('div'); div.className='booking done';
     div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone預約</span><div>'+treat+'</div><div>Phone: '+phone+'</div></div>';
     list.appendChild(div);
-    toast('✓ Phone預約已加入');
+    toast('✓ Phone booking added');
   });
 </script>
 </body>
