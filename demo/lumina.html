@@ -234,7 +234,8 @@
   #toTop.show{opacity:1;pointer-events:auto}
   #toTop:hover{background:var(--gold);color:#171410}
   .treat-banner{width:100%;height:auto;border-radius:18px;display:block;margin-bottom:28px;box-shadow:0 18px 40px rgba(60,45,20,.18)}
-  .cards.sig{grid-template-columns:repeat(2,1fr)}
+  .cards.sig{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:1020px){.cards.sig{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.cards.sig{grid-template-columns:1fr}}
   .card .price s{color:var(--muted);font-weight:400;font-size:15px;margin-right:5px}
   .card .promo{color:var(--brass-d);font-size:13.5px;font-weight:600;letter-spacing:.02em;margin-top:9px}
@@ -281,8 +282,8 @@
 <section class="prices" id="treatments"><div class="wrap">
   <div class="sec-head">
     <div class="kicker">Featured Treatments</div>
-    <h2>Our signature therapies.</h2>
-    <p>Four premium head therapies — each one includes added care products and device-assisted essence infusion.</p>
+    <h2>Our most-loved treatments.</h2>
+    <p>Our four signature head therapies, plus guest-favourite facials and massage — every signature therapy includes added care products and device-assisted essence infusion.</p>
   </div>
   <div style="position:relative;margin:4px 0 28px"><img src="banner-hydrafacial.jpg?v=20261015" alt="HydraFacial — cleanse, exfoliate, hydrate. A refreshing facial for smooth, hydrated skin." style="width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 18px 44px rgba(60,45,20,.20)"><a href="#book" onclick="document.querySelectorAll('#tlist .trow.sel').forEach(function(r){r.click()});var t=document.querySelector('#tlist .trow[data-name=\'Hydrafacial\']');if(t&&!t.classList.contains('sel'))t.click();document.getElementById('book').scrollIntoView({behavior:'smooth'});return false" style="position:absolute;left:50%;bottom:20px;transform:translateX(-50%);background:var(--brass);color:#fff;font-weight:600;font-size:16.5px;letter-spacing:.04em;padding:12px 34px;border-radius:999px;text-decoration:none;box-shadow:0 10px 26px rgba(60,45,20,.35);white-space:nowrap">Book this →</a></div>
   <div class="cards sig">
@@ -298,6 +299,21 @@
     <div class="card"><img class="card-photo" src="treat-floral.jpg" alt="Floral Head Spa"><h3>Floral Head Spa</h3>
       <p>A floral bath ritual for scalp and hair that engages the senses — promotes circulation, relieves fatigue and headaches, and lifts mood and mental tension.</p>
       <div class="meta"><span>75 min</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="gallery-basin.jpg" alt="Holographic Head Spa"><h3>Holographic Head Spa</h3>
+      <p>A calming holographic head spa ritual for scalp, hair and mind.</p>
+      <div class="meta"><span>60 min</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="gallery-analysis.jpg" alt="Nourishing Scalp Cleansing Treatment"><h3>Nourishing Scalp Cleansing Treatment</h3>
+      <p>A deep scalp cleanse with nourishing care for a balanced, refreshed scalp.</p>
+      <div class="meta"><span>60 min</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="svc-facial.jpg" alt="Deep Cleansing &amp; Firming Facial"><h3>Deep Cleansing &amp; Firming Facial</h3>
+      <p>Deep-cleanse and firming care for clear, smooth skin.</p>
+      <div class="meta"><span>60 min</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="card-hydrafacial.jpg" alt="Hydrafacial"><h3>Hydrafacial</h3>
+      <p>Bubble deep cleanse, gentle exfoliation, essence infusion and an ice-cool finish.</p>
+      <div class="meta"><span>90 min</span></div><a href="#book">Book this →</a></div>
+    <div class="card"><img class="card-photo" src="gallery-corner.jpg" alt="Swedish Massage for Two"><h3>Swedish Massage for Two</h3>
+      <p>Two guests together — share a 60-minute Swedish massage side by side.</p>
+      <div class="meta"><span>60 min</span></div><a href="#book">Book this →</a></div>
   </div>
   <p class="sample-note">Head spa therapies above are the shop's real treatments and prices. Foot, salt stone and facial prices further down are samples, pending the shop's price list.</p>
 </div>
@@ -331,6 +347,7 @@
       <button type="button" class="trow" data-min="60" data-price="88" data-name="Nourishing Scalp Cleansing Treatment"><span class="tmain"><span class="tn">Nourishing Scalp Cleansing Treatment</span><span class="badge"></span><span class="td">A deep scalp cleanse with nourishing care for a balanced, refreshed scalp.</span></span><span class="tp">$88<span class="tmin">60 MIN</span></span></button>
       <div class="tgroup">Facial</div>
       <button type="button" class="trow" data-min="60" data-price="68" data-name="Deep Cleansing &amp; Firming Facial"><span class="tmain"><span class="tn">Deep Cleansing &amp; Firming Facial</span><span class="badge"></span><span class="td">Deep-cleanse and firming care for clear, smooth skin.</span></span><span class="tp">$68<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="60" data-price="108" data-name="Probiotic Skincare Treatment"><span class="tmain"><span class="tn">Probiotic Skincare Treatment</span><span class="badge"></span><span class="td">Soothes sensitivity and helps repair the skin barrier.</span></span><span class="tp">$108<span class="tmin">60 MIN</span></span></button>
       <button type="button" class="trow" data-min="90" data-price="128" data-name="Hydrafacial"><span class="tmain"><span class="tn">Hydrafacial</span><span class="badge"></span><span class="td">Performed with our Signature Deep-Clean Device: bubble deep cleanse, gentle fruit-acid and salicylic exfoliation, essence infusion and an ice-cool finish — pores look refined; skin smooth, hydrated and calm.</span></span><span class="tp">$128<span class="tmin">90 MIN</span></span></button>
       <div class="tgroup">Massage</div>
       <button type="button" class="trow" data-min="60" data-price="78" data-name="Swedish Massage"><span class="tmain"><span class="tn">Swedish Massage</span><span class="badge"></span><span class="td">Classic flowing strokes for full-body relaxation.</span></span><span class="tp">$78<span class="tmin">60 MIN</span></span></button>
