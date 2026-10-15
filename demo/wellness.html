@@ -45,7 +45,8 @@
   .btn.ghost{background:transparent;color:var(--ink);border-color:#c9bda6}
   .hero-photo{border-radius:18px;overflow:hidden;box-shadow:0 24px 50px rgba(60,45,20,.22);border:1px solid #d9c9a8}
   .hero-photo img{display:block;width:100%;height:auto}
-  .card .card-photo{width:100%;height:185px;object-fit:cover;border-radius:12px}
+  .card .card-photo{width:100%;height:185px;border-radius:12px;overflow:hidden}
+  .card-photo img{width:100%;height:100%;object-fit:cover;display:block}
   .cards{grid-template-columns:repeat(2,1fr)}
   @media(max-width:860px){.cards{grid-template-columns:1fr}}
   .price-cat{padding:15px 26px 13px;background:#f6efe1;border-bottom:1px solid var(--line);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass-d);font-weight:600}
@@ -60,11 +61,11 @@
   .hero{padding:0;position:relative;overflow:hidden;background:#14110d;display:flex;align-items:center;min-height:660px}
   .hero::before{content:"";position:absolute;inset:0;background:
     linear-gradient(90deg, rgba(15,12,8,.86) 0%, rgba(15,12,8,.62) 44%, rgba(15,12,8,.18) 78%, rgba(15,12,8,.30) 100%),
-    url('lumina-hero2.jpg') center 72%/cover no-repeat}
+    url('serenity-hero.jpg') center 72%/cover no-repeat}
   .hero .wrap{position:relative;z-index:2;width:100%;padding-top:72px;padding-bottom:72px}
   .hero .hero-text{max-width:640px}
   @media(max-width:860px){
-    .hero::before{background:linear-gradient(180deg, rgba(15,12,8,.88) 0%, rgba(15,12,8,.66) 60%, rgba(15,12,8,.55) 100%), url('lumina-hero2.jpg') 78% 68%/cover no-repeat}
+    .hero::before{background:linear-gradient(180deg, rgba(15,12,8,.88) 0%, rgba(15,12,8,.66) 60%, rgba(15,12,8,.55) 100%), url('serenity-hero.jpg') 78% 68%/cover no-repeat}
     .hero .wrap{padding-top:56px;padding-bottom:56px}
   }
   .hero h1{font-size:clamp(48px,6vw,78px);margin:16px 0 20px;color:#fdf6e3}
@@ -297,12 +298,12 @@
     <p>Six guest favourites — and in the booking below, you pick the therapist who will look after you.</p>
   </div>
   <div class="cards">
-    <article class="card"><div class="card-photo"><img src="treat-herbal.jpg" alt="Signature Head Spa Ritual"></div><div class="card-body"><h3>Signature Head Spa Ritual</h3><p>Warm herbal ritual that melts away scalp, neck and shoulder tension.</p><div class="card-meta"><span>75 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
-    <article class="card"><div class="card-photo"><img src="treat-aroma.jpg" alt="Aromatherapy Massage"></div><div class="card-body"><h3>Aromatherapy Massage</h3><p>Slow, flowing massage with warm essential oils chosen for your mood.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
-    <article class="card"><div class="card-photo"><img src="gallery-room.jpg" alt="Deep Tissue Massage"></div><div class="card-body"><h3>Deep Tissue Massage</h3><p>Firm, focused pressure for tight backs, shoulders and legs.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
-    <article class="card"><div class="card-photo"><img src="lumina-svc-saltstone.jpg" alt="Hot Stone Therapy"></div><div class="card-body"><h3>Hot Stone Therapy</h3><p>Heated basalt stones ease deep muscle tension and calm the mind.</p><div class="card-meta"><span>90 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
-    <article class="card"><div class="card-photo"><img src="treat-floral.jpg" alt="Radiance Facial"></div><div class="card-body"><h3>Radiance Facial</h3><p>A brightening facial that leaves skin fresh, hydrated and glowing.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
-    <article class="card"><div class="card-photo"><img src="lumina-svc-foot.jpg" alt="Foot Reflexology"></div><div class="card-body"><h3>Foot Reflexology</h3><p>Pressure-point foot therapy that restores the whole body.</p><div class="card-meta"><span>45 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-headspa.jpg" alt="Signature Head Spa Ritual"></div><div class="card-body"><h3>Signature Head Spa Ritual</h3><p>Warm herbal ritual that melts away scalp, neck and shoulder tension.</p><div class="card-meta"><span>75 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-aroma.jpg" alt="Aromatherapy Massage"></div><div class="card-body"><h3>Aromatherapy Massage</h3><p>Slow, flowing massage with warm essential oils chosen for your mood.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-deep.jpg" alt="Deep Tissue Massage"></div><div class="card-body"><h3>Deep Tissue Massage</h3><p>Firm, focused pressure for tight backs, shoulders and legs.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-stone.jpg" alt="Hot Stone Therapy"></div><div class="card-body"><h3>Hot Stone Therapy</h3><p>Heated basalt stones ease deep muscle tension and calm the mind.</p><div class="card-meta"><span>90 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-facial.jpg" alt="Radiance Facial"></div><div class="card-body"><h3>Radiance Facial</h3><p>A brightening facial that leaves skin fresh, hydrated and glowing.</p><div class="card-meta"><span>60 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
+    <article class="card"><div class="card-photo"><img src="serenity-t-foot.jpg" alt="Foot Reflexology"></div><div class="card-body"><h3>Foot Reflexology</h3><p>Pressure-point foot therapy that restores the whole body.</p><div class="card-meta"><span>45 minutes</span></div><a class="card-link" href="#book">Book this →</a></div></article>
   </div>
 </div></section>
 
@@ -387,14 +388,14 @@
     <p>Soft light, warm tones and quiet corners — take a look inside our Toronto spa.</p>
   </div>
   <div class="gallery">
-    <div class="tile" style="background-image:url('gallery-room.jpg')"><span><small>Inside</small>Treatment Room</span></div>
-    <div class="tile" style="background-image:url('gallery-basin.jpg')"><span><small>Inside</small>Head Spa Basin</span></div>
-    <div class="tile" style="background-image:url('gallery-styling.jpg')"><span><small>Inside</small>Styling Area</span></div>
-    <div class="tile" style="background-image:url('gallery-corner.jpg')"><span><small>Inside</small>Relaxation Corner</span></div>
-    <div class="tile" style="background-image:url('gallery-hall.jpg')"><span><small>Inside</small>Welcome Hall</span></div>
-    <div class="tile" style="background-image:url('gallery-analysis.jpg')"><span><small>Inside</small>Scalp Analysis</span></div>
-    <div class="tile" style="background-image:url('gallery-ritual.jpg')"><span><small>Inside</small>Ritual Details</span></div>
-    <div class="tile" style="background-image:url('gallery-clean.jpg')"><span><small>Inside</small>Disinfected Daily</span></div>
+    <div class="tile" style="background-image:url('serenity-hero.jpg')"><span><small>Inside</small>Treatment Room</span></div>
+    <div class="tile" style="background-image:url('serenity-t-headspa.jpg')"><span><small>Inside</small>Head Spa Basin</span></div>
+    <div class="tile" style="background-image:url('serenity-g-shelf.jpg')"><span><small>Inside</small>Care Shelf</span></div>
+    <div class="tile" style="background-image:url('serenity-t-aroma.jpg')"><span><small>Inside</small>Relaxation Corner</span></div>
+    <div class="tile" style="background-image:url('serenity-g-plant.jpg')"><span><small>Inside</small>Welcome Corner</span></div>
+    <div class="tile" style="background-image:url('serenity-t-facial.jpg')"><span><small>Inside</small>Ritual Details</span></div>
+    <div class="tile" style="background-image:url('serenity-t-stone.jpg')"><span><small>Inside</small>Warm Details</span></div>
+    <div class="tile" style="background-image:url('serenity-t-deep.jpg')"><span><small>Inside</small>Quiet Corner</span></div>
   </div>
 </div></section>
 
@@ -406,7 +407,7 @@
     <p>Every ritual here is done slowly and by hand, in a warm, softly lit room. Come as you are; leave a little lighter.</p>
     <a class="btn ghost" href="#book">Book your hour</a>
   </div>
-  <div class="story-art"><img src="gallery-hall.jpg" alt="Inside Serenity Wellness Spa, Toronto"></div>
+  <div class="story-art"><img src="serenity-hero.jpg" alt="Inside Serenity Wellness Spa, Toronto"></div>
 </div></div></section>
 
 <section class="reviews"><div class="wrap">
