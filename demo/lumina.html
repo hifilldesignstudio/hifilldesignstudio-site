@@ -315,6 +315,13 @@
   .fld textarea{resize:vertical;min-height:58px}
   .trow .addbtn{flex:0 0 auto;align-self:center;margin-left:12px;border:1.5px solid var(--brass);color:var(--brass-d);border-radius:999px;padding:6px 15px;font-size:13.5px;font-weight:500;white-space:nowrap}
   .trow.sel .addbtn{background:var(--brass);color:#fff}
+
+  /* treatment rows: price on line 1, Add/Remove pill on its own line 2, right column aligned (2026-10-15) */
+  .trow{display:grid;grid-template-columns:minmax(0,1fr) 94px;grid-template-areas:'main price' 'main btn';align-items:start;column-gap:12px}
+  .trow .tmain{grid-area:main}
+  .trow .tp{grid-area:price;text-align:right}
+  .trow .addbtn{grid-area:btn;justify-self:stretch;margin:7px 0 0;text-align:center;align-self:start}
+  @media(max-width:560px){ .trow{grid-template-columns:minmax(0,1fr) 84px} }
 </style>
 </head>
 <body>
