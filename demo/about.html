@@ -331,6 +331,30 @@
     <div class="visit-item"><h3>Contact</h3><p>Phone: <a href="tel:+16473688148">647-368-8148</a><br>Email: <a href="mailto:info@luminaheadspa.ca">info@luminaheadspa.ca</a><br>luminaheadspa.ca</p></div>
   </div>
 </div></section>
+<section id="message"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Send a Message</div>
+    <h2>Questions? Write to us.</h2>
+    <p>Ask about a treatment, a group visit or anything else — we reply within one business day.</p>
+  </div>
+  <style>
+    .cform{max-width:640px}
+    .cform input,.cform textarea{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+    .cform textarea{resize:vertical;min-height:110px}
+  </style>
+  <form class="cform" id="cform" novalidate>
+    <div class="fld"><label for="cn">Your name</label><input type="text" id="cn" autocomplete="name"></div>
+    <div class="fld"><label for="ce">Email</label><input type="email" id="ce" autocomplete="email"></div>
+    <div class="fld"><label for="cp">Phone <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><input type="tel" id="cp" autocomplete="tel"></div>
+    <div class="fld"><label for="cm">Message</label><textarea id="cm"></textarea></div>
+    <input type="text" id="cweb" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="err" id="cerr" style="display:none"></p>
+    <button class="btn" type="submit" id="cbtn" disabled style="opacity:.55">Send Message</button>
+    <p id="cnote" style="color:var(--muted);font-size:14px;margin-top:10px">Online messages open very soon — for anything urgent, please call <a href="tel:+16473688148" style="color:var(--brass-d)">647-368-8148</a> or email <a href="mailto:info@luminaheadspa.ca" style="color:var(--brass-d)">info@luminaheadspa.ca</a>.</p>
+    <p id="cok" style="display:none;color:#2e7d4f;font-size:15.5px;margin-top:10px">✓ Thank you — your message is on its way. We will reply within one business day.</p>
+  </form>
+</div></section>
+
 <section style="padding-top:0"><div class="wrap"><div class="map-frame"><iframe title="Map — Lumina Head Spa &amp; Beauty, 9505 Keele Street, Maple" src="https://www.google.com/maps?q=9505+Keele+Street,+Unit+1A,+Maple,+ON+L6A+1W3&amp;output=embed" loading="lazy"></iframe></div><div style="text-align:center;margin:32px 0 8px"><a class="btn" href="tel:+16473688148">Call 647-368-8148</a> <a class="more-link" href="lumina.html#book" style="margin-left:18px;font-size:16px">Book an appointment →</a></div></div></section>
 <footer><div class="wrap">
   <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
@@ -342,6 +366,37 @@
 <script>
   var toTopBtn=document.getElementById('toTop');
   if(toTopBtn){ window.addEventListener('scroll',function(){ toTopBtn.classList.toggle('show', window.scrollY>500); }); toTopBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); }); }
+</script>
+<script>
+(function(){
+  var form=document.getElementById('cform'); if(!form) return;
+  var btn=document.getElementById('cbtn'), note=document.getElementById('cnote'),
+      err=document.getElementById('cerr'), ok=document.getElementById('cok'), live=false;
+  function showErr(t){ err.textContent=t; err.style.display='block'; }
+  if(window.fetch){
+    fetch('api/public.php?action=health').then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.live){ live=true; btn.disabled=false; btn.style.opacity=''; note.style.display='none'; }
+    }).catch(function(){});
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!live){ note.style.display='block'; return; }
+    var name=document.getElementById('cn').value.trim(), email=document.getElementById('ce').value.trim(),
+        phone=document.getElementById('cp').value.trim(), msg=document.getElementById('cm').value.trim();
+    err.style.display='none'; ok.style.display='none';
+    if(!name || !msg || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showErr('Please add your name, a valid email and your message.'); return; }
+    btn.disabled=true; btn.textContent='Sending…';
+    fetch('api/public.php?action=contact', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name:name, email:email, phone:phone, message:msg, website:document.getElementById('cweb').value})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        btn.disabled=false; btn.textContent='Send Message';
+        if(j.ok){ form.reset(); ok.style.display='block'; }
+        else showErr(j.error || 'Something went wrong — please try again, or call us at 647-368-8148.');
+      })
+      .catch(function(){ btn.disabled=false; btn.textContent='Send Message'; showErr('We could not send that just now — please try again, or call us at 647-368-8148.'); });
+  });
+})();
 </script>
 </body>
 </html>
