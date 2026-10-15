@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About &amp; Visit · Lumina Head Spa &amp; Beauty — Maple, Vaughan</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<meta name="description" content="About Lumina Head Spa & Beauty in Maple, Vaughan: our story, address, opening hours, map and directions. Open 7 days, 10 AM to 9 PM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ef; --cream2:#f3ecdf; --ink:#2e2a25; --muted:#7a7266;
+    --brass:#a98548; --brass-d:#8a6c38; --gold:#c9a35c; --sage:#8a9a8b; --line:#e3d9c8;
+    --card:#fffdf9; --deep:#171410;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-weight:300}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.12}
+  img{max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:11px;color:var(--brass);font-weight:500}
+  section{padding:84px 0}
+  .sec-head{max-width:640px;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(32px,4.4vw,46px);margin:10px 0 12px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* header */
+  .topbar{background:var(--deep);color:#e9e2d4;font-size:13px;letter-spacing:.06em}
+  .topbar .wrap{display:flex;justify-content:space-between;gap:14px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .topbar a{color:#e9e2d4;text-decoration:none}
+  header.site{position:sticky;top:0;background:rgba(20,17,13,.97);backdrop-filter:blur(8px);border-bottom:1px solid #3a332a;z-index:50}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;gap:16px}
+  .logo{text-decoration:none;line-height:0}
+  .logo img{height:50px;width:auto;display:block}
+  @media(max-width:860px){.logo img{height:36px}}
+  nav.main{display:flex;gap:26px;align-items:center}
+  nav.main a{color:#e9e2d4;text-decoration:none;font-size:15px;letter-spacing:.04em}
+  nav.main a:hover{color:var(--gold)}
+  .btn{display:inline-block;background:var(--brass);color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:15px;letter-spacing:.06em;font-weight:500;border:1px solid var(--brass);cursor:pointer;transition:.2s}
+  .btn:hover{background:var(--brass-d);border-color:var(--brass-d)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:#c9bda6}
+  .hero-photo{border-radius:18px;overflow:hidden;box-shadow:0 24px 50px rgba(60,45,20,.22);border:1px solid #d9c9a8}
+  .hero-photo img{display:block;width:100%;height:auto}
+  .card .card-photo{width:100%;height:185px;object-fit:cover;border-radius:12px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .price-cat{padding:15px 26px 13px;background:#f6efe1;border-bottom:1px solid var(--line);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass-d);font-weight:600}
+  .tile{background-size:cover;background-position:center}
+  .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,10,0) 45%,rgba(20,16,10,.55))}
+  footer .logo img{height:44px}
+  .btn.ghost:hover{border-color:var(--brass);color:var(--brass-d)}
+  nav.main .btn{padding:9px 20px}
+  @media(max-width:860px){nav.main a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{padding:0;position:relative;overflow:hidden;background:#14110d;display:flex;align-items:center;min-height:660px}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(90deg, rgba(15,12,8,.86) 0%, rgba(15,12,8,.62) 44%, rgba(15,12,8,.18) 78%, rgba(15,12,8,.30) 100%),
+    url('lumina-hero2.jpg') center 72%/cover no-repeat}
+  .hero .wrap{position:relative;z-index:2;width:100%;padding-top:72px;padding-bottom:72px}
+  .hero .hero-text{max-width:640px}
+  @media(max-width:860px){
+    .hero::before{background:linear-gradient(180deg, rgba(15,12,8,.88) 0%, rgba(15,12,8,.66) 60%, rgba(15,12,8,.55) 100%), url('lumina-hero2.jpg') 78% 68%/cover no-repeat}
+    .hero .wrap{padding-top:56px;padding-bottom:56px}
+  }
+  .hero h1{font-size:clamp(48px,6vw,78px);margin:16px 0 20px;color:#fdf6e3}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .kicker{color:var(--gold)}
+  .hero p.lede{font-size:21px;color:#eae1cd;max-width:560px;margin-bottom:32px}
+  .hero .kicker{font-size:12.5px}
+  .hero .btn{padding:14px 32px;font-size:16px}
+  .hero .hero-meta{font-size:15.5px;gap:32px}
+  .hero .btn.ghost{color:#f3ead8;border-color:rgba(243,234,216,.55)}
+  .hero .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .hero .hero-meta{color:#cfc4ab}
+  .hero .hero-meta b{color:#fdf6e3}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .hero-meta{display:flex;gap:26px;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .hero-meta b{color:var(--ink);font-weight:500}
+  .hero-art{position:relative}
+  .arch{background:linear-gradient(170deg,#e7dbc4,#d9c8a6 55%,#c9b184);border-radius:999px 999px 18px 18px;aspect-ratio:4/5;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative}
+  .arch::before{content:"";position:absolute;inset:16px;border:1px solid rgba(255,255,255,.55);border-radius:inherit}
+  .arch::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,251,240,.85),rgba(255,251,240,0) 65%);top:6%;left:50%;transform:translateX(-50%)}
+  .arch .arch-cap{position:relative;z-index:2;text-align:center;color:#4c4232;padding:26px}
+  .arch .arch-cap .serif{font-size:30px;font-style:italic}
+  .arch .arch-cap span{display:block;font-size:12px;letter-spacing:.3em;text-transform:uppercase;margin-top:6px}
+  .hero-badge{position:absolute;bottom:22px;left:-14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 18px;box-shadow:0 14px 30px rgba(90,75,45,.13);font-size:14px}
+  .hero-badge b{display:block;font-family:'Cormorant Garamond',serif;font-size:19px}
+  @media(max-width:860px){.hero-badge{left:8px}}
+
+  /* treatments */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;gap:10px}
+  .card .num{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--brass);font-size:19px}
+  .card h3{font-size:25px}
+  .card p{color:var(--muted);font-size:15.5px;flex:1}
+  .card .meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;font-size:15px}
+  .card .price{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700}
+  .card a{color:var(--brass-d);text-decoration:none;font-weight:500;letter-spacing:.05em;font-size:14px}
+  .sample-note{font-size:13px;color:var(--muted);margin-top:16px;font-style:italic}
+
+  /* price list */
+  .prices{background:var(--cream2)}
+  .price-table{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .price-row{display:flex;justify-content:space-between;gap:18px;padding:19px 26px;border-bottom:1px solid var(--line);align-items:baseline}
+  .price-row:last-child{border-bottom:none}
+  .price-row h3{font-size:21px}
+  .price-row p{color:var(--muted);font-size:14.5px}
+  .price-row .amt{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;white-space:nowrap}
+  .price-row .amt small{display:block;font-family:'Jost',sans-serif;font-weight:300;font-size:12.5px;color:var(--muted);text-align:right;letter-spacing:.08em}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:860px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  .tile{border-radius:16px;aspect-ratio:1/1.15;display:flex;align-items:flex-end;padding:16px;color:#fff;position:relative;overflow:hidden}
+  .tile span{font-size:14px;letter-spacing:.05em;position:relative;z-index:2}
+  .tile small{display:block;font-size:11.5px;opacity:.85;letter-spacing:.14em;text-transform:uppercase}
+  .t1{background:linear-gradient(165deg,#cbb489,#a98548)}
+  .t2{background:linear-gradient(165deg,#a9b6a4,#77896f)}
+  .t3{background:linear-gradient(165deg,#d8c6a5,#b3986d)}
+  .t4{background:linear-gradient(165deg,#b7a58e,#8d7c64)}
+
+  /* why / story / reviews */
+  .why{background:var(--deep);color:#efe9dc}
+  .why .sec-head p{color:#c9c0ac}
+  .why .kicker{color:#d3af6f}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.why-grid{grid-template-columns:1fr}}
+  .why-item{border:1px solid #4c473d;border-radius:18px;padding:28px 26px;background:#38352f}
+  .why-item .num{font-family:'Cormorant Garamond',serif;font-style:italic;color:#d3af6f;font-size:20px}
+  .why-item h3{font-size:24px;margin:8px 0}
+  .why-item p{color:#c9c0ac;font-size:15.5px}
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:860px){.story{grid-template-columns:1fr}}
+  .story h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
+  .story p{color:var(--muted);font-size:17px;margin-bottom:14px}
+  .story-art{border-radius:18px;aspect-ratio:4/3;overflow:hidden}
+  .story-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .story-art .serif{font-size:28px;font-style:italic}
+  .reviews{background:var(--cream2)}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.rev-grid{grid-template-columns:1fr}}
+  .rev{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .rev .stars{color:var(--brass);letter-spacing:.2em;margin-bottom:10px}
+  .rev p{font-size:16px;color:#4c463d}
+  .rev b{display:block;margin-top:14px;font-weight:500;font-size:14.5px}
+
+  /* booking */
+  .book-info{max-width:820px;margin:0 auto 34px;text-align:center}
+  .book-info ul{display:flex;flex-wrap:wrap;gap:4px 36px;justify-content:center}
+  .bk-side .cal{max-width:450px;width:100%;margin:0 auto}
+  .book-info h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
+  .book-info p{color:var(--muted);font-size:17px;margin-bottom:16px}
+  .book-info ul{list-style:none;margin-top:8px}
+  .book-info li{padding:4px 0;font-size:16px}
+  .book-info li b{font-weight:500}
+  .widget{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 40px rgba(90,75,45,.08)}
+  .widget h3{font-size:24px;margin-bottom:4px}
+  .widget .sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-weight:500}
+  select,input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid #d8cdb8;background:#fff;border-radius:999px;padding:8px 15px;font-size:14.5px;cursor:pointer;font-family:'Jost',sans-serif}
+  .chip:hover{border-color:var(--brass)}
+  .chip.sel{background:var(--brass);color:#fff;border-color:var(--brass)}
+  .widget .btn{width:100%;text-align:center;margin-top:6px}
+  .demo-note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
+  .step{display:none}
+  .step.on{display:block;animation:fadeUp .25s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .bk-pick{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;margin-top:6px}
+  .bk-side{display:flex;flex-direction:column;gap:18px}
+  .bk-side .step{display:none}
+  .bk-side .step.on{display:block}
+  .pick-h{font-family:'Jost',sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500}
+  .tlist{display:flex;flex-direction:column;gap:8px}
+  .tgroup{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-d);margin:10px 0 2px;font-weight:600}
+  .tgroup:first-child{margin-top:0}
+  .trow{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:13px;background:#fffdf9;cursor:pointer;font-family:'Jost',sans-serif;transition:border-color .15s,background .15s,box-shadow .15s}
+  .trow:hover{border-color:var(--brass)}
+  .trow.sel{border-color:var(--brass-d);background:#fdf6ea;box-shadow:0 4px 14px rgba(146,114,52,.14)}
+  .trow .tn{font-size:15.5px;color:var(--ink);font-weight:400;line-height:1.3}
+  .trow .td{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .trow .tp{text-align:right}
+  .trow .tmin{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--muted);font-weight:400;margin-top:3px}
+  .trow .tp{font-size:15.5px;color:var(--brass-d);font-weight:600;white-space:nowrap}
+  .trow .tp s{color:#b9a888;font-weight:400;font-size:13px;margin-right:5px}
+  .trow .badge{display:none;font-size:10.5px;letter-spacing:.1em;background:var(--brass-d);color:#fff;border-radius:99px;padding:2px 8px;margin-left:8px;vertical-align:2px}
+  .trow.sel .badge{display:inline-block}
+  .pick-note{font-size:13px;color:var(--muted);margin-top:10px}
+  .bk-summary{margin-top:14px}
+  @media(max-width:760px){.bk-pick{grid-template-columns:1fr}}
+  .bk-summary{display:none;background:#171410;color:#e9e2d4;border-radius:12px;padding:11px 16px;font-size:14.5px;margin-bottom:18px;letter-spacing:.03em}
+  .bk-summary.on{display:block}
+  .bk-summary b{color:var(--gold);font-weight:500}
+  .cal{border:1px solid #d8cdb8;border-radius:14px;padding:14px;background:#fff}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cal-head .mname{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700}
+  .cal-nav{border:1px solid #d8cdb8;background:#fff;border-radius:8px;width:34px;height:34px;font-size:17px;cursor:pointer;line-height:1}
+  .cal-nav:hover{border-color:var(--brass)}
+  .cal-nav:disabled{opacity:.3;cursor:default}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .cal-dow{text-align:center;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:4px 0;font-weight:500}
+  .cal-day{border:1px solid #e7ddc9;background:#fffdf9;border-radius:9px;padding:9px 0;font-size:15px;cursor:pointer;font-family:'Jost',sans-serif;text-align:center}
+  .cal-day:hover{border-color:var(--brass)}
+  .cal-day.sel{background:var(--brass);color:#fff;border-color:var(--brass);font-weight:500}
+  .cal-day.off{opacity:.32;cursor:default;background:transparent;border-color:transparent}
+  .cal-day.today{box-shadow:inset 0 0 0 1px var(--brass)}
+  .cal-tz{text-align:center;font-size:12.5px;color:var(--muted);margin-top:9px;letter-spacing:.05em}
+  .confirm{display:none;background:#eef2ea;border:1px solid #c8d4c2;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .confirm h4{font-family:'Cormorant Garamond',serif;font-size:23px;margin-bottom:6px}
+  .confirm p{font-size:15.5px}
+  .err{display:none;color:#a33d2a;font-size:14px;margin-top:10px}
+
+  /* visit / footer */
+  .visit{background:var(--cream2)}
+  .visit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.visit-grid{grid-template-columns:1fr}}
+  .visit-item h3{font-size:22px;margin-bottom:8px}
+  .visit-item p{color:#5c554a;font-size:16.5px}
+  .visit-item a{color:var(--brass-d);text-decoration:none;font-weight:500}
+  footer{background:var(--deep);color:#c9c0ac;padding:44px 0 34px;font-size:14.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer .logo{color:#efe9dc}
+  footer a{color:#e9e2d4}
+  .credit{max-width:1120px;margin:22px auto 0;padding:18px 22px 0;border-top:1px solid #4c473d;font-size:12.5px;color:#8f8776}
+  #toTop{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(20,17,13,.88);color:var(--gold);font-size:20px;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  #toTop.show{opacity:1;pointer-events:auto}
+  #toTop:hover{background:var(--gold);color:#171410}
+  .treat-banner{width:100%;height:auto;border-radius:18px;display:block;margin-bottom:28px;box-shadow:0 18px 40px rgba(60,45,20,.18)}
+  .cards.sig{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:1020px){.cards.sig{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.cards.sig{grid-template-columns:1fr}}
+  .card .price s{color:var(--muted);font-weight:400;font-size:15px;margin-right:5px}
+  .card .promo{color:var(--brass-d);font-size:13.5px;font-weight:600;letter-spacing:.02em;margin-top:9px}
+  .price-row .amt .was{font-size:16.5px;color:var(--muted);font-weight:400;margin-right:7px}
+  .promo-note{padding:13px 26px 17px;color:var(--brass-d);font-size:14px;font-weight:500}
+  /* treatments: 3 across */
+  .cards{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:1020px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+  /* --- multi-page additions (2026-10-15) --- */
+  .hero-slides{position:absolute;inset:0;z-index:0}
+  .hslide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.1s ease}
+  .hslide.on{opacity:1}
+  .hero::before{z-index:1;background:linear-gradient(90deg, rgba(15,12,8,.86) 0%, rgba(15,12,8,.62) 44%, rgba(15,12,8,.18) 78%, rgba(15,12,8,.30) 100%)}
+  .hero-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;display:flex;gap:8px;z-index:3}
+  .hero-dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(253,246,227,.45);cursor:pointer;padding:0}
+  .hero-dots button.on{background:var(--gold)}
+  .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid rgba(253,246,227,.5);background:rgba(20,17,13,.35);color:#fdf6e3;font-size:20px;cursor:pointer;line-height:1}
+  .hero-arrow.prev{left:18px}
+  .hero-arrow.next{right:18px}
+  @media(max-width:860px){.hero-arrow{display:none}}
+  .page-head{padding:58px 0 6px;text-align:center}
+  .page-head h1{font-size:clamp(36px,4.6vw,54px)}
+  .page-head p{color:var(--muted);max-width:660px;margin:12px auto 0;font-size:16.5px;line-height:1.55}
+  .menu-group{margin-top:40px}
+  .menu-group h2{font-size:27px;margin-bottom:4px}
+  .group-note{color:var(--muted);font-size:14.5px;margin-bottom:6px}
+  .menu-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 18px;border:1.5px solid var(--line);border-radius:14px;background:#fffdf9;margin-top:10px}
+  .menu-row .mn{font-size:17px;color:var(--ink)}
+  .menu-row .md{display:block;font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45;max-width:620px}
+  .menu-row .mp{text-align:right;white-space:nowrap;margin-left:auto}
+  .menu-row .mp .pr{font-size:17px;color:var(--brass-d);font-weight:600}
+  .menu-row .mp .pr s{color:#b9a888;font-weight:400;font-size:14px;margin-right:5px}
+  .menu-row .mp .min{display:block;font-size:11px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+  .btn.sm{padding:9px 22px;font-size:14.5px}
+  @media(max-width:640px){.menu-row{flex-wrap:wrap}.menu-row .mp{margin-left:0;text-align:left}}
+  .more-link{color:var(--brass-d);font-weight:600;letter-spacing:.02em;text-decoration:none}
+  .more-link:hover{text-decoration:underline}
+  .tile.wide{aspect-ratio:2.4/1;grid-column:1/-1}
+  .map-frame{border-radius:18px;overflow:hidden;margin-top:26px;box-shadow:0 14px 34px rgba(60,45,20,.14)}
+  .map-frame iframe{width:100%;height:340px;border:0;display:block}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>Head Spa &amp; Beauty · Maple, Vaughan</span>
+  <span>Open 7 days · 10:00 AM – 9:00 PM &nbsp;·&nbsp; <a href="tel:+16473688148">647-368-8148</a></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="logo" href="lumina.html"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
+  <nav class="main">
+    <a href="treatments.html">Treatments</a>
+    <a href="lumina.html#why">Why Lumina</a>
+    <a href="inside.html">Inside</a>
+    <a href="about.html">About &amp; Visit</a>
+    <a class="btn" href="lumina.html#book">Book Now</a>
+  </nav>
+</div></header>
+<section id="story"><div class="wrap"><div class="story">
+  <div>
+    <div class="kicker">Our Story</div>
+    <h2>A small spa with a simple idea.</h2>
+    <p>Lumina Head Spa &amp; Beauty opened in Maple with one belief: an hour of real quiet does more than rest your head — it resets your whole day.</p>
+    <p>Every ritual here is done slowly and by hand, in a warm, softly lit room. Come as you are; leave a little lighter.</p>
+    <a class="btn ghost" href="lumina.html#book">Book your hour</a>
+  </div>
+  <div class="story-art"><img src="gallery-hall.jpg" alt="Inside Lumina Head Spa &amp; Beauty, Maple"></div>
+</div></div></section>
+
+<section class="visit" id="visit"><div class="wrap">
+  <div class="sec-head">
+    <div class="kicker">Visit Us</div>
+    <h2>Maple · Vaughan</h2>
+  </div>
+  <div class="visit-grid">
+    <div class="visit-item"><h3>Address</h3><p>9505 Keele Street, Unit 1A<br>Maple, ON L6A 1W3<br><a href="https://www.google.com/maps/search/?api=1&amp;query=9505+Keele+Street+Unit+1A+Maple+ON+L6A+1W3" target="_blank" rel="noopener">Get directions →</a></p></div>
+    <div class="visit-item"><h3>Hours</h3><p>Monday – Sunday<br>10:00 AM – 9:00 PM<br>Open 7 days a week</p></div>
+    <div class="visit-item"><h3>Contact</h3><p>Phone: <a href="tel:+16473688148">647-368-8148</a><br>Email: <a href="mailto:info@luminaheadspa.ca">info@luminaheadspa.ca</a><br>luminaheadspa.ca</p></div>
+  </div>
+</div></section>
+<section style="padding-top:0"><div class="wrap"><div class="map-frame"><iframe title="Map — Lumina Head Spa &amp; Beauty, 9505 Keele Street, Maple" src="https://www.google.com/maps?q=9505+Keele+Street,+Unit+1A,+Maple,+ON+L6A+1W3&amp;output=embed" loading="lazy"></iframe></div><div style="text-align:center;margin:32px 0 8px"><a class="btn" href="tel:+16473688148">Call 647-368-8148</a> <a class="more-link" href="lumina.html#book" style="margin-left:18px;font-size:16px">Book an appointment →</a></div></div></section>
+<footer><div class="wrap">
+  <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
+  <div>9505 Keele Street, Unit 1A, Maple, ON L6A 1W3 · Open 7 days 10 AM – 9 PM · <a href="tel:+16473688148">647-368-8148</a></div>
+</div>
+<div class="credit">Preview sample prepared by Hifill Design Studio. Sample services, prices, reviews and photo placeholders will be replaced with the shop's real content before launch.</div>
+</footer>
+<button id="toTop" aria-label="Back to top" title="Back to top">&#8593;</button>
+<script>
+  var toTopBtn=document.getElementById('toTop');
+  if(toTopBtn){ window.addEventListener('scroll',function(){ toTopBtn.classList.toggle('show', window.scrollY>500); }); toTopBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); }); }
+</script>
+</body>
+</html>

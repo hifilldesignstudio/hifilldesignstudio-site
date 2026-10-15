@@ -245,6 +245,39 @@
   .cards{grid-template-columns:repeat(3,1fr)}
   @media(max-width:1020px){.cards{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){.cards{grid-template-columns:1fr}}
+
+  /* --- multi-page additions (2026-10-15) --- */
+  .hero-slides{position:absolute;inset:0;z-index:0}
+  .hslide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.1s ease}
+  .hslide.on{opacity:1}
+  .hero::before{z-index:1;background:linear-gradient(90deg, rgba(15,12,8,.86) 0%, rgba(15,12,8,.62) 44%, rgba(15,12,8,.18) 78%, rgba(15,12,8,.30) 100%)}
+  .hero-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;display:flex;gap:8px;z-index:3}
+  .hero-dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(253,246,227,.45);cursor:pointer;padding:0}
+  .hero-dots button.on{background:var(--gold)}
+  .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid rgba(253,246,227,.5);background:rgba(20,17,13,.35);color:#fdf6e3;font-size:20px;cursor:pointer;line-height:1}
+  .hero-arrow.prev{left:18px}
+  .hero-arrow.next{right:18px}
+  @media(max-width:860px){.hero-arrow{display:none}}
+  .page-head{padding:58px 0 6px;text-align:center}
+  .page-head h1{font-size:clamp(36px,4.6vw,54px)}
+  .page-head p{color:var(--muted);max-width:660px;margin:12px auto 0;font-size:16.5px;line-height:1.55}
+  .menu-group{margin-top:40px}
+  .menu-group h2{font-size:27px;margin-bottom:4px}
+  .group-note{color:var(--muted);font-size:14.5px;margin-bottom:6px}
+  .menu-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 18px;border:1.5px solid var(--line);border-radius:14px;background:#fffdf9;margin-top:10px}
+  .menu-row .mn{font-size:17px;color:var(--ink)}
+  .menu-row .md{display:block;font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45;max-width:620px}
+  .menu-row .mp{text-align:right;white-space:nowrap;margin-left:auto}
+  .menu-row .mp .pr{font-size:17px;color:var(--brass-d);font-weight:600}
+  .menu-row .mp .pr s{color:#b9a888;font-weight:400;font-size:14px;margin-right:5px}
+  .menu-row .mp .min{display:block;font-size:11px;letter-spacing:.14em;color:var(--muted);margin-top:2px}
+  .btn.sm{padding:9px 22px;font-size:14.5px}
+  @media(max-width:640px){.menu-row{flex-wrap:wrap}.menu-row .mp{margin-left:0;text-align:left}}
+  .more-link{color:var(--brass-d);font-weight:600;letter-spacing:.02em;text-decoration:none}
+  .more-link:hover{text-decoration:underline}
+  .tile.wide{aspect-ratio:2.4/1;grid-column:1/-1}
+  .map-frame{border-radius:18px;overflow:hidden;margin-top:26px;box-shadow:0 14px 34px rgba(60,45,20,.14)}
+  .map-frame iframe{width:100%;height:340px;border:0;display:block}
 </style>
 </head>
 <body>
@@ -255,17 +288,17 @@
 </div></div>
 
 <header class="site"><div class="wrap">
-  <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
+  <a class="logo" href="lumina.html"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
   <nav class="main">
-    <a href="#treatments">Treatments</a>
-    <a href="#why">Why Lumina</a>
-    <a href="#inside">Inside</a>
-    <a href="#visit">Visit Us</a>
+    <a href="treatments.html">Treatments</a>
+    <a href="lumina.html#why">Why Lumina</a>
+    <a href="inside.html">Inside</a>
+    <a href="about.html">About &amp; Visit</a>
     <a class="btn" href="#book">Book Now</a>
   </nav>
 </div></header>
 
-<section class="hero" id="top"><div class="wrap"><div class="hero-text">
+<section class="hero" id="top"><div class="hero-slides" aria-hidden="true"><div class="hslide on" style="background-image:url('lumina-hero2.jpg');background-position:center 72%"></div><div class="hslide" style="background-image:url('gallery-room.jpg')"></div><div class="hslide" style="background-image:url('gallery-basin.jpg')"></div><div class="hslide" style="background-image:url('gallery-ritual.jpg')"></div></div><button type="button" class="hero-arrow prev" id="heroPrev" aria-label="Previous photo">&#8249;</button><button type="button" class="hero-arrow next" id="heroNext" aria-label="Next photo">&#8250;</button><div class="hero-dots" id="heroDots"></div><div class="wrap"><div class="hero-text">
     <div class="kicker">Head Spa &amp; Beauty · Maple, Vaughan</div>
     <h1>Your beauty,<br><em>our care</em>.</h1>
     <p class="lede">Warm water, slow hands and a calm room. Lumina is a head spa in Maple where every visit is a small reset — for your hair, your head and your day.</p>
@@ -420,11 +453,9 @@
     <div class="tile" style="background-image:url('gallery-basin.jpg')"><span><small>Inside</small>Head Spa Basin</span></div>
     <div class="tile" style="background-image:url('gallery-styling.jpg')"><span><small>Inside</small>Styling Area</span></div>
     <div class="tile" style="background-image:url('gallery-corner.jpg')"><span><small>Inside</small>Relaxation Corner</span></div>
-    <div class="tile" style="background-image:url('gallery-hall.jpg')"><span><small>Inside</small>Welcome Hall</span></div>
-    <div class="tile" style="background-image:url('gallery-analysis.jpg')"><span><small>Inside</small>Scalp Analysis</span></div>
-    <div class="tile" style="background-image:url('gallery-ritual.jpg')"><span><small>Inside</small>Ritual Details</span></div>
-    <div class="tile" style="background-image:url('gallery-clean.jpg')"><span><small>Inside</small>Disinfected Daily</span></div>
   </div>
+</div>
+  <div style="text-align:center;margin-top:24px"><a class="more-link" href="inside.html" style="font-size:16px">See all photos — tour the spa →</a></div>
 </div></section>
 
 <section id="story"><div class="wrap"><div class="story">
@@ -433,7 +464,7 @@
     <h2>A small spa with a simple idea.</h2>
     <p>Lumina Head Spa &amp; Beauty opened in Maple with one belief: an hour of real quiet does more than rest your head — it resets your whole day.</p>
     <p>Every ritual here is done slowly and by hand, in a warm, softly lit room. Come as you are; leave a little lighter.</p>
-    <a class="btn ghost" href="#book">Book your hour</a>
+    <a class="btn ghost" href="#book">Book your hour</a> <a class="more-link" href="about.html" style="margin-left:16px">Our story &amp; visit info →</a>
   </div>
   <div class="story-art"><img src="gallery-hall.jpg" alt="Inside Lumina Head Spa &amp; Beauty, Maple"></div>
 </div></div></section>
@@ -451,17 +482,7 @@
   </div>
 </div></section>
 
-<section class="visit" id="visit"><div class="wrap">
-  <div class="sec-head">
-    <div class="kicker">Visit Us</div>
-    <h2>Maple · Vaughan</h2>
-  </div>
-  <div class="visit-grid">
-    <div class="visit-item"><h3>Address</h3><p>9505 Keele Street, Unit 1A<br>Maple, ON L6A 1W3<br><a href="https://www.google.com/maps/search/?api=1&amp;query=9505+Keele+Street+Unit+1A+Maple+ON+L6A+1W3" target="_blank" rel="noopener">Get directions →</a></p></div>
-    <div class="visit-item"><h3>Hours</h3><p>Monday – Sunday<br>10:00 AM – 9:00 PM<br>Open 7 days a week</p></div>
-    <div class="visit-item"><h3>Contact</h3><p>Phone: <a href="tel:+16473688148">647-368-8148</a><br>Email: <a href="mailto:info@luminaheadspa.ca">info@luminaheadspa.ca</a><br>luminaheadspa.ca</p></div>
-  </div>
-</div></section>
+
 
 <footer><div class="wrap">
   <a class="logo" href="#top"><img src="lumina-logo.svg" alt="Lumina Head Spa &amp; Beauty"></a>
@@ -618,6 +639,39 @@
     window.addEventListener('scroll',function(){ toTopBtn.classList.toggle('show', window.scrollY>500); });
     toTopBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
   }
+
+  /* preselect a treatment from ?book= (links from the Treatments page) */
+  (function(){
+    var q=new URLSearchParams(location.search).get('book');
+    if(!q) return;
+    var rows=[].slice.call(document.querySelectorAll('#tlist .trow'));
+    var target=null;
+    rows.forEach(function(r){ if(r.dataset.name===q) target=r; });
+    if(!target) return;
+    var sel=rows.filter(function(r){return r.classList.contains('sel');});
+    if(sel.length===1 && sel[0]===target) return;
+    sel.forEach(function(r){ r.click(); });
+    if(!target.classList.contains('sel')) target.click();
+  })();
+  /* hero slider (2026-10-15) */
+  (function(){
+    var slides=[].slice.call(document.querySelectorAll('.hslide'));
+    if(slides.length<2) return;
+    var dotsBox=document.getElementById('heroDots'), idx=0, timer=null;
+    slides.forEach(function(_,i){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Slide '+(i+1)); if(i===0)b.className='on'; b.addEventListener('click',function(){go(i);restart();}); dotsBox.appendChild(b); });
+    var dots=[].slice.call(dotsBox.children);
+    function go(i){ slides[idx].classList.remove('on'); dots[idx].classList.remove('on'); idx=(i+slides.length)%slides.length; slides[idx].classList.add('on'); dots[idx].classList.add('on'); }
+    function restart(){ if(timer)clearInterval(timer); if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){ timer=setInterval(function(){go(idx+1);},5500); } }
+    var pv=document.getElementById('heroPrev'), nx=document.getElementById('heroNext');
+    if(pv)pv.addEventListener('click',function(){go(idx-1);restart();});
+    if(nx)nx.addEventListener('click',function(){go(idx+1);restart();});
+    var hero=document.querySelector('.hero');
+    if(hero){ hero.addEventListener('mouseenter',function(){if(timer)clearInterval(timer);}); hero.addEventListener('mouseleave',restart);
+      var tx=null; hero.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+      hero.addEventListener('touchend',function(e){ if(tx===null)return; var dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>40){ go(idx+(dx<0?1:-1)); restart(); } tx=null; },{passive:true});
+    }
+    restart();
+  })();
 </script>
 </body>
 </html>
