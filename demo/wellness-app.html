@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenity Wellness Spa — Booking System Demo (Book · Staff Board · Admin)</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2b2620;--ink2:#5c554b;--gold:#b08d4f;--gold2:#96762f;--cream:#faf6ef;--sand:#f1e9db;--line:#e3d9c6;--card:#ffffff;--ok:#3e7d4e;--warn:#b3541e;--bad:#a33327;--radius:16px}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);font-weight:300;line-height:1.55}
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif;font-weight:600}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+  .topbar{position:sticky;top:0;z-index:60;background:rgba(250,246,239,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-in{max-width:1180px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .brand{font-family:'Playfair Display',serif;font-size:23px;letter-spacing:.22em;font-weight:600}
+  .brand small{display:block;font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.3em;color:var(--gold2);font-weight:500}
+  .tabs{margin-left:auto;display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px}
+  .tab{border:0;background:transparent;padding:9px 20px;border-radius:999px;font-size:15.5px;font-weight:500;color:var(--ink2);display:flex;align-items:center;gap:8px}
+  .tab.on{background:var(--ink);color:#fff}
+  .bdg{background:#b3392b;color:#fff;font-size:12px;font-weight:600;min-width:21px;height:21px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px}
+  .bdg:empty{display:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 70px}
+  .view{display:none}.view.on{display:block}
+  .hero{background:linear-gradient(100deg,rgba(24,20,14,.88),rgba(24,20,14,.45) 60%,rgba(24,20,14,.25)),url('serenity-hero.jpg') center 40%/cover;border-radius:22px;color:#fff;padding:38px 40px;margin-bottom:26px}
+  .hero h1{font-size:clamp(30px,4.4vw,46px);line-height:1.12}
+  .hero p{color:#efe7d7;max-width:520px;margin-top:8px;font-size:16.5px}
+  .hero .meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px;font-size:14.5px;color:#e8dfca}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  @media(max-width:900px){.cols{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .panel h2{font-size:21px;margin-bottom:4px}
+  .panel .sub{color:var(--ink2);font-size:14.5px;margin-bottom:14px}
+  .step-t{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);font-weight:600;margin:18px 0 10px}
+  .step-t:first-child{margin-top:0}
+  /* treatment rows */
+  .trow{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;position:relative}
+  .trow:hover{border-color:var(--gold)}
+  .trow.sel{border-color:var(--gold);background:#fdf8ec;box-shadow:0 0 0 1px var(--gold)}
+  .trow .nm{font-weight:600;font-size:16.5px}
+  .trow .ds{color:var(--ink2);font-size:14px}
+  .trow .pr{margin-left:auto;text-align:right;white-space:nowrap}
+  .trow .pr b{font-size:17px}
+  .trow .pr span{display:block;color:var(--ink2);font-size:13px}
+  .ord{position:absolute;top:-9px;left:-9px;background:var(--gold);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px}
+  /* therapist cards */
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.tgrid{grid-template-columns:1fr}}
+  .tcard{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:13px 15px;text-align:left;width:100%}
+  .tcard:hover{border-color:var(--gold)}
+  .tcard.sel{border-color:var(--gold);background:#fdf8ec;box-shadow:0 0 0 1px var(--gold)}
+  .tcard .nm{font-weight:600;font-size:16.5px}
+  .tcard .rl{color:var(--gold2);font-size:13px;letter-spacing:.06em}
+  .tcard .sk{color:var(--ink2);font-size:13.5px;margin-top:3px}
+  .tcard .off{color:var(--warn);font-size:13px;font-weight:500}
+  /* calendar + slots */
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  .cal .dow{font-size:11.5px;letter-spacing:.12em;color:var(--ink2);text-align:center;font-weight:600}
+  .day{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 2px;text-align:center;font-size:14.5px;font-weight:500}
+  .day small{display:block;font-size:10.5px;color:var(--ink2);font-weight:400}
+  .day:hover{border-color:var(--gold)}
+  .day.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .day.sel small{color:#d8cfba}
+  .day.dis{opacity:.32;pointer-events:none}
+  .slots{display:flex;flex-wrap:wrap;gap:8px}
+  .slot{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-size:14.5px;font-weight:500}
+  .slot:hover{border-color:var(--gold)}
+  .slot.sel{background:var(--gold);border-color:var(--gold);color:#fff}
+  .slot.dis{opacity:.35;text-decoration:line-through;pointer-events:none}
+  .fld{margin-bottom:13px}
+  .fld label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);font-weight:600;margin-bottom:5px}
+  .fld input,.fld select,.fld textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;background:#fff;font-weight:400}
+  .fld input:focus,.fld select:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  .sum{background:var(--sand);border-radius:12px;padding:14px 16px;font-size:15px;margin:16px 0}
+  .sum b{font-weight:600}
+  .btn{display:inline-block;border:0;border-radius:999px;padding:13px 28px;font-size:16px;font-weight:600;background:var(--gold);color:#fff}
+  .btn:hover{background:var(--gold2)}
+  .btn.dark{background:var(--ink)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+  .btn.sm{padding:8px 16px;font-size:14px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .err{display:none;background:#fbeae7;border:1px solid #e5b3aa;color:var(--bad);border-radius:10px;padding:11px 14px;font-size:14.5px;margin-bottom:12px}
+  .okbox{display:none;background:#eef6ee;border:1px solid #bcd6bc;color:#2e5d38;border-radius:12px;padding:16px 18px;font-size:15.5px}
+  .note{color:var(--ink2);font-size:13.5px;margin-top:10px}
+  /* board */
+  .board-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+  .board-tools select{border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;background:#fff;font-weight:500}
+  .bcard{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  .bcard .when{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;white-space:nowrap}
+  .bcard .what{flex:1;min-width:220px}
+  .bcard .what b{font-weight:600}
+  .bcard .acts{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{font-size:12px;font-weight:600;letter-spacing:.08em;border-radius:999px;padding:3px 11px;text-transform:uppercase}
+  .pill.pending{background:#fdf0e2;color:var(--warn)}
+  .pill.confirmed{background:#e7f2e7;color:var(--ok)}
+  .pill.done{background:#e8e8e8;color:#666}
+  .pill.cancelled{background:#fbeae7;color:var(--bad)}
+  .grp-t{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);font-weight:600;margin:22px 0 12px}
+  /* admin */
+  .arow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+  .arow .f{flex:1;min-width:130px}
+  .arow label{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:600;margin-bottom:4px}
+  .arow input,.arow select{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:9px 11px;background:#fff}
+  .checks{display:flex;flex-wrap:wrap;gap:6px 14px;padding:6px 0}
+  .checks label{display:inline-flex;gap:6px;align-items:center;font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink);font-weight:400}
+  .icon-btn{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:9px 13px;font-weight:600;font-size:14px}
+  .icon-btn.danger{color:var(--bad);border-color:#e5b3aa}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:15px;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{border-top:1px solid var(--line);padding:24px 22px;text-align:center;color:var(--ink2);font-size:13.5px}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+  <div class="brand">SERENITY<small>WELLNESS SPA · BOOKING SYSTEM DEMO</small></div>
+  <nav class="tabs">
+    <button class="tab on" data-view="book" onclick="showView('book')">Book</button>
+    <button class="tab" data-view="board" onclick="showView('board')">Bookings <span class="bdg" id="pendBadge"></span></button>
+    <button class="tab" data-view="admin" onclick="showView('admin')">Admin</button>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<!-- ============ BOOK VIEW ============ -->
+<section class="view on" id="view-book">
+  <div class="hero">
+    <h1>Book a treatment</h1>
+    <p>Choose your treatment and the therapist you trust — the same flow your customers use. Bookings you make here appear instantly on the staff board.</p>
+    <div class="meta"><span>Open 7 days · <span id="heroHours">10:00 AM – 9:00 PM</span></span><span>120 Yonge Street, Toronto (demo address)</span><span>416-555-0168</span></div>
+  </div>
+  <div class="cols">
+    <div class="panel">
+      <h2>1 · Choose your treatment</h2>
+      <p class="sub">Tap to select. Tap a second treatment to enjoy them back-to-back (maximum 2).</p>
+      <div id="bookTreatments"></div>
+      <p class="note"><b>Maximum 2 treatments per booking.</b> Want more? Please call us — 416-555-0168.</p>
+    </div>
+    <div class="panel">
+      <h2>2 · Therapist, date &amp; time</h2>
+      <p class="sub">Only therapists who can perform your treatment are shown.</p>
+      <div class="step-t">Your therapist</div>
+      <div class="tgrid" id="bookTherapists"></div>
+      <div class="step-t">Date</div>
+      <div class="cal" id="bookCal"></div>
+      <p class="note" id="offNote" style="display:none"></p>
+      <div class="step-t">Available times</div>
+      <div class="slots" id="bookSlots"></div>
+      <div class="step-t">Your details</div>
+      <div class="err" id="bookErr"></div>
+      <div class="fld"><label>Your name *</label><input id="bkName" autocomplete="name" placeholder="e.g. Jane Smith"></div>
+      <div class="fld"><label>Mobile phone *</label><input id="bkPhone" autocomplete="tel" placeholder="e.g. 416-555-0100"></div>
+      <div class="fld"><label>Email (optional)</label><input id="bkEmail" type="email" autocomplete="email" placeholder="For your confirmation email"></div>
+      <div class="sum" id="bookSum">Select a treatment to begin.</div>
+      <button class="btn" id="bkGo" onclick="submitBooking()">Request Booking</button>
+      <div class="okbox" id="bookOk"></div>
+      <p class="note">Demo only: your request is saved in this browser and appears on the Bookings board — try the tabs above. The live version saves to a database and emails the shop and the customer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD VIEW ============ -->
+<section class="view" id="view-board">
+  <div class="panel" style="margin-bottom:20px">
+    <h2>Staff board</h2>
+    <p class="sub">New requests wait for confirmation — just like a kitchen board. Confirm, complete or cancel with one tap. Everyone looking at this demo in the same browser sees the same board, live.</p>
+    <div class="board-tools">
+      <select id="boardDay" onchange="renderBoard()"><option value="today">Today</option><option value="all">All upcoming</option></select>
+      <select id="boardTherapist" onchange="renderBoard()"></select>
+      <input id="boardSearch" placeholder="Search guest name or phone…" oninput="renderBoard()" style="border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;background:#fff;min-width:220px">
+    </div>
+    <div id="boardList"></div>
+  </div>
+</section>
+
+<!-- ============ ADMIN VIEW ============ -->
+<section class="view" id="view-admin">
+  <div class="panel" style="margin-bottom:20px">
+    <h2>Admin — Treatments</h2>
+    <p class="sub">Add, edit or remove treatments and choose which therapists can perform each one. Changes appear on the booking page instantly — no web designer needed.</p>
+    <div id="admTreatments"></div>
+    <div class="step-t">Add a treatment</div>
+    <div class="arow">
+      <div class="f"><label>Name</label><input id="ntName" placeholder="e.g. Scalp Detox Ritual"></div>
+      <div class="f" style="max-width:110px"><label>Minutes</label><input id="ntMin" type="number" value="60" min="15" step="15"></div>
+      <div class="f" style="max-width:110px"><label>Price $</label><input id="ntPrice" type="number" value="95" min="0" step="1"></div>
+      <div class="f" style="flex:2"><label>Short description</label><input id="ntDesc" placeholder="One line shown to customers"></div>
+      <button class="btn sm" onclick="addTreatment()">+ Add</button>
+    </div>
+  </div>
+  <div class="panel" style="margin-bottom:20px">
+    <h2>Admin — Team</h2>
+    <p class="sub">Therapists and their regular day off. Skills are set per treatment above.</p>
+    <div id="admTeam"></div>
+    <div class="step-t">Add a therapist</div>
+    <div class="arow">
+      <div class="f"><label>Name</label><input id="npName" placeholder="e.g. Grace Liu"></div>
+      <div class="f"><label>Title</label><input id="npRole" placeholder="e.g. Wellness Therapist"></div>
+      <div class="f" style="max-width:150px"><label>Regular day off</label><select id="npOff"></select></div>
+      <button class="btn sm" onclick="addTherapist()">+ Add</button>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Admin — Settings</h2>
+    <p class="sub">Opening hours and how far ahead customers can book.</p>
+    <div class="arow">
+      <div class="f" style="max-width:150px"><label>Opens</label><select id="setOpen"></select></div>
+      <div class="f" style="max-width:150px"><label>Closes</label><select id="setClose"></select></div>
+      <div class="f" style="max-width:170px"><label>Booking window (days)</label><input id="setWindow" type="number" min="1" max="90"></div>
+      <button class="btn sm dark" onclick="saveSettings()">Save settings</button>
+      <button class="icon-btn danger" onclick="resetDemo()">Reset demo data</button>
+    </div>
+    <p class="note">Demo data is stored in this browser only. In the live system the owner signs in with a password, everything is stored in a database, and each therapist can have their own login to see only their own bookings.</p>
+  </div>
+</section>
+</div>
+
+<footer>Serenity Wellness Spa is a fictional business created to demonstrate the Hifill Design Studio booking system — staff-based model.<br>Also available: a shared-pool model for walk-in style shops (see Lumina Head Spa demo). Demo data resets from Admin → Settings.</footer>
+<div class="toast" id="toast"></div>
+<script>
+/* ================= Serenity booking system demo =================
+   One store, three views. Data lives in localStorage so the Book page,
+   the staff board and Admin stay in sync — across tabs too (storage event),
+   the same pattern as the Golden Hall Café ordering demo.             */
+const KEY = 'serenity_store_v1';
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function seedStore(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dstr = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const plus = n => { const d = new Date(today); d.setDate(d.getDate()+n); return dstr(d); };
+  return {
+    settings:{open:10, close:21, window:30},
+    treatments:[
+      {id:'t1', name:'Signature Head Spa Ritual', min:75, price:118, desc:'Warm herbal ritual that melts away scalp, neck and shoulder tension.', staff:['lily','aisha']},
+      {id:'t2', name:'Aromatherapy Massage', min:60, price:98, desc:'Slow, flowing massage with warm essential oils chosen for your mood.', staff:['aisha','sofia']},
+      {id:'t3', name:'Deep Tissue Massage', min:60, price:105, desc:'Firm, focused pressure for tight backs, shoulders and legs.', staff:['marcus','daniel']},
+      {id:'t4', name:'Hot Stone Therapy', min:90, price:135, desc:'Heated basalt stones ease deep muscle tension and calm the mind.', staff:['marcus','aisha']},
+      {id:'t5', name:'Radiance Facial', min:60, price:95, desc:'A brightening facial that leaves skin fresh, hydrated and glowing.', staff:['sofia','lily']},
+      {id:'t6', name:'Foot Reflexology', min:45, price:68, desc:'Pressure-point foot therapy that restores the whole body.', staff:['daniel','aisha']}
+    ],
+    therapists:[
+      {id:'lily', name:'Lily Chen', role:'Senior Therapist', off:1},
+      {id:'aisha', name:'Aisha Khan', role:'Wellness Therapist', off:3},
+      {id:'marcus', name:'Marcus Reid', role:'Massage Therapist', off:2},
+      {id:'sofia', name:'Sofia Marino', role:'Esthetician', off:0},
+      {id:'daniel', name:'Daniel Kim', role:'Therapist', off:4}
+    ],
+    bookings:[
+      {id:'b1', date:plus(0), start:11*60, tids:['t1'], therapist:'lily', any:false, name:'Emma Wilson', phone:'416-555-0112', email:'', status:'confirmed'},
+      {id:'b2', date:plus(0), start:14*60+30, tids:['t2','t6'], therapist:'aisha', any:false, name:'Olivia Chen', phone:'416-555-0147', email:'', status:'pending'},
+      {id:'b3', date:plus(0), start:16*60, tids:['t5'], therapist:'sofia', any:false, name:'Ava Martin', phone:'416-555-0190', email:'', status:'confirmed'},
+      {id:'b4', date:plus(1), start:10*60+30, tids:['t3'], therapist:'marcus', any:false, name:'Sophia Roy', phone:'416-555-0123', email:'', status:'pending'},
+      {id:'b5', date:plus(1), start:13*60, tids:['t4'], therapist:'aisha', any:true, name:'Mia Thompson', phone:'416-555-0171', email:'', status:'confirmed'}
+    ]
+  };
+}
+function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.treatments) return s; }catch(e){} const s = seedStore(); localStorage.setItem(KEY, JSON.stringify(s)); return s; }
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+let S = load();
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const T = id => S.treatments.find(t => t.id === id);
+const P = id => S.therapists.find(p => p.id === id);
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function fmt(min){ let h = Math.floor(min/60), m = min%60, ap = h >= 12 ? 'PM':'AM'; h = h%12; if(h===0) h = 12; return h + ':' + String(m).padStart(2,'0') + ' ' + ap; }
+function dstrOf(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function niceDate(ds){ const d = new Date(ds+'T12:00:00'); return DOW[d.getDay()] + ', ' + MON[d.getMonth()] + ' ' + d.getDate(); }
+function bookingMin(b){ return b.tids.reduce((a,id) => a + (T(id) ? T(id).min : 0), 0); }
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
+
+/* ---------- booking state ---------- */
+let picks = [], selTherapist = null, selDate = dstrOf(new Date()), selTime = null;
+function qualified(){ if(!picks.length) return S.therapists.map(p => p.id); let q = T(picks[0]).staff.slice(); for(const id of picks.slice(1)) q = q.filter(x => T(id).staff.includes(x)); return q; }
+function totalMin(){ return picks.reduce((a,id) => a + T(id).min, 0); }
+function totalPrice(){ return picks.reduce((a,id) => a + T(id).price, 0); }
+function fakeBusy(pid, ds, start){ let h = 7; const s = pid + ds + start; for(let i = 0; i < s.length; i++) h = (h*31 + s.charCodeAt(i)) >>> 0; return h % 4 === 0; }
+function realConflict(pid, ds, start, dur){ return S.bookings.some(b => b.therapist === pid && b.date === ds && (b.status === 'pending' || b.status === 'confirmed') && start < b.start + bookingMin(b) && b.start < start + dur); }
+function slotFree(pid, ds, start, dur){ const p = P(pid); if(!p) return false; const dow = new Date(ds+'T12:00:00').getDay(); if(p.off === dow) return false; return !fakeBusy(pid, ds, start) && !realConflict(pid, ds, start, dur); }
+
+function renderBook(){
+  $('bookTreatments').innerHTML = S.treatments.map(t => {
+    const i = picks.indexOf(t.id);
+    return '<button class="trow' + (i >= 0 ? ' sel' : '') + '" onclick="togglePick(\'' + t.id + '\')">' +
+      (i >= 0 ? '<span class="ord">' + (i === 0 ? '1st' : '2nd') + '</span>' : '') +
+      '<span><span class="nm">' + esc(t.name) + '</span><br><span class="ds">' + esc(t.desc) + '</span></span>' +
+      '<span class="pr"><b>$' + t.price + '</b><span>' + t.min + ' min</span></span></button>';
+  }).join('');
+  const q = qualified();
+  if(selTherapist && selTherapist !== 'any' && !q.includes(selTherapist)) selTherapist = null;
+  if(!picks.length){
+    $('bookTherapists').innerHTML = '<p class="note" style="grid-column:1/-1">Select a treatment first — the therapists who can perform it will appear here.</p>';
+  } else if(!q.length){
+    $('bookTherapists').innerHTML = '<p class="note" style="grid-column:1/-1;color:var(--warn);font-weight:500">No single therapist performs both treatments. Please book them separately, or call us at 416-555-0168 and we will arrange it.</p>';
+  } else {
+    let html = '<button class="tcard' + (selTherapist === 'any' ? ' sel' : '') + '" onclick="pickTherapist(\'any\')"><span class="nm">No preference</span><br><span class="rl">FIRST AVAILABLE</span><div class="sk">We will match you with the first available therapist.</div></button>';
+    html += q.map(id => { const p = P(id); if(!p) return ''; const skills = S.treatments.filter(t => t.staff.includes(id)).map(t => t.name).join(' · ');
+      return '<button class="tcard' + (selTherapist === id ? ' sel' : '') + '" onclick="pickTherapist(\'' + id + '\')"><span class="nm">' + esc(p.name) + '</span><br><span class="rl">' + esc(p.role).toUpperCase() + '</span><div class="sk">' + esc(skills) + '</div><div class="off">Off on ' + DOW[p.off] + 's</div></button>'; }).join('');
+    $('bookTherapists').innerHTML = html;
+  }
+  renderCal(); renderSlots(); renderSummary();
+}
+function renderCal(){
+  const days = ['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => '<div class="dow">' + d + '</div>').join('');
+  let cells = '';
+  const now = new Date(); now.setHours(0,0,0,0);
+  for(let i = 0; i < S.settings.window; i++){
+    const d = new Date(now); d.setDate(d.getDate() + i); const ds = dstrOf(d);
+    cells += '<button class="day' + (ds === selDate ? ' sel' : '') + '" onclick="pickDate(\'' + ds + '\')">' + d.getDate() + '<small>' + DOW[d.getDay()] + '</small></button>';
+  }
+  $('bookCal').innerHTML = days + cells;
+}
+function renderSlots(){
+  const box = $('bookSlots'), off = $('offNote');
+  off.style.display = 'none';
+  if(!picks.length || !selTherapist){ box.innerHTML = '<p class="note">Choose a treatment and a therapist to see open times.</p>'; return; }
+  const dur = totalMin(), open = S.settings.open * 60, last = S.settings.close * 60 - dur;
+  const isToday = selDate === dstrOf(new Date());
+  const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+  const cand = selTherapist === 'any' ? qualified() : [selTherapist];
+  if(selTherapist !== 'any'){
+    const p = P(selTherapist);
+    if(p && new Date(selDate + 'T12:00:00').getDay() === p.off){ off.textContent = p.name + ' is off on ' + DOW[p.off] + 's — please pick another day or therapist.'; off.style.display = 'block'; }
+  }
+  let html = '', anyShown = false;
+  for(let s = open; s <= last; s += 30){
+    if(isToday && s <= nowMin) continue;
+    const free = cand.some(pid => slotFree(pid, selDate, s, dur));
+    html += '<button class="slot' + (selTime === s ? ' sel' : '') + (free ? '' : ' dis') + '" onclick="pickTime(' + s + ')">' + fmt(s) + '</button>';
+    if(free) anyShown = true;
+  }
+  box.innerHTML = anyShown || html ? html : '<p class="note">No times left on this day — please try another date.</p>';
+  if(html && !anyShown) box.innerHTML = '<p class="note">Fully booked on this day — please try another date.</p>' + html;
+}
+function renderSummary(){
+  const el = $('bookSum');
+  if(!picks.length){ el.textContent = 'Select a treatment to begin.'; return; }
+  const names = picks.map(id => T(id).name).join('  +  ');
+  let who = 'choose a therapist', when = 'pick a date & time';
+  if(selTherapist === 'any') who = 'first available therapist'; else if(selTherapist && P(selTherapist)) who = P(selTherapist).name;
+  if(selTime !== null) when = niceDate(selDate) + ' at ' + fmt(selTime);
+  el.innerHTML = '<b>' + esc(names) + '</b> · ' + totalMin() + ' min · <b>$' + totalPrice() + '</b><br>with ' + esc(who) + ' · ' + when;
+}
+function togglePick(id){
+  const i = picks.indexOf(id);
+  if(i >= 0) picks.splice(i, 1); else { picks.push(id); if(picks.length > 2) picks.shift(); }
+  selTime = null; renderBook();
+}
+function pickTherapist(id){ selTherapist = id; selTime = null; renderBook(); }
+function pickDate(ds){ selDate = ds; selTime = null; renderBook(); }
+function pickTime(s){ selTime = s; renderBook(); }
+
+function submitBooking(){
+  const err = $('bookErr'); err.style.display = 'none';
+  const fail = m => { err.textContent = m; err.style.display = 'block'; err.scrollIntoView({behavior:'smooth', block:'center'}); };
+  if(!picks.length) return fail('Please choose at least one treatment.');
+  if(!selTherapist) return fail('Please choose a therapist (or "No preference").');
+  if(selTime === null) return fail('Please choose a time.');
+  const name = $('bkName').value.trim(), phone = $('bkPhone').value.trim(), email = $('bkEmail').value.trim();
+  if(!name) return fail('Please tell us your name.');
+  if(phone.replace(/\D/g, '').length < 7) return fail('Please enter a valid phone number — the shop confirms bookings by phone.');
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('That email address looks incomplete — please check it, or leave the field empty.');
+  const dur = totalMin();
+  let assigned = selTherapist;
+  if(selTherapist === 'any'){ assigned = qualified().find(pid => slotFree(pid, selDate, selTime, dur)); if(!assigned) return fail('That time just filled up — please pick another time.'); }
+  else if(!slotFree(assigned, selDate, selTime, dur)) return fail('That time is no longer available for ' + P(assigned).name + ' — please pick another time.');
+  const b = {id:'b' + Date.now(), date:selDate, start:selTime, tids:picks.slice(), therapist:assigned, any:selTherapist === 'any', name, phone, email, status:'pending'};
+  S.bookings.push(b); save();
+  const lines = picks.map((id, i) => { const t = T(id); return '• ' + t.name + ' — ' + fmt(b.start + picks.slice(0, i).reduce((a, x) => a + T(x).min, 0)) + ' to ' + fmt(b.start + picks.slice(0, i + 1).reduce((a, x) => a + T(x).min, 0)); }).join('<br>');
+  $('bookOk').innerHTML = '<b>Thank you, ' + esc(name.split(' ')[0]) + ' — your request is in!</b><br>' + lines + '<br>📅 ' + niceDate(b.date) + ' with ' + (b.any ? 'the first available therapist (' + esc(P(assigned).name) + ' can take you)' : esc(P(assigned).name)) + ' · Total $' + totalPrice() + '<br>We will confirm shortly by phone at ' + esc(phone) + '.' + (email ? '<br>A confirmation will also be emailed to ' + esc(email) + '.' : '');
+  $('bookOk').style.display = 'block'; $('bookOk').scrollIntoView({behavior:'smooth', block:'center'});
+  picks = []; selTherapist = null; selTime = null; $('bkName').value = ''; $('bkPhone').value = ''; $('bkEmail').value = '';
+  renderBook(); updateBadge();
+}
+
+/* ---------- board ---------- */
+function updateBadge(){ const n = S.bookings.filter(b => b.status === 'pending').length; $('pendBadge').textContent = n || ''; }
+function renderBoard(){
+  const tf = $('boardTherapist');
+  if(!tf.options.length){ tf.innerHTML = '<option value="">All therapists</option>' + S.therapists.map(p => '<option value="' + p.id + '">' + esc(p.name) + '</option>').join('') + '<option value="gone">Former team</option>'; }
+  const day = $('boardDay').value, tid = tf.value, q = ($('boardSearch').value || '').toLowerCase();
+  const today = dstrOf(new Date());
+  let list = S.bookings.filter(b => day === 'all' ? b.date >= today : b.date === today);
+  if(tid) list = list.filter(b => b.therapist === tid);
+  if(q) list = list.filter(b => b.name.toLowerCase().includes(q) || b.phone.replace(/\D/g, '').includes(q.replace(/\D/g, '')));
+  list.sort((a, b) => a.date === b.date ? a.start - b.start : (a.date < b.date ? -1 : 1));
+  const groups = [['pending','⏳ Waiting for confirmation'], ['confirmed','✓ Confirmed'], ['done','Completed'], ['cancelled','Cancelled']];
+  let html = '';
+  for(const [st, label] of groups){
+    const g = list.filter(b => b.status === st); if(!g.length) continue;
+    html += '<div class="grp-t">' + label + ' (' + g.length + ')</div>';
+    html += g.map(b => { const p = P(b.therapist); const treats = b.tids.map(id => T(id) ? T(id).name : '(removed treatment)').join(' + ');
+      const acts = b.status === 'pending' ? '<button class="btn sm" onclick="setStatus(\'' + b.id + '\',\'confirmed\')">Confirm</button><button class="btn sm ghost" onclick="setStatus(\'' + b.id + '\',\'cancelled\')">Cancel</button>'
+        : b.status === 'confirmed' ? '<button class="btn sm dark" onclick="setStatus(\'' + b.id + '\',\'done\')">Mark done</button><button class="btn sm ghost" onclick="setStatus(\'' + b.id + '\',\'cancelled\')">Cancel</button>' : '';
+      return '<div class="bcard"><div class="when">' + fmt(b.start) + '<br><span style="font-size:13px;font-family:Jost;color:var(--ink2)">' + niceDate(b.date) + '</span></div>' +
+        '<div class="what"><b>' + esc(b.name) + '</b> · ' + esc(b.phone) + (b.email ? ' · ' + esc(b.email) : '') + '<br>' + esc(treats) + ' (' + bookingMin(b) + ' min · $' + b.tids.reduce((a, id) => a + (T(id) ? T(id).price : 0), 0) + ')<br>Therapist: <b>' + (p ? esc(p.name) : 'former team member') + '</b>' + (b.any ? ' · guest had no preference' : '') + ' <span class="pill ' + b.status + '">' + b.status + '</span></div>' +
+        '<div class="acts">' + acts + '</div></div>'; }).join('');
+  }
+  $('boardList').innerHTML = html || '<p class="note">No bookings match. New requests from the Book tab appear here instantly.</p>';
+}
+function setStatus(id, st){ const b = S.bookings.find(x => x.id === id); if(!b) return; b.status = st; save(); renderBoard(); updateBadge(); toast('Booking ' + st + ' — ' + b.name); }
+
+/* ---------- admin ---------- */
+function renderAdmin(){
+  $('admTreatments').innerHTML = S.treatments.map(t =>
+    '<div class="arow"><div class="f" style="flex:2"><label>Treatment</label><input value="' + esc(t.name) + '" onchange="updT(\'' + t.id + '\',\'name\',this.value)"></div>' +
+    '<div class="f" style="max-width:95px"><label>Minutes</label><input type="number" value="' + t.min + '" min="15" step="15" onchange="updT(\'' + t.id + '\',\'min\',+this.value)"></div>' +
+    '<div class="f" style="max-width:95px"><label>Price $</label><input type="number" value="' + t.price + '" min="0" onchange="updT(\'' + t.id + '\',\'price\',+this.value)"></div>' +
+    '<div class="f" style="flex:2"><label>Description</label><input value="' + esc(t.desc) + '" onchange="updT(\'' + t.id + '\',\'desc\',this.value)"></div>' +
+    '<div style="flex-basis:100%"><label style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:600">Can be performed by</label><div class="checks">' +
+    S.therapists.map(p => '<label><input type="checkbox" ' + (t.staff.includes(p.id) ? 'checked' : '') + ' onchange="toggleStaff(\'' + t.id + '\',\'' + p.id + '\',this.checked)"> ' + esc(p.name) + '</label>').join('') +
+    '</div></div>' +
+    '<button class="icon-btn danger" onclick="delTreatment(\'' + t.id + '\')">Delete</button></div>').join('');
+  $('admTeam').innerHTML = S.therapists.map(p => { const skills = S.treatments.filter(t => t.staff.includes(p.id)).map(t => t.name).join(' · ') || '— none yet (tick them under a treatment above)';
+    return '<div class="arow"><div class="f"><label>Name</label><input value="' + esc(p.name) + '" onchange="updP(\'' + p.id + '\',\'name\',this.value)"></div>' +
+    '<div class="f"><label>Title</label><input value="' + esc(p.role) + '" onchange="updP(\'' + p.id + '\',\'role\',this.value)"></div>' +
+    '<div class="f" style="max-width:150px"><label>Day off</label><select onchange="updP(\'' + p.id + '\',\'off\',+this.value)">' + DOW.map((d, i) => '<option value="' + i + '"' + (p.off === i ? ' selected' : '') + '>' + d + '</option>').join('') + '</select></div>' +
+    '<div class="f" style="flex:2"><label>Skills (from treatments)</label><div style="padding:8px 0;font-size:14.5px">' + esc(skills) + '</div></div>' +
+    '<button class="icon-btn danger" onclick="delTherapist(\'' + p.id + '\')">Remove</button></div>'; }).join('');
+  const hours = Array.from({length: 15}, (_, i) => i + 6);
+  $('setOpen').innerHTML = hours.map(h => '<option value="' + h + '"' + (S.settings.open === h ? ' selected' : '') + '>' + fmt(h * 60) + '</option>').join('');
+  $('setClose').innerHTML = hours.map(h => '<option value="' + h + '"' + (S.settings.close === h ? ' selected' : '') + '>' + fmt(h * 60) + '</option>').join('');
+  $('setWindow').value = S.settings.window;
+  $('heroHours').textContent = fmt(S.settings.open * 60) + ' – ' + fmt(S.settings.close * 60);
+}
+function updT(id, k, v){ const t = T(id); if(!t) return; t[k] = v; save(); renderBook(); toast('Treatment saved'); }
+function toggleStaff(tid, pid, on){ const t = T(tid); if(!t) return; t.staff = on ? [...new Set([...t.staff, pid])] : t.staff.filter(x => x !== pid); save(); renderBook(); renderAdmin(); }
+function delTreatment(id){ if(!confirm('Delete this treatment? Existing bookings keep their record.')) return; S.treatments = S.treatments.filter(t => t.id !== id); picks = picks.filter(x => x !== id); save(); renderAdmin(); renderBook(); toast('Treatment deleted'); }
+function addTreatment(){ const name = $('ntName').value.trim(); if(!name) return toast('Give the treatment a name first'); const t = {id:'t' + Date.now(), name, min:Math.max(15, +$('ntMin').value || 60), price:Math.max(0, +$('ntPrice').value || 0), desc:$('ntDesc').value.trim() || 'A Serenity signature treatment.', staff:[]}; S.treatments.push(t); save(); $('ntName').value = $('ntDesc').value = ''; renderAdmin(); renderBook(); toast('Treatment added — now tick which therapists can perform it'); }
+function updP(id, k, v){ const p = P(id); if(!p) return; p[k] = v; save(); renderBook(); renderBoard(); toast('Team member saved'); }
+function delTherapist(id){ if(!confirm('Remove this therapist? Their existing bookings stay on the board.')) return; S.therapists = S.therapists.filter(p => p.id !== id); S.treatments.forEach(t => t.staff = t.staff.filter(x => x !== id)); if(selTherapist === id) selTherapist = null; save(); renderAdmin(); renderBook(); renderBoard(); toast('Therapist removed'); }
+function addTherapist(){ const name = $('npName').value.trim(); if(!name) return toast('Give the therapist a name first'); S.therapists.push({id:'p' + Date.now(), name, role:$('npRole').value.trim() || 'Therapist', off:+$('npOff').value}); save(); $('npName').value = $('npRole').value = ''; renderAdmin(); renderBook(); toast('Therapist added — now tick their skills under Treatments'); }
+function saveSettings(){ const o = +$('setOpen').value, c = +$('setClose').value; if(c <= o) return toast('Closing time must be after opening time'); S.settings.open = o; S.settings.close = c; S.settings.window = Math.min(90, Math.max(1, +$('setWindow').value || 30)); save(); selTime = null; renderBook(); renderAdmin(); toast('Settings saved'); }
+function resetDemo(){ if(!confirm('Reset all demo data (treatments, team, bookings) to the original samples?')) return; localStorage.removeItem(KEY); S = load(); picks = []; selTherapist = null; selTime = null; selDate = dstrOf(new Date()); renderAll(); toast('Demo data reset'); }
+
+/* ---------- shell ---------- */
+function showView(v){
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.view === v));
+  document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'view-' + v));
+  if(v === 'board') renderBoard(); if(v === 'admin') renderAdmin();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function renderAll(){ renderBook(); renderBoard(); renderAdmin(); updateBadge(); }
+$('npOff').innerHTML = DOW.map((d, i) => '<option value="' + i + '">' + d + '</option>').join('');
+renderAll();
+window.addEventListener('storage', e => { if(e.key === KEY){ S = load(); renderAll(); } });
+</script>
+</body>
+</html>
