@@ -313,6 +313,8 @@
   .wk-day.off{opacity:.35;cursor:default}
   .tslot-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;font-weight:600}
   .fld textarea{resize:vertical;min-height:58px}
+  .trow .addbtn{flex:0 0 auto;align-self:center;margin-left:12px;border:1.5px solid var(--brass);color:var(--brass-d);border-radius:999px;padding:6px 15px;font-size:13.5px;font-weight:500;white-space:nowrap}
+  .trow.sel .addbtn{background:var(--brass);color:#fff}
 </style>
 </head>
 <body>
@@ -446,7 +448,7 @@
       <button type="button" class="trow" data-min="90" data-price="99" data-name="Japanese Head Spa &amp; Foot Massage — 90-Minute Combo"><span class="tmain"><span class="tn">Japanese Head Spa &amp; Foot Massage — 90-Minute Combo</span><span class="badge"></span><span class="td">Special combo: Japanese head spa paired with a foot massage — scalp and neck massage plus foot massage.</span></span><span class="tp">$99<span class="tmin">90 MIN</span></span></button>
         </div>
         <p class="pick-note" style="color:var(--brass-d)">✦ Promotional prices — every signature therapy includes premium care products and device-assisted essence infusion.</p>
-        <p class="pick-note">Tap a treatment to select it. Tap a second one and it runs right after the first, in the same visit — tap again to remove it. <b>Maximum 2 treatments per booking.</b></p>
+        <p class="pick-note">Tap <b>Add</b> to include a treatment — your picks run back-to-back in the same visit. Tap <b>Remove</b> to take one out. <b>Maximum 5 treatments per booking.</b></p>
         <p class="pick-note">Want to book more treatments? Please call us — <a href="tel:+16473688148" style="color:var(--brass-d);font-weight:600;text-decoration:none">647-368-8148</a></p>
     </div>
     <div class="bk-panel" id="panelTime" hidden>
@@ -551,7 +553,7 @@
 
 <script>
 (function(){
-  var MAX_PICKS = 2;              /* client rule: max treatments chained in one booking */
+  var MAX_PICKS = 5;              /* client rule: max treatments chained in one booking */
   var WINDOW_DAYS = 30;           /* how far ahead guests can book (1 month) */
   var tabsEl=document.getElementById('bkTabs'),
       listEl=document.getElementById('tlist'),
@@ -606,6 +608,7 @@
       var idx=picks.indexOf(r), b=r.querySelector('.badge');
       r.classList.toggle('sel', idx>=0);
       if(b) b.textContent = idx>=0 ? (ORD[idx]||'') : '';
+      var ab=r.querySelector('.addbtn'); if(ab) ab.textContent = idx>=0 ? 'Remove' : 'Add';
     });
   }
 
@@ -664,10 +667,11 @@
     renderRail();
   }
   document.querySelectorAll('.trow').forEach(function(r){
+    var pill=document.createElement('span'); pill.className='addbtn'; pill.textContent='Add'; r.appendChild(pill);
     r.addEventListener('click',function(){
       var idx=picks.indexOf(r);
       if(idx>=0){ picks.splice(idx,1); }
-      else { if(picks.length>=MAX_PICKS) picks.shift(); picks.push(r); }
+      else { if(picks.length>=MAX_PICKS){ railHint.textContent='Up to '+MAX_PICKS+' treatments per booking — tap Remove to swap one out.'; return; } picks.push(r); }
       onPickChange();
     });
   });
