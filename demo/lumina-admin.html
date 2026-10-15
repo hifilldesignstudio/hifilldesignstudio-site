@@ -244,6 +244,7 @@
           <div><label>Guest name</label><input id="mName" placeholder="e.g. Ms. Wang"></div>
           <div><label>Phone</label><input id="mPhone" placeholder="e.g. 647-555-0100"></div>
           <div><label>Email (optional)</label><input id="mEmail" type="email" placeholder="e.g. guest@email.com"></div>
+          <div><label>Note (optional)</label><input id="mNote" placeholder="e.g. prefers a quiet room"></div>
           <div><label>Treatment</label><select id="mTreat"><option>Aromatherapy Head Spa for Relaxation</option><option>New Chinese-Style Wellness Head Therapy</option><option>Floral Head Spa</option><option>Herbal Hot Compress Head Treatment</option><option>Holographic Head Spa</option><option>Nourishing Scalp Cleansing Treatment</option><option>Deep Cleansing & Firming Facial</option><option>Probiotic Skincare Treatment</option><option>Hydrafacial</option><option>Swedish Massage</option><option>Foot Reflexology</option><option>Hot Stone Massage</option><option>Himalayan Salt Stone Therapy</option><option>Swedish Massage for Two</option><option>Japanese Head Spa & Facial — 60-Minute Combo</option><option>Japanese Head Spa & Hot Stone Massage — 60-Minute Combo</option><option>Japanese Head Spa & Foot Massage — 60-Minute Combo</option><option>Japanese Head Spa & Facial — 90-Minute Combo</option><option>Japanese Head Spa & Hot Stone Massage — 90-Minute Combo</option><option>Japanese Head Spa & Foot Massage — 90-Minute Combo</option></select></div>
           <div class="row2">
             <div><label>Date</label><input type="date" id="mDate" value="2026-10-14"></div>
@@ -292,7 +293,7 @@
   var BOOKINGS=[
     {id:1, date:'2026-10-14', start:'11:00 AM', end:'12:00 PM', name:'Mr. Liu', treat:'Classic Foot Reflexology · 45 min · $55', phone:'905-555-0114', status:'confirmed'},
     {id:2, date:'2026-10-14', start:'2:00 PM', end:'3:15 PM', name:'Ms. Chen', treat:'Head Spa & Shoulder Release · 75 min · $108', phone:'647-555-0132', status:'pending'},
-    {id:3, date:'2026-10-14', start:'4:30 PM', end:'6:30 PM', name:'Emily W.', treat:'Signature Head Spa Ritual + Signature Facial · 120 min total · $163', phone:'416-555-0187', status:'pending'},
+    {id:3, date:'2026-10-14', start:'4:30 PM', end:'6:30 PM', name:'Emily W.', treat:'Signature Head Spa Ritual + Signature Facial · 120 min total · $163', phone:'416-555-0187', note:'Allergic to lavender — please use unscented products', status:'pending'},
     {id:4, date:'2026-10-15', start:'10:30 AM', end:'12:00 PM', name:'Sarah K.', treat:'Head Spa & Mini Facial · 90 min · $128', phone:'647-555-0163', status:'confirmed'},
     {id:5, date:'2026-10-15', start:'1:00 PM', end:'2:30 PM', name:'Ms. Wang', treat:'Herbal Hot Compress Head Treatment · 90 min · $149', phone:'437-555-0129', status:'pending'},
     {id:6, date:'2026-10-16', start:'12:00 PM', end:'1:15 PM', name:'Jessica M.', treat:'Floral Head Spa · 75 min · $129', phone:'647-555-0145', status:'confirmed'},
@@ -314,7 +315,7 @@
     var h='<div class="booking'+(b.status!=='pending'?' done':'')+'">'
       +'<div class="time">'+b.start+'<small>to '+b.end+'</small>'+(showDate?'<small>'+fmtDay(b.date)+'</small>':'')+'</div>'
       +'<div class="info"><b>'+b.name+'</b> '+badgeFor(b.status)
-      +'<div>'+b.treat+'</div><div>Phone: '+b.phone+'</div></div>';
+      +'<div>'+b.treat+'</div><div>Phone: '+b.phone+'</div>'+(b.note?'<div style="color:var(--brass-d)">Note: '+b.note+'</div>':'')+'</div>';
     if(b.status==='pending') h+='<div class="actions"><button class="act confirm" data-act="confirm" data-id="'+b.id+'">Confirm</button><button class="act cancel" data-act="cancel" data-id="'+b.id+'">Cancel</button></div>';
     return h+'</div>';
   }
@@ -434,11 +435,12 @@
     var name=document.getElementById('mName').value.trim()||'(no name)';
     var phone=document.getElementById('mPhone').value.trim()||'—';
     var treat=document.getElementById('mTreat').value;
+    var note=document.getElementById('mNote').value.trim();
     var date=document.getElementById('mDate').value, time=document.getElementById('mTime').value;
     var list=document.getElementById('manualList');
     if(list.querySelector('p')) list.innerHTML='';
     var div=document.createElement('div'); div.className='booking done';
-    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone booking</span><div>'+treat+'</div><div>Phone: '+phone+'</div></div>';
+    div.innerHTML='<div class="time">'+time+'<small>'+date+'</small></div><div class="info"><b>'+name+'</b> <span class="badge confirmed">Phone booking</span><div>'+treat+'</div><div>Phone: '+phone+'</div>'+(note?'<div>Note: '+note+'</div>':'')+'</div>';
     list.appendChild(div);
     toast('✓ Phone booking added');
   });

@@ -164,7 +164,7 @@
   .widget .sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
   .fld{margin-bottom:16px}
   .fld label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-weight:500}
-  select,input[type=text],input[type=tel],input[type=email]{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+  select,input[type=text],input[type=tel],input[type=email],textarea{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip{border:1px solid #d8cdb8;background:#fff;border-radius:999px;padding:8px 15px;font-size:14.5px;cursor:pointer;font-family:'Jost',sans-serif}
   .chip:hover{border-color:var(--brass)}
@@ -312,6 +312,7 @@
   .wk-day.sel{border-color:var(--brass-d);background:#fdf6ea}
   .wk-day.off{opacity:.35;cursor:default}
   .tslot-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;font-weight:600}
+  .fld textarea{resize:vertical;min-height:58px}
 </style>
 </head>
 <body>
@@ -450,6 +451,7 @@
       <div class="fld"><label for="nm">Your name</label><input type="text" id="nm" placeholder="Full name"></div>
       <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
       <div class="fld"><label for="em">Email <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><input type="email" id="em" placeholder="e.g. jane@email.com"></div>
+      <div class="fld"><label for="nt">Special requests <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><textarea id="nt" rows="2" placeholder="e.g. allergies, pregnancy, light or firm pressure, a quiet room…"></textarea></div>
       <p class="err" id="err">Please complete each step: treatment, date, time, and your name and phone number.</p>
     </div>
     <div class="bk-panel" id="panelConfirm" hidden>
@@ -727,7 +729,8 @@
   /* ---------- confirm ---------- */
   function doConfirm(){
     var nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
-        em=document.getElementById('em').value.trim();
+        em=document.getElementById('em').value.trim(),
+        nt=document.getElementById('nt').value.trim();
     if(!picks.length||!selDay||!selTime||!nm||!ph){ errEl.style.display='block'; return; }
     if(em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ errEl.textContent='That email looks incomplete — please check it, or clear it (email is optional).'; errEl.style.display='block'; return; }
     errEl.textContent='Please complete each step: treatment, date, time, and your name and phone number.';
@@ -739,7 +742,7 @@
       t+=d;
     });
     document.getElementById('confirmText').textContent =
-      nm+' · '+parts.join(' · ')+' on '+selDayLabel+'. We have your number as '+ph+(em? ', and your email as '+em : '')+'.';
+      nm+' · '+parts.join(' · ')+' on '+selDayLabel+'. We have your number as '+ph+(em? ', and your email as '+em : '')+'.'+(nt? ' Your note: '+nt : '');
     box.style.display='block';
     goStep(4);
   }
