@@ -694,7 +694,7 @@
     var im=document.getElementById('tsImg');
     if(TIMG[name]){ im.src=TIMG[name]; im.alt=name; im.style.display='block'; } else { im.style.display='none'; }
     var b=document.getElementById('tsToggle');
-    if(idx>=0){ b.disabled=false; b.textContent='Remove from My Booking · your '+(ORD[idx]||'')+' pick'; }
+    if(idx>=0){ b.disabled=false; b.textContent='Close'; document.getElementById('tsMeta').textContent+=' · Added \u2713 · your '+(ORD[idx]||'')+' pick'; }
     else if(picks.length>=MAX_PICKS){ b.disabled=true; b.textContent='Booking Full — Remove One First'; }
     else { b.disabled=false; b.textContent='Add to My Booking'; }
   }
@@ -702,7 +702,7 @@
   function closeSheet(){ sheet.classList.remove('open'); sheet.hidden=true; document.body.style.overflow=''; }
   sheet.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeSheet); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !sheet.hidden) closeSheet(); });
-  document.getElementById('tsToggle').addEventListener('click', function(){ if(sheetRow){ togglePick(sheetRow); sheetRender(); } });
+  document.getElementById('tsToggle').addEventListener('click', function(){ if(!sheetRow) return; if(picks.indexOf(sheetRow)>=0){ closeSheet(); } else { togglePick(sheetRow); sheetRender(); } });
 
   /* ---------- week strip ---------- */
   function renderStrip(){
