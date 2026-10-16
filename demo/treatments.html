@@ -312,6 +312,22 @@
   .wk-day.sel{border-color:var(--brass-d);background:#fdf6ea}
   .wk-day.off{opacity:.35;cursor:default}
   .tslot-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;font-weight:600}
+
+  /* treatment detail sheet (tap a treatment) */
+  .menu-row{cursor:pointer}
+  .tsheet{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center}
+  .tsheet[hidden]{display:none}
+  .tsheet-bg{position:absolute;inset:0;background:rgba(28,23,16,.55);opacity:0;transition:opacity .25s}
+  .tsheet.open .tsheet-bg{opacity:1}
+  .tsheet-card{position:relative;background:#fffdf8;width:100%;max-width:540px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:0 24px 26px;transform:translateY(24px);opacity:0;transition:transform .25s,opacity .25s}
+  .tsheet.open .tsheet-card{transform:none;opacity:1}
+  @media(min-width:700px){ .tsheet{align-items:center;padding:20px} .tsheet-card{border-radius:20px} }
+  .tsheet-card img{width:calc(100% + 48px);margin-left:-24px;height:210px;object-fit:cover}
+  .tsheet-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,253,248,.92);font-size:20px;cursor:pointer;color:var(--ink);z-index:2;font-family:inherit}
+  .tsheet-card h3{font-size:25px;margin:16px 0 2px}
+  .ts-meta{color:var(--brass-d);font-weight:600;font-size:15.5px;margin-bottom:8px}
+  #tsDesc{color:var(--muted);font-size:15.5px;line-height:1.55}
+  #tsBook{display:block;text-align:center;margin-top:18px}
 </style>
 </head>
 <body>
@@ -331,7 +347,7 @@
   </nav>
 </div></header>
 <section><div class="wrap">
-<div class="page-head"><div class="kicker">Treatments</div><h1>Every treatment, one calm menu.</h1><p>All twenty treatments, in order. Tap <b>Book</b> on any treatment and it will be ready for you in the booking form.</p></div>
+<div class="page-head"><div class="kicker">Treatments</div><h1>Every treatment, one calm menu.</h1><p>All twenty treatments, in order. Tap any treatment to see its photo and details, or tap <b>Book</b> and it will be ready for you in the booking form.</p></div>
 <div class="menu-group"><h2>Head Spa — Signature Therapies</h2>
 <p class="group-note">Every signature therapy includes premium care products and device-assisted essence infusion.</p>
 <div class="menu-row"><div><span class="mn">Aromatherapy Head Spa for Relaxation</span><span class="md">Aromatherapy scalp &amp; facial ritual for deep relaxation.</span></div><div class="mp"><span class="pr">$99</span><span class="min">75 MIN</span></div><a class="btn sm" href="lumina.html?book=Aromatherapy%20Head%20Spa%20for%20Relaxation#book">Book</a></div>
@@ -395,6 +411,44 @@
   });
   var first=groups[0];
   first.parentNode.insertBefore(bar, first);
+})();
+</script>
+
+<div class="tsheet" id="tsheet" hidden>
+  <div class="tsheet-bg" data-close></div>
+  <div class="tsheet-card" role="dialog" aria-modal="true" aria-label="Treatment details">
+    <button class="tsheet-x" type="button" data-close aria-label="Close">×</button>
+    <img id="tsImg" alt="">
+    <h3 id="tsName"></h3>
+    <p class="ts-meta" id="tsMeta"></p>
+    <p id="tsDesc"></p>
+    <a class="btn" id="tsBook" href="#">Book This Treatment</a>
+  </div>
+</div>
+<script>
+(function(){
+  var TIMG={"Aromatherapy Head Spa for Relaxation": "treat-aroma.jpg", "New Chinese-Style Wellness Head Therapy": "treat-chinese.jpg", "Floral Head Spa": "treat-floral.jpg", "Herbal Hot Compress Head Treatment": "treat-herbal.jpg", "Holographic Head Spa": "gallery-basin.jpg", "Nourishing Scalp Cleansing Treatment": "gallery-analysis.jpg", "Deep Cleansing & Firming Facial": "svc-facial.jpg", "Probiotic Skincare Treatment": "gallery-clean.jpg", "HydroGlow Facial": "card-hydroglow.jpg", "Swedish Massage": "gallery-room.jpg", "Foot Reflexology": "svc-foot.jpg", "Hot Stone Massage": "gallery-ritual.jpg", "Himalayan Salt Stone Therapy": "svc-saltstone.jpg", "Swedish Massage for Two": "gallery-corner.jpg", "Japanese Head Spa & Facial — 60-Minute Combo": "svc-headspa.jpg", "Japanese Head Spa & Hot Stone Massage — 60-Minute Combo": "svc-headspa.jpg", "Japanese Head Spa & Foot Massage — 60-Minute Combo": "svc-headspa.jpg", "Japanese Head Spa & Facial — 90-Minute Combo": "svc-headspa.jpg", "Japanese Head Spa & Hot Stone Massage — 90-Minute Combo": "svc-headspa.jpg", "Japanese Head Spa & Foot Massage — 90-Minute Combo": "svc-headspa.jpg"};
+  var sheet=document.getElementById('tsheet');
+  function openSheet(row){
+    var name=row.querySelector('.mn').textContent;
+    document.getElementById('tsName').textContent=name;
+    document.getElementById('tsMeta').textContent=row.querySelector('.pr').textContent+' \u00b7 '+row.querySelector('.min').textContent.replace(' MIN',' minutes');
+    var dsc=row.querySelector('.md').textContent;
+    var grp=row.closest('.menu-group'), h=grp?grp.querySelector('h2').textContent:'';
+    if(h.indexOf('Signature')>=0) dsc+=' Includes premium care products and device-assisted essence infusion.';
+    document.getElementById('tsDesc').textContent=dsc;
+    var im=document.getElementById('tsImg');
+    if(TIMG[name]){ im.src=TIMG[name]; im.alt=name; im.style.display='block'; } else { im.style.display='none'; }
+    document.getElementById('tsBook').href=row.querySelector('a.btn').getAttribute('href');
+    sheet.hidden=false; requestAnimationFrame(function(){ sheet.classList.add('open'); });
+    document.body.style.overflow='hidden';
+  }
+  function closeSheet(){ sheet.classList.remove('open'); sheet.hidden=true; document.body.style.overflow=''; }
+  document.querySelectorAll('.menu-row').forEach(function(row){
+    row.addEventListener('click', function(e){ if(e.target.closest('a')) return; openSheet(row); });
+  });
+  sheet.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeSheet); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !sheet.hidden) closeSheet(); });
 })();
 </script>
 </body>
