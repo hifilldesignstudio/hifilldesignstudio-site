@@ -379,7 +379,7 @@
     <h2>Our most-loved treatments.</h2>
     <p>Our four signature head therapies, plus guest-favourite facials and massage — every signature therapy includes added care products and device-assisted essence infusion.</p>
   </div>
-  <div style="position:relative;margin:4px 0 28px"><img src="banner-hydroglow.jpg?v=20261015" alt="HydroGlow Facial — cleanse, exfoliate, hydrate. A refreshing facial for smooth, hydrated skin." style="width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 18px 44px rgba(60,45,20,.20)"><a href="#book" onclick="document.querySelectorAll('#tlist .trow.sel').forEach(function(r){r.click()});var t=document.querySelector('#tlist .trow[data-name=\'HydroGlow Facial\']');if(t&&!t.classList.contains('sel'))t.click();document.getElementById('book').scrollIntoView({behavior:'smooth'});return false" style="position:absolute;left:50%;bottom:20px;transform:translateX(-50%);background:var(--brass);color:#fff;font-weight:600;font-size:16.5px;letter-spacing:.04em;padding:12px 34px;border-radius:999px;text-decoration:none;box-shadow:0 10px 26px rgba(60,45,20,.35);white-space:nowrap">Book this →</a></div>
+  <div style="position:relative;margin:4px 0 28px"><img src="banner-hydroglow.jpg?v=20261015" alt="HydroGlow Facial — cleanse, exfoliate, hydrate. A refreshing facial for smooth, hydrated skin." style="width:100%;height:auto;display:block;border-radius:18px;box-shadow:0 18px 44px rgba(60,45,20,.20)"><a href="#book" onclick="document.querySelectorAll('#tlist .trow.sel').forEach(function(r){window.luminaToggle(r)});var t=document.querySelector('#tlist .trow[data-name=\'HydroGlow Facial\']');if(t&&!t.classList.contains('sel'))window.luminaToggle(t);document.getElementById('book').scrollIntoView({behavior:'smooth'});return false" style="position:absolute;left:50%;bottom:20px;transform:translateX(-50%);background:var(--brass);color:#fff;font-weight:600;font-size:16.5px;letter-spacing:.04em;padding:12px 34px;border-radius:999px;text-decoration:none;box-shadow:0 10px 26px rgba(60,45,20,.35);white-space:nowrap">Book this →</a></div>
   <div class="cards sig">
     <div class="card"><img class="card-photo" src="treat-herbal.jpg" alt="Herbal Hot Compress Head Treatment"><h3>Herbal Hot Compress Head Treatment</h3>
       <p>A warm herbal pouch with ginger and lemon essential oils, worked in with massage techniques to dispel cold and dampness, ease headaches and improve sleep.</p>
@@ -672,11 +672,11 @@
     onPickChange();
     return true;
   }
+  window.luminaToggle=togglePick;
   document.querySelectorAll('.trow').forEach(function(r){
     var pill=document.createElement('span'); pill.className='addbtn'; pill.textContent='Add'; r.appendChild(pill);
     r.addEventListener('click',function(e){
-      var direct = (e.target===r) || (e.target.closest && e.target.closest('.addbtn'));
-      if(direct) togglePick(r); else openSheet(r);
+      if(e.target.closest && e.target.closest('.addbtn')) togglePick(r); else openSheet(r);
     });
   });
 
@@ -815,8 +815,8 @@
     if(!target) return;
     var sel=rows.filter(function(r){return r.classList.contains('sel');});
     if(sel.length===1 && sel[0]===target) return;
-    sel.forEach(function(r){ r.click(); });
-    if(!target.classList.contains('sel')) target.click();
+    sel.forEach(function(r){ window.luminaToggle(r); });
+    if(!target.classList.contains('sel')) window.luminaToggle(target);
   })();
   /* hero slider (2026-10-15) */
   (function(){
