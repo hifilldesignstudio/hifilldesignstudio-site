@@ -487,9 +487,9 @@
       <div class="pick-h">Your details</div>
       <div class="fld"><label for="nm">Your name</label><input type="text" id="nm" placeholder="Full name"></div>
       <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
-      <div class="fld"><label for="em">Email <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><input type="email" id="em" placeholder="e.g. jane@email.com"></div>
+      <div class="fld"><label for="em">Email</label><input type="email" id="em" placeholder="e.g. jane@email.com"></div>
       <div class="fld"><label for="nt">Special requests <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><textarea id="nt" rows="2" placeholder="e.g. allergies, pregnancy, light or firm pressure, a quiet room…"></textarea></div>
-      <p class="err" id="err">Please complete each step: treatment, date, time, and your name and phone number.</p>
+      <p class="err" id="err">Please complete each step: treatment, date, time, and your name, phone number and email.</p>
     </div>
     <div class="bk-panel" id="panelConfirm" hidden>
       <div class="confirm" id="confirmBox" style="display:none">
@@ -777,8 +777,8 @@
         em=document.getElementById('em').value.trim(),
         nt=document.getElementById('nt').value.trim();
     if(!picks.length||!selDay||!selTime||!nm||!ph){ errEl.style.display='block'; return; }
-    if(em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ errEl.textContent='That email looks incomplete — please check it, or clear it (email is optional).'; errEl.style.display='block'; return; }
-    errEl.textContent='Please complete each step: treatment, date, time, and your name and phone number.';
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ errEl.textContent='Please add your email — your confirmation and your private link to change or cancel are sent there.'; errEl.style.display='block'; return; }
+    errEl.textContent='Please complete each step: treatment, date, time, and your name, phone number and email.';
     errEl.style.display='none';
     var t=selStartMin, parts=[];
     picks.forEach(function(r){
