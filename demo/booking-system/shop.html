@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenity Head Spa &amp; Wellness — Online Booking (Interactive Demo)</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="shortcut icon" href="../favicon.ico">
+<meta name="description" content="Serenity Head Spa & Wellness is a fictional shop in the Hifill Design Studio booking-system demo. Book as a guest, then open the owner admin to see your booking arrive.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ef; --cream2:#f3ecdf; --ink:#2e2a25; --muted:#7a7266;
+    --brass:#a98548; --brass-d:#8a6c38; --gold:#c9a35c; --sage:#8a9a8b; --line:#e3d9c8;
+    --card:#fffdf9; --deep:#171410;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-weight:300}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.12}
+  img{max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:11px;color:var(--brass);font-weight:500}
+  section{padding:84px 0}
+  .sec-head{max-width:640px;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(32px,4.4vw,46px);margin:10px 0 12px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* header */
+  .topbar{background:var(--deep);color:#e9e2d4;font-size:13px;letter-spacing:.06em}
+.promo-ticker{background:linear-gradient(90deg,#c9a35f,#e6cc8d,#c9a35f);color:#241d12;overflow:hidden;padding:8px 0;font-size:12.5px;font-weight:700;letter-spacing:.14em}
+.promo-track{display:flex;width:max-content;animation:promoScroll 28s linear infinite}
+.promo-track span{white-space:nowrap}
+@keyframes promoScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.promo-track{animation:none}}
+  .topbar .wrap{display:flex;justify-content:space-between;gap:14px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .topbar a{color:#e9e2d4;text-decoration:none}
+  header.site{position:sticky;top:0;background:rgba(20,17,13,.97);backdrop-filter:blur(8px);border-bottom:1px solid #3a332a;z-index:50}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;gap:16px}
+  .logo{text-decoration:none;line-height:0}
+  .logo img{height:50px;width:auto;display:block}
+  @media(max-width:860px){.logo img{height:36px}}
+  nav.main{display:flex;gap:26px;align-items:center}
+  nav.main a{color:#e9e2d4;text-decoration:none;font-size:15px;letter-spacing:.04em}
+  nav.main a:hover{color:var(--gold)}
+  .btn{display:inline-block;background:var(--brass);color:#fff;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:15px;letter-spacing:.06em;font-weight:500;border:1px solid var(--brass);cursor:pointer;transition:.2s}
+  .btn:hover{background:var(--brass-d);border-color:var(--brass-d)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:#c9bda6}
+  .hero-photo{border-radius:18px;overflow:hidden;box-shadow:0 24px 50px rgba(60,45,20,.22);border:1px solid #d9c9a8}
+  .hero-photo img{display:block;width:100%;height:auto}
+  .card .card-photo{width:100%;height:185px;object-fit:cover;border-radius:12px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .price-cat{padding:15px 26px 13px;background:#f6efe1;border-bottom:1px solid var(--line);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass-d);font-weight:600}
+  .tile{background-size:cover;background-position:center}
+  .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,10,0) 45%,rgba(20,16,10,.55))}
+  footer .logo img{height:44px}
+  .btn.ghost:hover{border-color:var(--brass);color:var(--brass-d)}
+  nav.main .btn{padding:9px 20px}
+  .nav-toggle{display:none;background:none;border:0;color:var(--gold);font-size:26px;line-height:1;padding:8px 6px;cursor:pointer}
+  @media(max-width:860px){nav.main a:not(.btn){display:none}.nav-toggle{display:block}nav.main.open{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:rgba(20,17,13,.98);padding:8px 5vw 16px;border-bottom:1px solid #3a332a;box-shadow:0 18px 30px rgba(0,0,0,.35)}nav.main.open a:not(.btn){display:block;padding:11px 0;font-size:16.5px;border-bottom:1px solid rgba(233,226,212,.08)}nav.main.open .btn{margin-top:10px;text-align:center}}
+
+  /* hero */  /* booking */
+  .book-info{max-width:820px;margin:0 auto 34px;text-align:center}
+  .book-info ul{display:flex;flex-wrap:wrap;gap:4px 36px;justify-content:center}
+  .bk-side .cal{max-width:450px;width:100%;margin:0 auto}
+  .book-info h2{font-size:clamp(30px,4vw,42px);margin:10px 0 14px}
+  .book-info p{color:var(--muted);font-size:17px;margin-bottom:16px}
+  .book-info ul{list-style:none;margin-top:8px}
+  .book-info li{padding:4px 0;font-size:16px}
+  .book-info li b{font-weight:500}
+  .widget{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 18px 40px rgba(90,75,45,.08)}
+  .widget h3{font-size:24px;margin-bottom:4px}
+  .widget .sub{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;font-weight:500}
+  select,input[type=text],input[type=tel],input[type=email],textarea{width:100%;padding:12px 14px;border:1px solid #d8cdb8;border-radius:10px;font-family:'Jost',sans-serif;font-size:16px;background:#fff;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid #d8cdb8;background:#fff;border-radius:999px;padding:8px 15px;font-size:14.5px;cursor:pointer;font-family:'Jost',sans-serif}
+  .chip:hover{border-color:var(--brass)}
+  .chip.sel{background:var(--brass);color:#fff;border-color:var(--brass)}
+  .widget .btn{width:100%;text-align:center;margin-top:6px}
+  .demo-note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
+  .step{display:none}  .confirm{display:none;background:#eef2ea;border:1px solid #c8d4c2;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .confirm h4{font-family:'Cormorant Garamond',serif;font-size:23px;margin-bottom:6px}
+  .confirm p{font-size:15.5px}
+  .err{display:none;color:#a33d2a;font-size:14px;margin-top:10px}  footer{background:var(--deep);color:#c9c0ac;padding:44px 0 34px;font-size:14.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer .logo{color:#efe9dc}
+  footer a{color:#e9e2d4}
+  .credit{max-width:1120px;margin:22px auto 0;padding:18px 22px 0;border-top:1px solid #4c473d;font-size:12.5px;color:#8f8776}
+  #toTop{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(20,17,13,.88);color:var(--gold);font-size:20px;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  #toTop.show{opacity:1;pointer-events:auto}
+  #toTop:hover{background:var(--gold);color:#171410}  /* --- stepped booking (2026-10-15) --- */
+  .bk-layout{display:grid;grid-template-columns:1fr 330px;gap:28px;align-items:start;margin-top:6px}
+  @media(max-width:960px){.bk-layout{grid-template-columns:1fr}.bk-rail{position:static}}
+  .bk-rail{position:sticky;top:96px}
+  .bk-panel{scroll-margin-top:104px}
+  /* mobile sticky booking bar: summary + Back/Next stay in thumb reach */
+  .bk-mbar{display:none}
+  @media(max-width:960px){
+    .bk-mbar{display:flex;align-items:center;gap:10px;position:sticky;bottom:0;z-index:40;background:#fffdf9;border:1.5px solid var(--line);border-radius:14px;box-shadow:0 -6px 24px rgba(90,75,45,.14);padding:10px 12px calc(10px + env(safe-area-inset-bottom));margin-top:16px}
+    .bk-mbar.off{display:none}
+    .bk-mbar .mb-info{flex:1;min-width:0}
+    .bk-mbar .mb-l1{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .bk-mbar .mb-l2{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .bk-mbar .mb-hint{font-size:12.5px;color:#b3402e;display:none}
+    .bk-mbar .btn{padding:11px 16px;white-space:nowrap}
+    #toTop{bottom:100px}
+  }
+  .rail-card{border:1.5px solid var(--line);border-radius:16px;background:#fffdf9;padding:20px;box-shadow:0 12px 30px rgba(90,75,45,.07)}
+  .rail-shop{font-weight:600;font-size:15px;margin-bottom:8px}
+  .ri{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .ri .rn{font-size:14.5px;line-height:1.35}
+  .ri .rt{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+  .ri .rp{font-weight:600;color:var(--brass-d);white-space:nowrap}
+  .rail-total{display:flex;justify-content:space-between;align-items:baseline;font-size:16.5px;margin-top:14px}
+  .rail-total b{color:var(--brass-d);font-size:19px}
+  .rail-dur{font-size:13px;color:var(--muted);margin-top:2px}
+  .rail-nav{display:flex;gap:10px;margin-top:16px}
+  .rail-next{flex:1}
+  .rail-back{color:var(--brass-d);border:1.5px solid var(--brass);background:transparent}
+  .rail-hint{font-size:13px;color:var(--muted);margin-top:12px;line-height:1.45}
+  .bk-crumbs{display:flex;gap:7px;align-items:center;font-size:14px;margin-bottom:18px;color:var(--muted);flex-wrap:wrap}
+  .bk-crumbs button{background:none;border:none;font:inherit;cursor:pointer;color:var(--muted);padding:2px 3px}
+  .bk-crumbs button.on{color:var(--ink);font-weight:600}
+  .bk-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+  .bk-tab{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 16px;font-family:'Jost',sans-serif;font-size:13.5px;cursor:pointer;color:var(--ink)}
+  .bk-tab.on{background:#171410;color:#fdf6e3;border-color:#171410}
+  .wk-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .wk-month{font-weight:600;font-size:16px}
+  .wk-strip{display:flex;gap:6px}
+  .wk-day{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 2px 7px;text-align:center;cursor:pointer;font-family:'Jost',sans-serif}
+  .wk-day .dw{display:block;font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .wk-day .dn{display:block;font-size:17px;font-weight:600;margin-top:1px}
+  .wk-day.today .dn{color:var(--brass-d)}
+  .wk-day.sel{border-color:var(--brass-d);background:#fdf6ea}
+  .wk-day.off{opacity:.35;cursor:default}
+  .tslot-h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;font-weight:600}
+  .fld textarea{resize:vertical;min-height:58px}
+  .chip.off{opacity:.35;text-decoration:line-through;pointer-events:none}
+  .th-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .th-card{border:1px solid #d8cdb8;background:#fff;border-radius:14px;padding:14px 12px;cursor:pointer;font-family:'Jost',sans-serif;text-align:left;display:flex;flex-direction:column;gap:3px}
+  .th-card .th-n{font-size:16px;font-weight:500;color:var(--ink)}
+  .th-card .th-s{font-size:12.5px;color:var(--muted)}
+  .th-card.sel{border-color:var(--brass);background:#faf5ea;box-shadow:0 0 0 1px var(--brass)}
+  .th-card.off{opacity:.45;cursor:not-allowed}
+  .trow .addbtn{flex:0 0 auto;align-self:center;margin-left:12px;border:1.5px solid var(--brass);color:var(--brass-d);border-radius:999px;padding:6px 15px;font-size:13.5px;font-weight:500;white-space:nowrap}
+  .trow.sel .addbtn{background:var(--brass);color:#fff}
+
+  /* treatment rows: price on line 1, Add/Remove pill on its own line 2, right column aligned (2026-10-15) */
+  .trow{display:grid;grid-template-columns:minmax(0,1fr) 94px;grid-template-areas:'main price' 'main btn';align-items:start;column-gap:12px}
+  .trow .tmain{grid-area:main}
+  .trow .tp{grid-area:price;text-align:right}
+  .trow .addbtn{grid-area:btn;justify-self:end;width:52px;margin:7px 0 0;padding:4px 0;font-size:12px;text-align:center;align-self:start}
+  @media(max-width:560px){ .trow{grid-template-columns:minmax(0,1fr) 84px} }
+
+  /* treatment detail sheet (tap a treatment) */
+  .tsheet{position:fixed;inset:0;z-index:200;display:flex;align-items:flex-end;justify-content:center}
+  .tsheet[hidden]{display:none}
+  .tsheet-bg{position:absolute;inset:0;background:rgba(28,23,16,.55);opacity:0;transition:opacity .25s}
+  .tsheet.open .tsheet-bg{opacity:1}
+  .tsheet-card{position:relative;background:#fffdf8;width:100%;max-width:540px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:0 24px 26px;transform:translateY(24px);opacity:0;transition:transform .25s,opacity .25s}
+  .tsheet.open .tsheet-card{transform:none;opacity:1}
+  @media(min-width:700px){ .tsheet{align-items:center;padding:20px} .tsheet-card{border-radius:20px} }
+  .tsheet-card img{width:calc(100% + 48px);margin-left:-24px;height:210px;object-fit:cover}
+  .tsheet-x{position:absolute;top:10px;right:12px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,253,248,.92);font-size:20px;cursor:pointer;color:var(--ink);z-index:2;font-family:inherit}
+  .tsheet-card h3{font-size:25px;margin:16px 0 2px}
+  .ts-meta{color:var(--brass-d);font-weight:600;font-size:15.5px;margin-bottom:8px}
+  #tsDesc{color:var(--muted);font-size:15.5px;line-height:1.55}
+  #tsToggle{width:100%;margin-top:18px}
+  #tsToggle:disabled{opacity:.5;cursor:default}
+
+  .trow .tdet{display:block;font-size:12px;color:var(--brass-d);margin-top:2px;text-decoration:underline;text-underline-offset:2px}
+
+  /* --- demo shop additions --- */
+  .demo-banner{background:#1457ff;color:#fff;font-size:13.5px;padding:9px 0}
+  .demo-banner .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .demo-banner a{color:#fff;border:1px solid rgba(255,255,255,.65);border-radius:8px;padding:4px 11px;text-decoration:none;white-space:nowrap}
+  .demo-banner button{background:#fff;color:#1457ff;border:none;border-radius:8px;padding:5px 12px;cursor:pointer;font:inherit;font-weight:600}
+  .wordmark{font-family:'Cormorant Garamond',serif;font-size:29px;color:#fdf6e3;text-decoration:none;letter-spacing:.14em;line-height:1}
+  .wordmark small{display:block;font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.34em;color:var(--gold);margin-top:3px}
+  @media(max-width:860px){.wordmark{font-size:23px}}
+  .hero-band{position:relative;padding:92px 0 84px;background:linear-gradient(90deg, rgba(15,12,8,.84) 0%, rgba(15,12,8,.55) 52%, rgba(15,12,8,.25) 100%), url('../serenity-hero.jpg') center 62%/cover no-repeat}
+  .hero-band h1{font-size:clamp(40px,5.4vw,64px);color:#fdf6e3;margin:12px 0 14px}
+  .hero-band .kicker{color:var(--gold)}
+  .hero-band p{font-size:19px;color:#eae1cd;max-width:560px;margin-bottom:26px}
+  .gallery-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .gallery-strip img{width:100%;height:170px;object-fit:cover;border-radius:14px;display:block}
+  @media(max-width:860px){.gallery-strip{grid-template-columns:1fr}}
+  .msg-ok{color:#2e7d4f;font-size:15px;margin-top:10px;display:none}
+  .msg-err{color:#a33d2a;font-size:15px;margin-top:10px;display:none}
+
+</style>
+</head>
+<body>
+<div class="demo-banner"><div class="wrap">
+  <span>&#129514; <b>Interactive demo</b> by Hifill Design Studio — Serenity is a fictional shop; bookings and messages stay in your browser only.</span>
+  <span style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+    <a href="index.html">Demo home</a>
+    <a href="admin.html">Owner view (admin)</a>
+    <button id="demoResetBtn" type="button">Reset demo data</button>
+  </span>
+</div></div>
+<div class="topbar"><div class="wrap">
+  <span>Head Spa &amp; Wellness · Maple</span>
+  <span>Open 7 days · 10:00 AM – 9:00 PM &nbsp;·&nbsp; <a href="tel:+19055550134">905-555-0134</a></span>
+</div></div>
+<header class="site"><div class="wrap">
+  <a class="wordmark" href="shop.html">SERENITY<small>HEAD SPA &amp; WELLNESS</small></a>
+  <nav class="main">
+    <a href="#book">Treatments</a>
+    <a href="#message">Message Us</a>
+    <a href="admin.html">Owner View</a>
+    <a class="btn" href="#book">Book Now</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false">&#9776;</button>
+</div></header>
+<script>(function(){var b=document.getElementById('navToggle'),n=document.querySelector('nav.main');if(!b||!n)return;b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');b.innerHTML=o?'&#10005;':'&#9776;';});n.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('a')){n.classList.remove('open');b.setAttribute('aria-expanded','false');b.innerHTML='&#9776;';}});})();</script>
+
+<div class="hero-band"><div class="wrap">
+  <div class="kicker">Serenity Head Spa &amp; Wellness</div>
+  <h1>Your calm,<br>booked in a minute.</h1>
+  <p>Pick your treatments, a time and your therapist — then watch your booking land in the owner&rsquo;s admin panel. That round trip is the product.</p>
+  <a class="btn" href="#book" style="padding:14px 32px;font-size:16px">Book an appointment</a>
+</div></div>
+
+<section style="padding:56px 0 8px"><div class="wrap">
+  <div class="gallery-strip">
+    <img src="../serenity-g-plant.jpg" alt="Inside Serenity (sample photo)">
+    <img src="../serenity-g-shelf.jpg" alt="Treatment room (sample photo)">
+    <img src="../serenity-t-headspa.jpg" alt="Head spa treatment (sample photo)">
+  </div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <div class="book-info">
+    <div class="kicker">Online Booking</div>
+    <h2>Book in about a minute.</h2>
+    <p id="bookIntro">Choose your treatment and a time that suits you — we confirm every booking personally.</p>
+    <ul>
+      <li><b>Hours</b> — Open 7 days, 10:00 AM – 9:00 PM</li>
+      <li><b>Booking ahead</b> — You can book online up to 1 month in advance</li>
+      <li><b>Need assistance?</b> — Call us at <a href="tel:+19055550134" style="color:var(--brass-d);font-weight:500;text-decoration:none">905-555-0134</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h3>Book an appointment</h3>
+    <p class="sub">Serenity Head Spa &amp; Wellness · Maple</p>
+    <div class="bk-layout">
+  <div class="bk-main">
+    <div class="bk-crumbs" id="bkCrumbs"><button type="button" data-goto="1" class="on">Services</button><span>›</span><button type="button" data-goto="2">Time</button><span>›</span><button type="button" data-goto="3" id="crumbTher" hidden>Therapist</button><span id="crumbTherSep" hidden>›</span><button type="button" data-goto="3" id="crumbDetails">Details</button><span>›</span><span>Confirm</span></div>
+    <div class="bk-panel" id="panelServices">
+      <div class="pick-h">Choose your treatment(s)</div>
+      <div class="bk-tabs" id="bkTabs"></div>
+      <div class="tlist" id="tlist">
+      <div class="tgroup">Signature</div>
+      <button type="button" class="trow sel" data-min="75" data-price="95" data-name="Aromatherapy Head Spa Ritual"><span class="tmain"><span class="tn">Aromatherapy Head Spa Ritual</span><span class="badge">1st</span><span class="tdet">Details &#8594;</span></span><span class="tp">$95<span class="tmin">75 MIN</span></span></button>
+      <button type="button" class="trow" data-min="90" data-price="118" data-name="Herbal Steam Head Therapy"><span class="tmain"><span class="tn">Herbal Steam Head Therapy</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$118<span class="tmin">90 MIN</span></span></button>
+      <div class="tgroup">Head Spa</div>
+      <button type="button" class="trow" data-min="60" data-price="72" data-name="Signature Japanese Head Spa"><span class="tmain"><span class="tn">Signature Japanese Head Spa</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$72<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="60" data-price="84" data-name="Deep Scalp Renewal Treatment"><span class="tmain"><span class="tn">Deep Scalp Renewal Treatment</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$84<span class="tmin">60 MIN</span></span></button>
+      <div class="tgroup">Facial</div>
+      <button type="button" class="trow" data-min="60" data-price="76" data-name="Radiance Renewal Facial"><span class="tmain"><span class="tn">Radiance Renewal Facial</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$76<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="90" data-price="148" data-name="HydraDew Glow Facial"><span class="tmain"><span class="tn">HydraDew Glow Facial</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$148<span class="tmin">90 MIN</span></span></button>
+      <div class="tgroup">Massage</div>
+      <button type="button" class="trow" data-min="60" data-price="82" data-name="Swedish Massage"><span class="tmain"><span class="tn">Swedish Massage</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$82<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="60" data-price="92" data-name="Hot Stone Massage"><span class="tmain"><span class="tn">Hot Stone Massage</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$92<span class="tmin">60 MIN</span></span></button>
+      <button type="button" class="trow" data-min="45" data-price="58" data-name="Foot Reflexology"><span class="tmain"><span class="tn">Foot Reflexology</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$58<span class="tmin">45 MIN</span></span></button>
+      <button type="button" class="trow" data-min="60" data-price="138" data-name="Swedish Massage for Two"><span class="tmain"><span class="tn">Swedish Massage for Two</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$138<span class="tmin">60 MIN</span></span></button>
+      <div class="tgroup">Special Combos</div>
+      <button type="button" class="trow" data-min="90" data-price="109" data-name="Head Spa & Facial Combo"><span class="tmain"><span class="tn">Head Spa & Facial Combo</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$109<span class="tmin">90 MIN</span></span></button>
+      <button type="button" class="trow" data-min="90" data-price="115" data-name="Head Spa & Stone Massage Combo"><span class="tmain"><span class="tn">Head Spa & Stone Massage Combo</span><span class="badge"></span><span class="tdet">Details &#8594;</span></span><span class="tp">$115<span class="tmin">90 MIN</span></span></button>
+                <p class="pick-note">Tap a treatment for details, or tap <b>Add</b> to include it — your picks run back-to-back in the same visit. Tap <b>Remove</b> to take one out. <b>Maximum 5 treatments per booking.</b></p>
+        <p class="pick-note">Want to book more treatments? Please call us — <a href="tel:+19055550134" style="color:var(--brass-d);font-weight:600;text-decoration:none">905-555-0134</a></p>
+    </div>
+    <div class="bk-panel" id="panelTime" hidden>
+      <div class="pick-h">Pick a date</div>
+      <div class="wk-head"><button type="button" class="cal-nav" id="wkPrev" aria-label="Previous week">‹</button><div class="wk-month" id="wkMonth"></div><button type="button" class="cal-nav" id="wkNext" aria-label="Next week">›</button></div>
+      <div class="wk-strip" id="wkStrip"></div>
+      <div class="pick-h" style="margin-top:24px">Pick a start time</div>
+      <div id="times"></div>
+      <p class="pick-note" style="margin-top:14px">Your treatments run one after another — you only pick the start time of the first one.</p>
+    </div>
+    <div class="bk-panel" id="panelTherapist" hidden>
+      <div class="pick-h">Choose your therapist</div>
+      <div class="th-grid" id="therapistCards"></div>
+      <p class="pick-note" id="therapistNote" style="margin-top:12px"></p>
+      <p class="pick-note">Not sure? Choose <b>No preference</b> — we will match you with the first available therapist.</p>
+    </div>
+    <div class="bk-panel" id="panelDetails" hidden>
+      <div class="pick-h">Your details</div>
+      <div class="fld"><label for="nm">Your name</label><input type="text" id="nm" placeholder="Full name"></div>
+      <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="e.g. 416-555-0123"></div>
+      <div class="fld"><label for="em">Email</label><input type="email" id="em" placeholder="e.g. jane@email.com"></div>
+      <div class="fld"><label for="nt">Special requests <span style="text-transform:none;letter-spacing:0;font-weight:300">(optional)</span></label><textarea id="nt" rows="2" placeholder="e.g. allergies, pregnancy, light or firm pressure, a quiet room…"></textarea></div>
+      <p class="err" id="err">Please complete each step: treatment, date, time, and your name, phone number and email.</p>
+    </div>
+    <div class="bk-panel" id="panelConfirm" hidden>
+      <div class="confirm" id="confirmBox" style="display:none">
+      <h4>Your booking details</h4>
+      <p id="confirmText"></p>
+      <div id="callStep"><p style="margin-top:8px;color:var(--muted);font-size:14px">One last step — call us to confirm and we will book you in:</p>
+      <p style="margin-top:10px"><a class="btn" href="tel:+19055550134" style="display:inline-block;width:auto;padding:11px 24px">Call 905-555-0134 to Confirm</a></p></div>
+      <div id="bookedOk" style="display:none">
+      <p id="okText" style="margin-top:8px;font-size:15.5px"></p>
+      <p style="margin-top:10px"><a class="btn" id="manageLink" href="#" style="display:inline-block;width:auto;padding:11px 24px">View / Change My Booking</a></p>
+      <p style="margin-top:8px;color:var(--muted);font-size:14px">Need anything sooner? Call us at <a href="tel:+19055550134">905-555-0134</a>.</p>
+      </div>
+    </div>
+    </div>
+  </div>
+  <aside class="bk-rail"><div class="rail-card">
+    <div class="rail-shop">Serenity Head Spa &amp; Wellness · Maple</div>
+    <div id="railItems"></div>
+    <div class="rail-total"><span>Total</span><b id="railTotal">$0</b></div>
+    <div class="rail-dur" id="railDur"></div>
+    <div class="rail-nav"><button type="button" class="btn rail-back" id="bkBack">← Back</button><button type="button" class="btn rail-next" id="bkNext">Next</button></div>
+    <p class="rail-hint" id="railHint"></p>
+  </div></aside>
+</div>
+  <div class="bk-mbar off" id="bkMbar">
+    <div class="mb-info"><div class="mb-l1" id="mbL1">No treatments chosen yet</div><div class="mb-l2" id="mbL2"></div><div class="mb-hint" id="mbHint"></div></div>
+    <button type="button" class="btn rail-back" id="mbBack" style="visibility:hidden">← Back</button>
+    <button type="button" class="btn rail-next" id="mbNext">Next</button>
+  </div>
+    <p class="demo-note" id="bkModeNote">Live demo — your booking goes straight to the (fictional) shop. Open the Owner view afterwards to confirm it, just like the owner would.</p>
+  </div>
+</div></section>
+
+<section id="message" style="padding-top:20px"><div class="wrap">
+  <div class="widget" style="max-width:720px;margin:0 auto">
+    <h3>Send us a message</h3>
+    <p class="sub">Questions, gift cards, special requests — write to us. In this demo your message lands in the owner&rsquo;s Messages tab.</p>
+    <div class="fld"><label for="cName">Your name</label><input type="text" id="cName" placeholder="Full name"></div>
+    <div class="fld"><label for="cEmail">Email</label><input type="email" id="cEmail" placeholder="e.g. jane@email.com"></div>
+    <div class="fld"><label for="cPhone">Phone (optional)</label><input type="tel" id="cPhone" placeholder="e.g. 416-555-0123"></div>
+    <div class="fld"><label for="cMsg">Message</label><textarea id="cMsg" rows="3" placeholder="How can we help?"></textarea></div>
+    <input type="text" id="cWeb" name="website" style="display:none" tabindex="-1" autocomplete="off">
+    <button type="button" class="btn" id="cSend">Send message</button>
+    <p class="msg-ok" id="cOk">&#10003; Message sent — the shop has it now. (Demo: no email was sent; check the Owner view &rarr; Messages.)</p>
+    <p class="msg-err" id="cErr"></p>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <a class="wordmark" href="#top">SERENITY<small>HEAD SPA &amp; WELLNESS</small></a>
+  <div>128 Willow Lane, Suite 4, Maple, ON · Open 7 days 10 AM – 9 PM · <a href="tel:+19055550134">905-555-0134</a></div>
+</div>
+<div class="credit">&copy; 2026 Serenity Head Spa &amp; Wellness (fictional demo shop) · Booking system demo by Hifill Design Studio</div>
+</footer>
+<button id="toTop" aria-label="Back to top" title="Back to top">&#8593;</button>
+
+<div class="tsheet" id="tsheet" hidden>
+  <div class="tsheet-bg" data-close></div>
+  <div class="tsheet-card" role="dialog" aria-modal="true" aria-label="Treatment details">
+    <button class="tsheet-x" type="button" data-close aria-label="Close">×</button>
+    <img id="tsImg" alt="">
+    <h3 id="tsName"></h3>
+    <p class="ts-meta" id="tsMeta"></p>
+    <p id="tsDesc"></p>
+    <button class="btn" id="tsToggle" type="button">Add to My Booking</button>
+  </div>
+</div>
+<script src="demo-api.js"></script>
+<script>
+(function(){
+  var MAX_PICKS = 5;              /* client rule: max treatments chained in one booking */
+  var WINDOW_DAYS = 30;           /* how far ahead guests can book (1 month) */
+  var tabsEl=document.getElementById('bkTabs'),
+      listEl=document.getElementById('tlist'),
+      stripEl=document.getElementById('wkStrip'),
+      wkMonth=document.getElementById('wkMonth'),
+      wkPrev=document.getElementById('wkPrev'), wkNext=document.getElementById('wkNext'),
+      timesEl=document.getElementById('times'),
+      railItems=document.getElementById('railItems'),
+      railTotal=document.getElementById('railTotal'),
+      railDur=document.getElementById('railDur'),
+      railHint=document.getElementById('railHint'),
+      backB=document.getElementById('bkBack'), nextB=document.getElementById('bkNext'),
+      mbar=document.getElementById('bkMbar'), mbL1=document.getElementById('mbL1'), mbL2=document.getElementById('mbL2'), mbHint=document.getElementById('mbHint'),
+      mbBack=document.getElementById('mbBack'), mbNext=document.getElementById('mbNext'),
+      errEl=document.getElementById('err'), box=document.getElementById('confirmBox');
+  var panels={1:document.getElementById('panelServices'),2:document.getElementById('panelTime'),3:document.getElementById('panelDetails'),4:document.getElementById('panelConfirm')};
+  var crumbs=[].slice.call(document.querySelectorAll('#bkCrumbs [data-goto]'));
+  var picks=[], step=1;
+  var liveMode=false, treatIds={}, availSet=null, availSeq=0;
+  var staffMode=false, staffTechs=[], selTech=0, staffByStart=null;
+  var stepDetails=3, stepConfirm=4;
+  var selDay=null, selDayLabel='', selTime=null, selEnd=null, selStartMin=null, weekIdx=0;
+  var today=new Date(); today.setHours(0,0,0,0);
+  var lastDay=new Date(today); lastDay.setDate(today.getDate()+WINDOW_DAYS);
+  var fmtFull=new Intl.DateTimeFormat('en-CA',{weekday:'long',month:'long',day:'numeric'});
+  var fmtShort=new Intl.DateTimeFormat('en-CA',{weekday:'short',month:'short',day:'numeric'});
+  var fmtMonY=new Intl.DateTimeFormat('en-CA',{month:'long',year:'numeric'});
+  var DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var ORD=['1st','2nd','3rd','4th','5th','6th','7th','8th'];
+
+  /* ---------- category tabs over the treatment list ---------- */
+  var CATMAP={};
+  var cats=['All'];
+  listEl.querySelectorAll('.tgroup').forEach(function(g){
+    var cat=CATMAP[g.textContent.trim()]||g.textContent.trim();
+    g.dataset.cat=cat; if(cats.indexOf(cat)<0) cats.push(cat);
+    var n=g.nextElementSibling;
+    while(n && !n.classList.contains('tgroup')){ n.dataset.cat=cat; n=n.nextElementSibling; }
+  });
+  cats.forEach(function(cat,i){
+    var b=document.createElement('button'); b.type='button'; b.className='bk-tab'+(i===0?' on':''); b.textContent=cat;
+    b.addEventListener('click',function(){
+      tabsEl.querySelectorAll('.bk-tab').forEach(function(t){t.classList.remove('on')});
+      b.classList.add('on');
+      listEl.querySelectorAll('[data-cat]').forEach(function(el){ el.style.display=(cat==='All'||el.dataset.cat===cat)?'':'none'; });
+    });
+    tabsEl.appendChild(b);
+  });
+
+  /* ---------- helpers ---------- */
+  function totalMin(){ return picks.reduce(function(a,r){return a+(parseInt(r.dataset.min,10)||0)},0); }
+  function totalPrice(){ return picks.reduce(function(a,r){return a+(parseInt(r.dataset.price,10)||0)},0); }
+  function unitsNow(){ return picks.some(function(r){ return /for Two$/.test(r.dataset.name); })?2:1; }
+  function fmtTime(mins){ var h=Math.floor(mins/60), m=mins%60, ap=h>=12?'PM':'AM', h12=h%12; if(h12===0)h12=12; return h12+':'+(m<10?'0':'')+m+' '+ap; }
+  function fmtDur(mins){ var h=Math.floor(mins/60), m=mins%60; if(!h) return m+' min'; return h+' hr'+(h>1?'s':'')+(m?' '+m+' min':''); }
+  function refreshBadges(){
+    document.querySelectorAll('.trow').forEach(function(r){
+      var idx=picks.indexOf(r), b=r.querySelector('.badge');
+      r.classList.toggle('sel', idx>=0);
+      if(b) b.textContent = idx>=0 ? (ORD[idx]||'') : '';
+      var ab=r.querySelector('.addbtn'); if(ab) ab.textContent = idx>=0 ? 'Remove' : 'Add';
+    });
+  }
+
+  /* ---------- summary rail ---------- */
+  /* Mobile sticky bar mirrors the rail: totals + chosen day/time up top in
+     the bar, and Back/Next always in reach (they proxy the rail buttons). */
+  function syncMbar(){
+    if(!mbar) return;
+    mbar.classList.toggle('off', !liveMode || step>=stepConfirm);
+    if(!liveMode) return;
+    mbL1.textContent=picks.length? (picks.length+' treatment'+(picks.length>1?'s':'')+' · $'+totalPrice()+' · '+fmtDur(totalMin())) : 'No treatments chosen yet';
+    mbL2.textContent=selDay? (fmtShort.format(selDay)+(selStartMin!==null? ' · starts '+fmtTime(selStartMin) : '')) : '';
+    mbBack.style.visibility=backB.style.visibility;
+    mbNext.style.display=nextB.style.display;
+    mbNext.textContent=nextB.textContent;
+    var h=railHint.textContent||'';
+    mbHint.textContent=(h.indexOf('Please')===0)? h : '';
+    mbHint.style.display=mbHint.textContent? 'block':'none';
+  }
+  function renderRail(){
+    railItems.innerHTML='';
+    if(!picks.length){
+      railItems.innerHTML='<p style="color:var(--muted);font-size:14px;margin:4px 0">No treatments chosen yet.</p>';
+    }
+    var t=selStartMin;
+    picks.forEach(function(r,i){
+      var d=parseInt(r.dataset.min,10)||0;
+      var row=document.createElement('div'); row.className='ri';
+      var when='';
+      if(selDay) when='<span class="rt">'+fmtShort.format(selDay)+(selStartMin!==null? ' · '+fmtTime(t)+' – '+fmtTime(t+d) : '')+'</span>';
+      row.innerHTML='<div><span class="rn">'+(i+1)+'. '+r.dataset.name+'</span>'+when+'</div><span class="rp">$'+r.dataset.price+'</span>';
+      railItems.appendChild(row);
+      if(selStartMin!==null) t+=d;
+    });
+    railTotal.textContent='$'+totalPrice();
+    railDur.textContent=picks.length? 'Total time: '+fmtDur(totalMin()) : '';
+    backB.style.visibility=(step>1&&step<stepConfirm)?'visible':'hidden';
+    nextB.style.display=step<stepConfirm?'':'none';
+    nextB.textContent=step===stepDetails?(liveMode?'Confirm My Booking':'Show My Booking Details'):'Next';
+    crumbs.forEach(function(c){ c.classList.toggle('on', parseInt(c.dataset.goto,10)===step); });
+    if(step===1) railHint.textContent=picks.length?'Looking good — tap Next to pick a date & time.':'Tap a treatment to add it. You can add up to '+MAX_PICKS+' in one visit.';
+    else if(step===2) railHint.textContent=selTime?'Tap Next to leave your details.':'Pick a day, then a start time — your treatments run one after another.';
+    else if(step===3 && staffMode) railHint.textContent='No preference is the easy choice — or tap a name to book with that therapist.';
+    else if(step===stepDetails) railHint.textContent='We confirm every booking personally.';
+    else railHint.textContent='';
+    syncMbar();
+  }
+  function goStep(n, noScroll){
+    step=n;
+    Object.keys(panels).forEach(function(k){ panels[k].hidden=parseInt(k,10)!==n; });
+    if(n===3 && staffMode) renderTherapists();
+    renderRail();
+    /* Bring the new panel into view — on mobile it stacks below the rail,
+       so without this the guest is left staring at the old spot (most
+       noticeable on the final confirmation). Only scrolls when needed.
+       The initial page-load call passes noScroll: opening the homepage
+       must land at the top, never jump down to the booking widget. */
+    var p=panels[n];
+    if(p && p.scrollIntoView && !noScroll){
+      var r=p.getBoundingClientRect();
+      if(r.top<70 || r.top>window.innerHeight*0.55){ try{ p.scrollIntoView({behavior:'smooth', block:'start'}); }catch(e){ p.scrollIntoView(); } }
+    }
+  }
+  nextB.addEventListener('click',function(){
+    if(step===1){ if(!picks.length){ railHint.textContent='Please choose at least one treatment first.'; return; } goStep(2); }
+    else if(step===2){ if(!selTime){ railHint.textContent='Please pick a start time first.'; return; } goStep(3); }
+    else if(staffMode && step===3){ goStep(stepDetails); }
+    else if(step===stepDetails){ doConfirm(); }
+  });
+  backB.addEventListener('click',function(){ if(step>1) goStep(step-1); });
+  mbBack.addEventListener('click',function(){ backB.click(); setTimeout(syncMbar,0); });
+  mbNext.addEventListener('click',function(){ nextB.click(); setTimeout(syncMbar,0); });
+  crumbs.forEach(function(c){
+    c.addEventListener('click',function(){
+      var g=parseInt(c.dataset.goto,10);
+      if(g===1) goStep(1);
+      else if(g===2 && picks.length) goStep(2);
+      else if(g>=3 && selTime) goStep(g);
+    });
+  });
+
+  /* ---------- picking treatments ---------- */
+  function onPickChange(){
+    selTime=null; selEnd=null; selStartMin=null;
+    selTech=0; staffByStart=null;
+    refreshBadges();
+    if(selDay) buildTimes();
+    refreshAvail();
+    renderRail();
+  }
+  function togglePick(r){
+    var idx=picks.indexOf(r);
+    if(idx>=0){ picks.splice(idx,1); }
+    else { if(picks.length>=MAX_PICKS){ railHint.textContent='Up to '+MAX_PICKS+' treatments per booking — tap Remove to swap one out.'; return false; } picks.push(r); }
+    onPickChange();
+    return true;
+  }
+  window.luminaToggle=togglePick;
+  document.querySelectorAll('.trow').forEach(function(r){
+    var pill=document.createElement('span'); pill.className='addbtn'; pill.textContent='Add'; r.appendChild(pill);
+    r.addEventListener('click',function(e){
+      if(e.target.closest && e.target.closest('.addbtn')) togglePick(r); else openSheet(r);
+    });
+  });
+
+
+  /* ---------- treatment detail sheet ---------- */
+  var TDESC={"Aromatherapy Head Spa Ritual": "Warm aromatic oils, a slow scalp massage and a warm-towel finish — our signature way to melt a long week away.", "Herbal Steam Head Therapy": "A steaming herbal compress opens the ritual, followed by deep scalp cleansing and a neck-and-shoulder massage.", "Signature Japanese Head Spa": "The classic Japanese head spa: scalp analysis, deep cleanse, waterfall rinse and a pressure-point massage.", "Deep Scalp Renewal Treatment": "An exfoliating scalp treatment that lifts build-up and leaves your scalp breathing again — finished with a nourishing mask.", "Radiance Renewal Facial": "Cleanse, gentle exfoliation and a brightening mask for skin that looks rested and even-toned.", "HydraDew Glow Facial": "Layers of hydration with a water-based glow treatment, essence infusion and a cool-down mask. Our most-booked facial.", "Swedish Massage": "Long, flowing strokes at the pressure you choose — the classic full-body reset.", "Hot Stone Massage": "Smooth heated stones do the deep work while your therapist keeps everything slow and warm.", "Foot Reflexology": "Focused foot and lower-leg work based on reflex points. Short, and surprisingly mighty.", "Swedish Massage for Two": "Two guests, two therapists, one quiet room — our Swedish massage side by side.", "Head Spa & Facial Combo": "Our Japanese head spa followed by the Radiance Renewal Facial, back to back in one visit.", "Head Spa & Stone Massage Combo": "Japanese head spa first, then a full hot stone massage. Leave floating."};
+  var TIMG={"Aromatherapy Head Spa Ritual": "../serenity-t-aroma.jpg", "Herbal Steam Head Therapy": "../serenity-t-headspa.jpg", "Signature Japanese Head Spa": "../serenity-hero.jpg", "Deep Scalp Renewal Treatment": "../serenity-t-deep.jpg", "Radiance Renewal Facial": "../serenity-t-facial.jpg", "HydraDew Glow Facial": "../t-hydroglow.jpg", "Swedish Massage": "../t-swedish.jpg", "Hot Stone Massage": "../serenity-t-stone.jpg", "Foot Reflexology": "../serenity-t-foot.jpg", "Swedish Massage for Two": "../t-swedish-two.jpg", "Head Spa & Facial Combo": "../t-combo-facial-90.jpg", "Head Spa & Stone Massage Combo": "../t-combo-stone-90.jpg"};
+  var sheet=document.getElementById('tsheet'), sheetRow=null;
+  function sheetRender(){
+    if(!sheetRow) return;
+    var name=sheetRow.dataset.name, idx=picks.indexOf(sheetRow);
+    document.getElementById('tsName').textContent=name;
+    document.getElementById('tsMeta').textContent='$'+sheetRow.dataset.price+' · '+sheetRow.dataset.min+' minutes';
+    var dsc=TDESC[name]||'';
+    if(sheetRow.dataset.cat==='Signature') dsc+=' Includes our premium botanical scalp-care products.';
+    document.getElementById('tsDesc').textContent=dsc;
+    var im=document.getElementById('tsImg');
+    if(TIMG[name]){ im.src=TIMG[name]; im.alt=name; im.style.display='block'; } else { im.style.display='none'; }
+    var b=document.getElementById('tsToggle');
+    if(idx>=0){ b.disabled=false; b.textContent='Close'; document.getElementById('tsMeta').textContent+=' · Added \u2713 · your '+(ORD[idx]||'')+' pick'; }
+    else if(picks.length>=MAX_PICKS){ b.disabled=true; b.textContent='Booking Full — Remove One First'; }
+    else { b.disabled=false; b.textContent='Add to My Booking'; }
+  }
+  function openSheet(r){ sheetRow=r; sheetRender(); sheet.hidden=false; requestAnimationFrame(function(){ sheet.classList.add('open'); }); document.body.style.overflow='hidden'; }
+  function closeSheet(){ sheet.classList.remove('open'); sheet.hidden=true; document.body.style.overflow=''; }
+  sheet.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click', closeSheet); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !sheet.hidden) closeSheet(); });
+  document.getElementById('tsToggle').addEventListener('click', function(){ if(!sheetRow) return; if(picks.indexOf(sheetRow)>=0){ closeSheet(); } else { togglePick(sheetRow); sheetRender(); } });
+
+  /* ---------- week strip ---------- */
+  function renderStrip(){
+    stripEl.innerHTML='';
+    var start=new Date(today); start.setDate(today.getDate()+weekIdx*7);
+    wkMonth.textContent=fmtMonY.format(start);
+    for(var i=0;i<7;i++){
+      (function(i){
+        var dt=new Date(start); dt.setDate(start.getDate()+i);
+        var b=document.createElement('button'); b.type='button'; b.className='wk-day';
+        b.innerHTML='<span class="dw">'+DOW[(dt.getDay()+6)%7]+'</span><span class="dn">'+dt.getDate()+'</span>';
+        if(dt>lastDay){ b.classList.add('off'); b.disabled=true; }
+        if(dt.getTime()===today.getTime()) b.classList.add('today');
+        if(selDay && dt.getTime()===selDay.getTime()) b.classList.add('sel');
+        b.addEventListener('click',function(){
+          selDay=dt; selDayLabel=fmtFull.format(dt);
+          selTime=null; selEnd=null; selStartMin=null;
+          renderStrip(); buildTimes(); refreshAvail(); renderRail();
+        });
+        stripEl.appendChild(b);
+      })(i);
+    }
+    wkPrev.disabled=weekIdx===0;
+    wkNext.disabled=weekIdx>=Math.ceil((WINDOW_DAYS+1)/7)-1;
+  }
+  wkPrev.addEventListener('click',function(){ if(weekIdx>0){ weekIdx--; renderStrip(); } });
+  wkNext.addEventListener('click',function(){ weekIdx++; renderStrip(); });
+
+  /* ---------- time slots, grouped like a day ---------- */
+  function buildTimes(){
+    timesEl.innerHTML='';
+    var dur=totalMin(); if(!dur) dur=60;
+    var OPEN=10*60, CLOSE=21*60, STEP=30;
+    var now=new Date(); var isToday=selDay && selDay.getTime()===today.getTime();
+    var nowMin=now.getHours()*60+now.getMinutes();
+    var groups=[['Morning',0,12*60],['Afternoon',12*60,17*60],['Evening',17*60,24*60]];
+    var any=false, made=0, offed=0;
+    groups.forEach(function(g){
+      var wrap=null;
+      for(var st=OPEN; st+dur<=CLOSE; st+=STEP){
+        if(st<g[1]||st>=g[2]) continue;
+        if(isToday && st<=nowMin) continue;
+        if(!wrap){
+          var h=document.createElement('div'); h.className='tslot-h'; h.textContent=g[0]; timesEl.appendChild(h);
+          wrap=document.createElement('div'); wrap.className='chips'; timesEl.appendChild(wrap);
+        }
+        any=true;
+        (function(st,wrap){
+          var b=document.createElement('button'); b.type='button'; b.className='chip'; b.textContent=fmtTime(st);
+          made++; if(availSet && !availSet.has(st)){ b.classList.add('off'); b.disabled=true; offed++; }
+          if(selStartMin===st) b.classList.add('sel');
+          b.addEventListener('click',function(){
+            timesEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('sel')});
+            b.classList.add('sel'); selTime=fmtTime(st); selEnd=fmtTime(st+dur); selStartMin=st;
+            if(staffMode) renderTherapists();
+            renderRail();
+          });
+          wrap.appendChild(b);
+        })(st,wrap);
+      }
+    });
+    if(availSet && made>0 && made===offed){
+      var full=document.createElement('span'); full.style.cssText='color:var(--muted);font-size:14.5px';
+      full.textContent='Fully booked that day for this visit — please try another day.';
+      timesEl.appendChild(full);
+    }
+    if(!any){
+      var none=document.createElement('span'); none.style.cssText='color:var(--muted);font-size:14.5px';
+      none.textContent='No times left for this treatment today — please pick another day.';
+      timesEl.appendChild(none);
+    }
+  }
+
+  /* ---------- confirm ---------- */
+  function doConfirm(){
+    var nm=document.getElementById('nm').value.trim(), ph=document.getElementById('ph').value.trim(),
+        em=document.getElementById('em').value.trim(),
+        nt=document.getElementById('nt').value.trim();
+    if(!picks.length||!selDay||!selTime||!nm||!ph){ errEl.style.display='block'; return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ errEl.textContent='Please add your email — your confirmation and your private link to change or cancel are sent there.'; errEl.style.display='block'; return; }
+    errEl.textContent='Please complete each step: treatment, date, time, and your name, phone number and email.';
+    errEl.style.display='none';
+    if(liveMode){ submitBooking(nm, ph, em, nt); return; }
+    var t=selStartMin, parts=[];
+    picks.forEach(function(r){
+      var d=parseInt(r.dataset.min,10)||0;
+      parts.push(r.dataset.name+' '+fmtTime(t)+' – '+fmtTime(t+d));
+      t+=d;
+    });
+    document.getElementById('confirmText').textContent =
+      nm+' · '+parts.join(' · ')+' on '+selDayLabel+'. We have your number as '+ph+(em? ', and your email as '+em : '')+'.'+(nt? ' Your note: '+nt : '');
+    box.style.display='block';
+    goStep(stepConfirm);
+  }
+
+
+  /* ---------- live booking backend (activates itself when the API is installed) ---------- */
+  function isoOf(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function refreshAvail(){
+    if(!liveMode||!selDay) return;
+    var dur=totalMin()||60;
+    var units=unitsNow();
+    var seq=++availSeq;
+    fetch('api/public.php?action=availability&date='+isoOf(selDay)+'&minutes='+dur+'&units='+units+(staffMode? '&techId='+selTech : ''))
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(seq!==availSeq||!j.ok) return;
+        availSet=new Set(j.starts);
+        if(staffMode) staffByStart=j.byStart||null;
+        if(selStartMin!==null && !availSet.has(selStartMin)){ selTime=null; selEnd=null; selStartMin=null; }
+        buildTimes(); if(staffMode) renderTherapists(); renderRail();
+      }).catch(function(){});
+  }
+  /* ---------- therapist step (staff mode only) ---------- */
+  function renderTherapists(){
+    if(!staffMode) return;
+    var wrap=document.getElementById('therapistCards'); if(!wrap) return;
+    wrap.innerHTML='';
+    var units=unitsNow();
+    var hasData=!!staffByStart && selStartMin!==null;
+    var freeList=hasData? (staffByStart[String(selStartMin)]||null) : null;
+    function card(id, name, sub, avail){
+      var b=document.createElement('button'); b.type='button';
+      b.className='th-card'+(selTech===id?' sel':'')+(avail?'':' off');
+      var n1=document.createElement('span'); n1.className='th-n'; n1.textContent=name;
+      var n2=document.createElement('span'); n2.className='th-s'; n2.textContent=sub;
+      b.appendChild(n1); b.appendChild(n2);
+      if(!avail) b.disabled=true;
+      b.addEventListener('click',function(){ selTech=id; renderTherapists(); refreshAvail(); renderRail(); });
+      wrap.appendChild(b);
+    }
+    card(0, 'No preference', selTime? 'First available therapist' : 'Pick a time first', true);
+    staffTechs.forEach(function(t){
+      var avail=true, sub='';
+      if(selStartMin===null) sub='Pick a time first';
+      else if(hasData && !(freeList && freeList.indexOf(t.id)>=0 && (units<2 || freeList.length>=2))){ avail=false; sub='Not available at this time'; }
+      else sub='Available at '+selTime;
+      card(t.id, t.name, sub, avail);
+    });
+    var note=document.getElementById('therapistNote');
+    if(note) note.textContent = units>=2? 'Your treatment is for two guests — a second therapist will be assigned as well.' : '';
+  }
+  function syncTreatments(){
+    fetch('api/public.php?action=treatments').then(function(r){ return r.json(); }).then(function(j){
+      if(!j.ok) return;
+      var list=j.treatments||[];
+      list.forEach(function(t){ treatIds[t.name]=t.id; });
+      document.querySelectorAll('.trow').forEach(function(r){
+        var t=null; list.forEach(function(x){ if(x.name===r.dataset.name) t=x; });
+        if(!t) return;
+        r.dataset.price=t.price; r.dataset.min=t.minutes;
+        var tp=r.querySelector('.tp');
+        if(tp){ tp.childNodes[0].textContent='$'+t.price; var tm=tp.querySelector('.tmin'); if(tm) tm.textContent=t.minutes+' MIN'; }
+      });
+    }).catch(function(){});
+  }
+  function submitBooking(nm, ph, em, nt){
+    nextB.disabled=true; nextB.textContent='Booking\u2026';
+    var payload={name:nm, phone:ph, email:em, note:nt, date:isoOf(selDay), start:selStartMin,
+      items: picks.map(function(r){ return treatIds[r.dataset.name]; }).filter(function(x){ return x; })};
+    if(staffMode) payload.techId=selTech;
+    fetch('api/public.php?action=book', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        nextB.disabled=false;
+        if(!j.ok){ errEl.textContent=j.error||'Something went wrong — please try again, or call us at 905-555-0134.'; errEl.style.display='block'; refreshAvail(); return; }
+        document.getElementById('confirmText').textContent =
+          nm+' \u00B7 '+j.summary.lines.join(' \u00B7 ')+(j.summary.withTechs? ' \u00B7 With '+j.summary.withTechs : '')+' on '+j.summary.dayLabel+'. Total $'+j.summary.totalPrice+'. We have your number as '+ph+(em? ', and your email as '+em : '')+'.'+(nt? ' Your note: '+nt : '');
+        document.getElementById('callStep').style.display='none';
+        var ok=document.getElementById('bookedOk'); ok.style.display='block';
+        document.getElementById('okText').textContent='\u2713 Request received — your reference is '+j.ref+'. The shop will confirm your booking shortly.'+(em? ' A confirmation email is on its way to '+em+', with a private link to change or cancel.' : ' Use the button below to change or cancel your booking.');
+        document.getElementById('manageLink').href=j.manageUrl;
+        box.style.display='block';
+        goStep(stepConfirm);
+      })
+      .catch(function(){ nextB.disabled=false; renderRail(); errEl.textContent='We could not reach the booking system — please try again, or call us at 905-555-0134.'; errEl.style.display='block'; });
+  }
+  if(window.fetch) fetch('api/public.php?action=health').then(function(r){ return r.json(); }).then(function(j){
+    if(j && j.live){
+      liveMode=true;
+      if(j.mode==='staff'){
+        staffMode=true; staffTechs=j.techs||[];
+        stepDetails=4; stepConfirm=5;
+        panels={1:document.getElementById('panelServices'),2:document.getElementById('panelTime'),3:document.getElementById('panelTherapist'),4:document.getElementById('panelDetails'),5:document.getElementById('panelConfirm')};
+        var ct=document.getElementById('crumbTher'), cs=document.getElementById('crumbTherSep'), cd=document.getElementById('crumbDetails');
+        if(ct) ct.hidden=false; if(cs) cs.hidden=false; if(cd) cd.dataset.goto='4';
+        var intro=document.getElementById('bookIntro');
+        if(intro) intro.textContent='Choose your treatment and a time that suits you \u2014 then pick your therapist, or choose \u201cNo preference\u201d and we will assign one for you. We confirm every booking personally.';
+      }
+      var note=document.getElementById('bkModeNote');
+      if(note) note.textContent='Book right here — your request goes straight to the shop, and we email you a confirmation with a link to change or cancel.';
+      syncTreatments(); refreshAvail(); renderRail();
+    }
+  }).catch(function(){});
+
+  /* ---------- init: first treatment + today pre-selected ---------- */
+  var firstRow=document.querySelector('.trow.sel');
+  if(firstRow){ picks=[firstRow]; }
+  selDay=today; selDayLabel=fmtFull.format(today);
+  refreshBadges(); renderStrip(); buildTimes();
+  goStep(1, true);
+})();
+  var toTopBtn=document.getElementById('toTop');
+  if(toTopBtn){
+    window.addEventListener('scroll',function(){ toTopBtn.classList.toggle('show', window.scrollY>500); });
+    toTopBtn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  }
+
+  /* preselect a treatment from ?book= (links from the Treatments page) */
+  (function(){
+    var q=new URLSearchParams(location.search).get('book');
+    if(!q) return;
+    var rows=[].slice.call(document.querySelectorAll('#tlist .trow'));
+    var target=null;
+    rows.forEach(function(r){ if(r.dataset.name===q) target=r; });
+    if(!target) return;
+    var sel=rows.filter(function(r){return r.classList.contains('sel');});
+    if(sel.length===1 && sel[0]===target) return;
+    sel.forEach(function(r){ window.luminaToggle(r); });
+    if(!target.classList.contains('sel')) window.luminaToggle(target);
+  })();
+</script>
+<script>
+document.getElementById('cSend').addEventListener('click', function(){
+  var ok=document.getElementById('cOk'), er=document.getElementById('cErr');
+  ok.style.display='none'; er.style.display='none';
+  var body={name:document.getElementById('cName').value, email:document.getElementById('cEmail').value,
+            phone:document.getElementById('cPhone').value, message:document.getElementById('cMsg').value,
+            website:document.getElementById('cWeb').value};
+  fetch('api/public.php?action=contact', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)})
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(j.ok){ ok.style.display='block'; document.getElementById('cMsg').value=''; }
+      else { er.textContent=j.error||'Please check the form and try again.'; er.style.display='block'; }
+    })
+    .catch(function(){ er.textContent='Could not send — please try again.'; er.style.display='block'; });
+});
+document.getElementById('demoResetBtn').addEventListener('click', function(){ if(window.SerenityDemo) SerenityDemo.reset(); location.reload(); });
+</script>
+
+</body>
+</html>
