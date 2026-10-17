@@ -204,6 +204,13 @@
   .trow:hover{border-color:var(--brass)}
   #book{scroll-margin-top:96px}
   #message{scroll-margin-top:96px}
+  /* --- production parity 2: trow base + list layout (base rule was missing entirely) --- */
+  .trow{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:13px;background:#fffdf9;cursor:pointer;font-family:'Jost',sans-serif;font-size:15px;color:var(--ink);-webkit-appearance:none;appearance:none;transition:border-color .15s,background .15s,box-shadow .15s}
+  .trow .tp{font-size:15.5px;color:var(--brass-d);font-weight:600}
+  .bk-layout>*{min-width:0}
+  .tlist{display:flex;flex-direction:column;gap:8px}
+  .tgroup{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-d);margin:10px 0 2px;font-weight:600}
+  .tgroup:first-child{margin-top:0}
 </style>
 </head>
 <body>
