@@ -36,6 +36,32 @@
     .bk-price-card h3{margin:0 0 6px}
     .bk-price-card .bk-amount{font-size:1.55rem;font-weight:700;letter-spacing:-.01em}
     .bk-price-card p{color:var(--muted)}
+    /* This page's steps sit on a light band; the shared .steps style is built for dark bands, so restyle locally */
+    #try .steps{border-top-color:var(--line)}
+    #try .step{border-color:var(--line);min-height:0}
+    #try .step p{color:var(--muted)}
+    /* Customised section: exactly 2x2 on desktop (the shared .why-grid auto-fit leaves the 4th card alone) */
+    @media (min-width:861px){ #customised .why-grid{grid-template-columns:1fr 1fr} }
+    /* Steps: bigger, darker numbers on this page */
+    #try .step b{font-family:"Libre Caslon Display",Georgia,serif;font-size:34px;font-weight:700;color:var(--ink);margin-bottom:14px}
+    /* Features: 3x2 on desktop */
+    @media (min-width:861px){ #features .why-grid{grid-template-columns:repeat(3,1fr)} }
+    /* Hero: overlay the copy on the banner from tablet widths up, not only on wide desktop */
+    @media (min-width:861px) and (max-width:1199px){
+      .bk-hero{background:linear-gradient(to right, rgba(250,246,238,.96) 30%, rgba(250,246,238,.62) 52%, rgba(250,246,238,0) 70%), url('booking-system-banner.jpg') center/cover no-repeat;padding:64px 0 60px}
+      .bk-hero-copy{max-width:470px;margin-right:auto}
+      .bk-hero-img{display:none}
+    }
+    /* Industries: the headline sits on the photo's calm left side */
+    .bk-industry{position:relative}
+    .bk-industry-copy{padding-top:22px}
+    .bk-industry-copy h2{font-family:"Libre Caslon Display",Georgia,serif;font-size:clamp(34px,6vw,58px);line-height:1.02;letter-spacing:-.03em;margin:0 0 10px}
+    .bk-industry-copy p{color:var(--muted);margin:0;max-width:520px}
+    @media (min-width:861px){
+      .bk-industry-copy{position:absolute;left:2px;top:50%;transform:translateY(-50%);max-width:450px;padding-top:0}
+      .bk-industry-copy h2{font-size:clamp(34px,4.2vw,56px)}
+      .bk-industry-copy p{max-width:400px}
+    }
     .bk-faq{max-width:760px}
     .bk-faq h3{margin:26px 0 6px}
     .bk-faq p{margin:0;color:var(--muted)}
@@ -144,11 +170,13 @@
 
     <section id="industries">
       <div class="shell">
-        <div class="section-head">
-          <h2>Built for appointment-based businesses.</h2>
-          <p>If your day runs on appointments, this system can be shaped to fit it.</p>
+        <div class="bk-industry">
+          <img class="bk-shot" src="booking-industry-headspa.jpg" alt="A customer relaxing during a head spa treatment while a therapist works, with an appointment calendar on the counter" width="2172" height="724" />
+          <div class="bk-industry-copy">
+            <h2>Built for appointment-based businesses.</h2>
+            <p>If your day runs on appointments, this system can be shaped to fit it.</p>
+          </div>
         </div>
-        <img class="bk-shot" src="booking-industry-headspa.jpg" alt="A customer relaxing during a head spa treatment while a therapist works, with an appointment calendar on the counter" width="2172" height="724" />
         <ul class="industry-list" style="margin-top:24px">
           <li>Head spas</li>
           <li>Massage &amp; wellness clinics</li>
