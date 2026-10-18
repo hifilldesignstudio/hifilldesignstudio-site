@@ -20,9 +20,19 @@
   <meta name="twitter:description" content="Sample website designs for bakeries, restaurants, salons, law firms, home services and wellness brands. Toronto web design portfolio." />
   <link rel="stylesheet" href="styles.css?v=20260930b" />
   <style>
-    .bk-top { padding: 28px 0 0; }
-    .bk-top-img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: 0 18px 45px rgba(16,24,39,.16); }
-    .bk-top-note { margin: 12px 2px 0; color: var(--muted); font-size: 15px; }
+    .bk-band { position: relative; }
+    .bk-band-img { display: block; width: 100%; height: auto; }
+    .bk-band-copy { padding: 30px 0 36px; }
+    .bk-band-kicker { display: inline-block; background: var(--yellow); color: #202020; border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); padding: 5px 12px; font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; transform: rotate(-1deg); }
+    .bk-band-title { margin: 18px 0 0; font-family: "Libre Caslon Display", Georgia, serif; font-size: clamp(38px, 4.6vw, 60px); line-height: 1; letter-spacing: -.03em; }
+    .bk-band-title em { color: var(--blue); font-style: normal; }
+    .bk-band-sub { color: var(--muted); font-size: 17px; max-width: 520px; margin: 16px 0 0; }
+    .bk-band .cta-row { margin-top: 24px; }
+    @media (min-width: 1200px) {
+      .bk-band { background: linear-gradient(to right, rgba(250,246,238,.95) 26%, rgba(250,246,238,.55) 46%, rgba(250,246,238,0) 62%), url('booking-system-banner.jpg') center/cover no-repeat; }
+      .bk-band-img { display: none; }
+      .bk-band-copy { padding: 92px 0 96px; max-width: 540px; }
+    }
     .demo-group { margin-top: 60px; }
     .demo-group:first-of-type { margin-top: 8px; }
     .demo-group-head { margin-bottom: 30px; }
@@ -78,10 +88,18 @@
   </header>
 
   <main id="main">
-    <section class="bk-top" aria-label="Online Booking System">
+    <section class="bk-band" aria-label="Online Booking System">
+      <img class="bk-band-img" src="booking-system-banner.jpg" alt="Businesses that take appointments — a head spa, a dental clinic, a nail salon and a barber shop, each with an appointment calendar" width="2172" height="724" />
       <div class="shell">
-        <a href="booking-system.html" aria-label="Learn more about our Online Booking System"><img class="bk-top-img" src="booking-system-banner.jpg" alt="Businesses that take appointments — a head spa, a dental clinic, a nail salon and a barber shop, each with an appointment calendar" width="2172" height="724" /></a>
-        <p class="bk-top-note">New — our <a href="booking-system.html">Online Booking System</a>: guests book themselves, you just confirm. <a href="https://hifilldesignstudio.com/demo/booking-system/">Try the live demo</a>.</p>
+        <div class="bk-band-copy">
+          <span class="bk-band-kicker">New</span>
+          <h2 class="bk-band-title">Online Booking <em>System</em></h2>
+          <p class="bk-band-sub">Guests book themselves on your website — you just confirm. CAD $150 one-time, no monthly platform fee.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="booking-system.html"><span>Explore the Booking System</span></a>
+            <a class="btn secondary" href="https://hifilldesignstudio.com/demo/booking-system/"><span>Try the live demo</span></a>
+          </div>
+        </div>
       </div>
     </section>
     <section class="page-hero" id="top">
