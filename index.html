@@ -190,7 +190,7 @@
       slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden'); dots[i].classList.add('is-active');
     }
     function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-    function play(){ stop(); if(reduce) return; timer=setInterval(function(){ go(i+1); }, 6500); }
+    function play(){ stop(); if(reduce) return; timer=setInterval(function(){ go(i+1); }, 8000); }
     dots.forEach(function(d,k){ d.addEventListener('click', function(){ go(k); play(); }); });
     s.querySelector('.harrow.prev').addEventListener('click', function(){ go(i-1); play(); });
     s.querySelector('.harrow.next').addEventListener('click', function(){ go(i+1); play(); });
