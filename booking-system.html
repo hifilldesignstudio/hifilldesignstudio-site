@@ -65,6 +65,17 @@
     .bk-faq{max-width:760px}
     .bk-faq h3{margin:26px 0 6px}
     .bk-faq p{margin:0;color:var(--muted)}
+    /* Roadmap: 7-day launch grid (cards reuse .why-item) */
+    .roadmap-grid{display:grid;gap:18px;margin-top:8px}
+    @media (min-width:861px){ .roadmap-grid{grid-template-columns:repeat(4,1fr)} }
+    .roadmap-day{display:block;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+    .roadmap-time{display:inline-block;margin-top:12px;background:rgba(127,127,127,.14);border-radius:999px;padding:.28rem .8rem;font-size:.82rem;font-weight:700}
+    .roadmap-milestones{display:grid;gap:14px;margin:0 0 22px}
+    @media (min-width:861px){ .roadmap-milestones{grid-template-columns:repeat(3,1fr)} }
+    .roadmap-milestone{border-left:3px solid var(--blue);padding:4px 0 4px 14px}
+    .roadmap-milestone b{display:block;margin-bottom:4px}
+    .roadmap-milestone p{margin:0;color:var(--muted);font-size:.95rem}
+    .roadmap-note{margin-top:18px;color:var(--muted);font-size:.92rem}
   </style>
   <script type="application/ld+json">
   {
@@ -133,6 +144,30 @@
           <div class="step"><b>03</b><h3>Confirm it</h3><p>Tap Confirm and watch it move into Upcoming. Then explore the calendar, phone bookings, schedules and reports.</p></div>
         </div>
         <p style="margin-top:26px"><a class="btn primary" href="https://hifilldesignstudio.com/demo/booking-system/"><span>Open the live demo</span></a></p>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="shell">
+        <div class="section-head">
+          <h2>From first chat to taking bookings — in about a week.</h2>
+          <p>We do the building. Your part is about 15 minutes a day: answer a few questions, look at what we have set up, and tell us what to adjust. No homework, and no new platform to learn on your own.</p>
+        </div>
+        <div class="roadmap-milestones">
+          <div class="roadmap-milestone"><b>By Day 3</b><p>You click through your own shop&rsquo;s booking page — your treatments, your prices, not a generic demo.</p></div>
+          <div class="roadmap-milestone"><b>By Day 5</b><p>You and your staff have placed test bookings and confirmed them from your own dashboard.</p></div>
+          <div class="roadmap-milestone"><b>On Day 7</b><p>Your customers book themselves, day or night — you just confirm.</p></div>
+        </div>
+        <div class="roadmap-grid">
+          <div class="why-item"><span class="roadmap-day">Day 1</span><h3>Tell us about your shop</h3><p>Send us your service list, prices and durations — a short call or a simple form, whichever is easier. We set up the structure for you.</p><span class="roadmap-time">Your time: ~15 min</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 2</span><h3>Your staff &amp; hours</h3><p>Confirm who works when, plus days off and breaks. We build each schedule so the system only offers times that are truly free.</p><span class="roadmap-time">Your time: ~10 min</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 3</span><h3>See your first draft</h3><p>Your booking page is ready to click through as a customer — your treatments and prices, on your website&rsquo;s design.</p><span class="roadmap-time">Your time: ~15 min</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 4</span><h3>Your rules, your way</h3><p>How far ahead guests can book, couples and same-time bookings, buffer time between appointments, holiday closures — set together, around how your shop runs.</p><span class="roadmap-time">Your time: ~15 min</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 5</span><h3>Test day</h3><p>Place test bookings as a guest and by phone, then confirm, cancel and complete them from the dashboard. We check the English and Chinese wording with you.</p><span class="roadmap-time">Your time: ~15 min</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 6</span><h3>Your dashboard, in 15 minutes</h3><p>A short walkthrough: confirming bookings, the daily list, reports, and how to edit a price or a treatment yourself later.</p><span class="roadmap-time">Your time: 15 min walkthrough</span></div>
+          <div class="why-item"><span class="roadmap-day">Day 7</span><h3>Go live</h3><p>The booking link goes on your website — and on your Google profile, if you have one. Real bookings can start coming in the same day.</p><span class="roadmap-time">Your job from here: just confirm</span></div>
+        </div>
+        <p class="roadmap-note">Typical timing when your service list and staff details arrive on Day 1. Having a website built at the same time? We will confirm your exact launch date before we start — in writing, no guessing.</p>
       </div>
     </section>
 
@@ -225,7 +260,7 @@
           <h3>What if my services, prices or staff change?</h3>
           <p>You can edit treatments, prices, staff and schedules yourself in the dashboard. Bigger changes are covered by our optional care plans — or just ask us.</p>
           <h3>How long does setup take?</h3>
-          <p>We set everything up for you. Once we have your service list and staff details, we'll confirm your launch timing before we start — no guessing.</p>
+          <p>Most shops go live in about a week once we have the service list and staff details — see the <a href="#roadmap">day-by-day roadmap</a> above. Your part is roughly 15 minutes a day, and we confirm your exact launch date before we start.</p>
         </div>
       </div>
     </section>
